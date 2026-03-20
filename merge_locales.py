@@ -1,0 +1,321 @@
+import json
+import os
+
+def merge_dict(d1, d2):
+    for k, v in d2.items():
+        if k in d1 and isinstance(d1[k], dict) and isinstance(v, dict):
+            merge_dict(d1[k], v)
+        else:
+            d1[k] = v
+
+en_additions = {
+  "nav": {
+    "marketing": "Digital Marketing",
+    "webdev": "Web Development"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "who_we_are_title": "Who we are",
+    "who_we_are_desc": "Our website address is: https://apexdigital.dev.",
+    "comments_title": "Comments",
+    "comments_desc1": "When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor's IP address and browser user agent string to help spam detection.",
+    "comments_desc2": "An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: https://automattic.com/privacy/. After approval of your comment, your profile picture is visible to the public in the context of your comment.",
+    "media_title": "Media",
+    "media_desc": "If you upload images to the website, you should avoid uploading images with embedded location data (EXIF GPS) included. Visitors to the website can download and extract any location data from images on the website.",
+    "cookies_title": "Cookies",
+    "cookies_desc1": "If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.",
+    "cookies_desc2": "If you visit our login page, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.",
+    "cookies_desc3": "When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select \"Remember Me\", your login will persist for two weeks. If you log out of your account, the login cookies will be removed.",
+    "cookies_desc4": "If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.",
+    "embedded_title": "Embedded content from other websites",
+    "embedded_desc1": "Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.",
+    "embedded_desc2": "These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracking your interaction with the embedded content if you have an account and are logged in to that website.",
+    "share_title": "Who we share your data with",
+    "share_desc": "If you request a password reset, your IP address will be included in the reset email.",
+    "retain_title": "How long we retain your data",
+    "retain_desc1": "If you leave a comment, the comment and its metadata are retained indefinitely. This is so we can recognize and approve any follow-up comments automatically instead of holding them in a moderation queue.",
+    "retain_desc2": "For users that register on our website (if any), we also store the personal information they provide in their user profile. All users can see, edit, or delete their personal information at any time (except they cannot change their username). Website administrators can also see and edit that information.",
+    "rights_title": "What rights you have over your data",
+    "rights_desc": "If you have an account on this site, or have left comments, you can request to receive an exported file of the personal data we hold about you, including any data you have provided to us. You can also request that we erase any personal data we hold about you. This does not include any data we are obliged to keep for administrative, legal, or security purposes.",
+    "where_title": "Where your data is sent",
+    "where_desc": "Visitor comments may be checked through an automated spam detection service."
+  },
+  "projects": {
+    "mobile": "Mobile",
+    "desktop": "Desktop",
+    "client": "Client",
+    "date": "Date",
+    "view_project": "View Project"
+  },
+  "services_inner": {
+    "about_service": "About the service",
+    "individual_meeting": "Individual Meeting",
+    "individual_solution": "Individual Solution",
+    "portfolio_title": "Our Portfolio",
+    "prices_title1": "Our",
+    "prices_title2": "Pricing",
+    "prices_title3": "Plans",
+    "prices_title4": "for Web Development",
+    "prices_title4_seo": "for SEO",
+    "step": "Step",
+    "step1": "01",
+    "step2": "02",
+    "step3": "03",
+    "step4": "04",
+    "view_all": "View All",
+    "view_portfolio": "View Portfolio",
+    "view_works": "View Works",
+    "marketing": {
+      "acc1_name": "Search Engine Optimization (SEO)",
+      "acc1_p1": "Improve your online visibility and rank higher on search engines.",
+      "acc2_name": "Pay-Per-Click Advertising (PPC)",
+      "acc2_p1": "Drive targeted traffic to your website with cost-effective PPC campaigns.",
+      "acc3_name": "Social Media Marketing",
+      "acc3_p1": "Engage your audience and build brand awareness on social platforms.",
+      "acc4_name": "Content Marketing",
+      "acc4_p1": "Create valuable content to attract and retain customers.",
+      "approach1": "Data-Driven",
+      "approach2": "Marketing",
+      "approach3": "Strategies",
+      "approach4": "for Growth",
+      "approach_desc": "We use analytics and insights to craft marketing campaigns that deliver measurable results.",
+      "banner1": "Digital",
+      "banner2": "Marketing",
+      "banner3": "Solutions",
+      "prices_desc": "Choose the right marketing plan to scale your business.",
+      "step1_desc": "We analyze your target audience and competitors to create a customized marketing strategy.",
+      "step1_title": "Strategy & Planning",
+      "step2_desc": "We launch and manage your marketing campaigns across multiple channels.",
+      "step2_title": "Campaign Execution",
+      "step3_desc": "We monitor campaign performance and optimize strategies to maximize ROI.",
+      "step3_title": "Monitoring & Optimization"
+    },
+    "seo": {
+      "acc1_name": "On-Page SEO",
+      "acc1_p1": "We optimize individual web pages to rank higher and earn more relevant traffic.",
+      "acc1_p2": "This includes optimizing content, HTML source code, and images.",
+      "acc1_p3": "We ensure your website is user-friendly and fully accessible.",
+      "acc2_name": "Off-Page SEO",
+      "acc2_p1": "Build your site's authority with high-quality backlinks and social signals.",
+      "acc2_p2": "We focus on increasing your domain authority and online presence.",
+      "acc3_name": "Technical SEO",
+      "acc3_p1": "Improve your site's technical aspects to enhance search engine crawling and indexing.",
+      "acc3_p2": "We optimize site speed, mobile-friendliness, and site architecture.",
+      "acc3_p3": "Ensure your website meets all technical requirements of modern search engines.",
+      "acc4_name": "Local SEO",
+      "acc4_p1": "Optimize your online presence to attract more business from relevant local searches.",
+      "acc4_p2": "We manage your Google My Business profile and local citations.",
+      "acc4_p3": "Improve your visibility in local search results and Google Maps.",
+      "approach1": "Data-Driven",
+      "approach2": "SEO",
+      "approach3": "Strategies",
+      "approach4": "for Growth",
+      "approach_desc": "We use analytics and insights to craft SEO campaigns that deliver measurable results.",
+      "banner1": "Search Engine",
+      "banner2": "Optimization",
+      "banner3": "Services",
+      "prices_desc": "Choose the right SEO plan to boost your online visibility.",
+      "step1_desc": "We conduct a comprehensive audit of your website to identify SEO opportunities.",
+      "step1_title": "SEO Audit",
+      "step2_desc": "We develop a customized SEO strategy based on your business goals.",
+      "step2_title": "Strategy Development",
+      "step3_desc": "We implement on-page, off-page, and technical SEO optimizations.",
+      "step3_title": "Implementation",
+      "step4_desc": "We continuously monitor your site's performance and make necessary adjustments.",
+      "step4_title": "Monitoring & Reporting"
+    },
+    "webdev": {
+      "acc1_name": "Custom Website Design",
+      "acc1_p1": "We create unique and visually appealing websites tailored to your brand.",
+      "acc1_p2": "Our designs are fully responsive and optimized for all devices.",
+      "acc2_name": "E-Commerce Development",
+      "acc2_p1": "Build a robust and scalable online store to sell your products and services.",
+      "acc3_name": "Content Management Systems (CMS)",
+      "acc3_p1": "Manage your website content easily with a powerful CMS like WordPress.",
+      "acc4_name": "Web Application Development",
+      "acc4_p1": "Develop custom web applications to streamline your business processes.",
+      "approach1": "Innovative",
+      "approach2": "Web",
+      "approach3": "Development",
+      "approach4": "Solutions",
+      "approach_desc": "We use the latest technologies to build fast, secure, and scalable websites.",
+      "banner1": "Custom Web",
+      "banner2": "Development",
+      "banner3": "Services",
+      "prices_desc": "Choose the right web development plan for your business needs.",
+      "step1_desc": "We understand your requirements and define the project scope.",
+      "step1_title": "Discovery & Planning",
+      "step2_desc": "We create wireframes and UI/UX designs for your approval.",
+      "step2_title": "Design & Prototyping",
+      "step3_desc": "We develop the website using the best coding practices.",
+      "step3_title": "Development",
+      "step4_desc": "We test the website thoroughly and launch it successfully.",
+      "step4_title": "Testing & Deployment"
+    }
+  }
+}
+
+bg_additions = {
+  "nav": {
+    "marketing": "Дигитален маркетинг",
+    "webdev": "Уеб разработка"
+  },
+  "privacy": {
+    "title": "Политика за поверителност",
+    "who_we_are_title": "Кои сме ние",
+    "who_we_are_desc": "Адресът на нашия уебсайт е: https://apexdigital.dev.",
+    "comments_title": "Коментари",
+    "comments_desc1": "Когато посетителите оставят коментари в сайта, ние събираме данните, показани във формуляра за коментари, както и IP адреса на посетителя и низ на потребителския агент на браузъра, за да помогнем за откриването на спам.",
+    "comments_desc2": "Анонимизиран низ, създаден от вашия имейл адрес (наричан още хеш), може да бъде предоставен на услугата Gravatar, за да се провери дали я използвате. Политиката за поверителност на услугата Gravatar е достъпна тук: https://automattic.com/privacy/. След одобрение на вашия коментар, профилната ви снимка е видима публично в контекста на вашия коментар.",
+    "media_title": "Медия",
+    "media_desc": "Ако качвате изображения в уебсайта, трябва да избягвате качването на изображения с включени данни за вградено местоположение (EXIF GPS). Посетителите на уебсайта могат да изтеглят и извличат всякакви данни за местоположение от изображения на уебсайта.",
+    "cookies_title": "Бисквитки",
+    "cookies_desc1": "Ако оставите коментар на нашия сайт, можете да изберете да запазите името, имейл адреса и уебсайта си в бисквитки. Те са за ваше удобство, така че да не се налага да попълвате отново данните си, когато оставяте друг коментар. Тези бисквитки ще се пазят една година.",
+    "cookies_desc2": "Ако посетите страницата ни за вход, ние ще зададем временна бисквитка, за да определим дали браузърът ви приема бисквитки. Тази бисквитка не съдържа лични данни и се отхвърля, когато затворите браузъра си.",
+    "cookies_desc3": "Когато влезете, ние също така ще настроим няколко бисквитки, за да запазим вашите данни за вход и избора ви на показване на екрана. Бисквитките за вход се пазят два дни, а бисквитките за опции на екрана се пазят една година. Ако изберете \"Запомни ме\", вашето влизане ще продължи две седмици. Ако излезете от акаунта си, бисквитките за вход ще бъдат премахнати.",
+    "cookies_desc4": "Ако редактирате или публикувате статия, допълнителна бисквитка ще бъде запазена във вашия браузър. Тази бисквитка не съдържа лични данни и просто показва ID-то на публикацията на статията, която току-що сте редактирали. Тя изтича след 1 ден.",
+    "embedded_title": "Вградено съдържание от други уебсайтове",
+    "embedded_desc1": "Статиите в този сайт могат да включват вградено съдържание (напр. видеоклипове, изображения, статии и др.). Вграденото съдържание от други уебсайтове се държи по същия начин, както ако посетителят е посетил другия уебсайт.",
+    "embedded_desc2": "Тези уебсайтове могат да събират данни за вас, да използват бисквитки, да вграждат допълнително проследяване от трети страни и да наблюдават взаимодействието ви с това вградено съдържание, включително да проследяват взаимодействието ви с вграденото съдържание, ако имате акаунт и сте влезли в този уебсайт.",
+    "share_title": "С кого споделяме вашите данни",
+    "share_desc": "Ако заявите нулиране на паролата, вашият IP адрес ще бъде включен в имейла за нулиране.",
+    "retain_title": "Колко дълго запазваме вашите данни",
+    "retain_desc1": "Ако оставите коментар, коментарът и неговите метаданни се запазват за неопределено време. Това е така, за да можем автоматично да разпознаваме и одобряваме всички последващи коментари, вместо да ги държим в опашка за модериране.",
+    "retain_desc2": "За потребители, които се регистрират на нашия уебсайт (ако има такива), ние също съхраняваме личната информация, която предоставят в своя потребителски профил. Всички потребители могат да виждат, редактират или изтриват личната си информация по всяко време (с изключение на това, че не могат да променят потребителското си име). Администраторите на уебсайта също могат да виждат и редактират тази информация.",
+    "rights_title": "Какви права имате върху данните си",
+    "rights_desc": "Ако имате акаунт в този сайт или сте оставили коментари, можете да поискате да получите експортиран файл на личните данни, които съхраняваме за вас, включително всякакви данни, които сте ни предоставили. Можете също да поискате да изтрием всички лични данни, които съхраняваме за вас. Това не включва данни, които сме длъжни да съхраняваме за административни, правни цели или цели на сигурността.",
+    "where_title": "Къде се изпращат вашите данни",
+    "where_desc": "Коментарите на посетителите могат да бъдат проверени чрез автоматизирана услуга за откриване на спам."
+  },
+  "projects": {
+    "mobile": "Мобилен",
+    "desktop": "Десктоп",
+    "client": "Клиент",
+    "date": "Дата",
+    "view_project": "Виж проекта"
+  },
+  "services_inner": {
+    "about_service": "За услугата",
+    "individual_meeting": "Индивидуална среща",
+    "individual_solution": "Индивидуално решение",
+    "portfolio_title": "Нашето Портфолио",
+    "prices_title1": "Нашите",
+    "prices_title2": "Ценови",
+    "prices_title3": "Планове",
+    "prices_title4": "за Уеб Разработка",
+    "prices_title4_seo": "за SEO",
+    "step": "Стъпка",
+    "step1": "01",
+    "step2": "02",
+    "step3": "03",
+    "step4": "04",
+    "view_all": "Виж Всички",
+    "view_portfolio": "Виж Портфолио",
+    "view_works": "Виж Проекти",
+    "marketing": {
+      "acc1_name": "Оптимизация за търсачки (SEO)",
+      "acc1_p1": "Подобрете онлайн видимостта си и се класирайте по-високо в търсачките.",
+      "acc2_name": "Реклама на клик (PPC)",
+      "acc2_p1": "Привлечете целеви трафик към уебсайта си с рентабилни PPC кампании.",
+      "acc3_name": "Маркетинг в Социалните Мрежи",
+      "acc3_p1": "Ангажирайте аудиторията си и изградете разпознаваемост на марката в социалните платформи.",
+      "acc4_name": "Контент Маркетинг",
+      "acc4_p1": "Създайте ценно съдържание, за да привлечете и задържите клиенти.",
+      "approach1": "Основан на Данни",
+      "approach2": "Маркетинг",
+      "approach3": "Стратегии",
+      "approach4": "за Растеж",
+      "approach_desc": "Използваме анализи и прозрения, за да създадем маркетингови кампании, които осигуряват измерими резултати.",
+      "banner1": "Дигитален",
+      "banner2": "Маркетинг",
+      "banner3": "Решения",
+      "prices_desc": "Изберете правилния маркетингов план, за да мащабирате бизнеса си.",
+      "step1_desc": "Анализираме вашата целева аудитория и конкуренти, за да създадем персонализирана маркетингова стратегия.",
+      "step1_title": "Стратегия и Планиране",
+      "step2_desc": "Стартираме и управляваме вашите маркетингови кампании в множество канали.",
+      "step2_title": "Изпълнение на Кампания",
+      "step3_desc": "Наблюдаваме ефективността на кампанията и оптимизираме стратегиите, за да увеличим максимално възвръщаемостта на инвестициите.",
+      "step3_title": "Мониторинг и Оптимизация"
+    },
+    "seo": {
+      "acc1_name": "On-Page SEO",
+      "acc1_p1": "Ние оптимизираме отделните уеб страници, за да се класират по-високо и да печелят по-подходящ трафик.",
+      "acc1_p2": "Това включва оптимизиране на съдържанието, HTML изходния код и изображенията.",
+      "acc1_p3": "Ние гарантираме, че вашият уебсайт е удобен за потребителя и напълно достъпен.",
+      "acc2_name": "Off-Page SEO",
+      "acc2_p1": "Изградете авторитета на вашия сайт с висококачествени връзки и социални сигнали.",
+      "acc2_p2": "Ние се фокусираме върху увеличаване на авторитета на вашия домейн и онлайн присъствие.",
+      "acc3_name": "Техническо SEO",
+      "acc3_p1": "Подобрете техническите аспекти на сайта си, за да подобрите обхождането и индексирането от търсачките.",
+      "acc3_p2": "Оптимизираме скоростта на сайта, съвместимостта с мобилни устройства и архитектурата на сайта.",
+      "acc3_p3": "Гарантираме, че уебсайтът ви отговаря на всички технически изисквания на съвременните търсачки.",
+      "acc4_name": "Локално SEO",
+      "acc4_p1": "Оптимизирайте онлайн присъствието си, за да привлечете повече бизнес от подходящи локални търсения.",
+      "acc4_p2": "Ние управляваме вашия профил в Google My Business и местните цитирания.",
+      "acc4_p3": "Подобрете видимостта си в резултатите от локалното търсене и Google Maps.",
+      "approach1": "Основани на Данни",
+      "approach2": "SEO",
+      "approach3": "Стратегии",
+      "approach4": "за Растеж",
+      "approach_desc": "Използваме анализи и прозрения, за да създадем SEO кампании, които осигуряват измерими резултати.",
+      "banner1": "Оптимизация за",
+      "banner2": "Търсачки",
+      "banner3": "Услуги",
+      "prices_desc": "Изберете правилния SEO план, за да увеличите онлайн видимостта си.",
+      "step1_desc": "Провеждаме цялостен одит на вашия уебсайт, за да идентифицираме възможности за SEO.",
+      "step1_title": "SEO Одит",
+      "step2_desc": "Разработваме персонализирана SEO стратегия въз основа на вашите бизнес цели.",
+      "step2_title": "Разработване на Стратегия",
+      "step3_desc": "Ние внедряваме on-page, off-page и технически SEO оптимизации.",
+      "step3_title": "Внедряване",
+      "step4_desc": "Ние непрекъснато наблюдаваме ефективността на вашия сайт и правим необходимите корекции.",
+      "step4_title": "Мониторинг и Отчитане"
+    },
+    "webdev": {
+      "acc1_name": "Обичаен Уеб Дизайн",
+      "acc1_p1": "Ние създаваме уникални и визуално привлекателни уебсайтове, съобразени с вашата марка.",
+      "acc1_p2": "Нашите дизайни са напълно адаптивни и оптимизирани за всички устройства.",
+      "acc2_name": "Разработка на Електронна Търговия",
+      "acc2_p1": "Изградете стабилен и мащабируем онлайн магазин, за да продавате продуктите и услугите си.",
+      "acc3_name": "Системи за Управление на Съдържанието (CMS)",
+      "acc3_p1": "Управлявайте съдържанието на уебсайта си лесно с мощна CMS като WordPress.",
+      "acc4_name": "Разработка на Уеб Приложения",
+      "acc4_p1": "Разработете персонализирани уеб приложения, за да оптимизирате бизнес процесите си.",
+      "approach1": "Иновативни",
+      "approach2": "Уеб",
+      "approach3": "Изработки",
+      "approach4": "Решения",
+      "approach_desc": "Ние използваме най-новите технологии за изграждане на бързи, сигурни и мащабируеми уебсайтове.",
+      "banner1": "Персонализирана Уеб",
+      "banner2": "Разработка",
+      "banner3": "Услуги",
+      "prices_desc": "Изберете правилния план за уеб разработка за вашите бизнес нужди.",
+      "step1_desc": "Разбираме вашите изисквания и дефинираме обхвата на проекта.",
+      "step1_title": "Откриване и Планиране",
+      "step2_desc": "Създаваме wireframes и UI/UX дизайни за вашето одобрение.",
+      "step2_title": "Дизайн и Прототипиране",
+      "step3_desc": "Разработваме уебсайта, като използваме най-добрите практики за кодиране.",
+      "step3_title": "Разработка",
+      "step4_desc": "Тестваме уебсайта задълбочено и го стартираме успешно.",
+      "step4_title": "Тестване и Внедряване"
+    }
+  }
+}
+
+en_path = 'i18n/locales/en.json'
+bg_path = 'i18n/locales/bg.json'
+
+with open(en_path, 'r', encoding='utf-8') as f:
+    en_data = json.load(f)
+with open(bg_path, 'r', encoding='utf-8') as f:
+    bg_data = json.load(f)
+
+merge_dict(en_data, en_additions)
+merge_dict(bg_data, bg_additions)
+
+with open(en_path, 'w', encoding='utf-8') as f:
+    json.dump(en_data, f, indent=2, ensure_ascii=False)
+with open(bg_path, 'w', encoding='utf-8') as f:
+    json.dump(bg_data, f, indent=2, ensure_ascii=False)
+
+print("Merged successfully.")

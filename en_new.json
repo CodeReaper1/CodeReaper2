@@ -1,0 +1,114 @@
+{
+    "trusted": "Trusted by industry leaders",
+    "expertise": {
+        "title": "Our <span class=\"font-[100]\">Expertise</span>",
+        "subtitle": "Comprehensive digital solutions designed to elevate your brand and drive measurable results across all touchpoints.",
+        "cards": [
+            {
+                "title": "Performance Optimization",
+                "desc": "Lightning-fast load times and optimized core web vitals to ensure seamless user experiences and better search rankings."
+            },
+            {
+                "title": "Technical SEO",
+                "desc": "Deep-dive structural improvements, schema markup, and advanced crawlability enhancements for maximum visibility."
+            },
+            {
+                "title": "E-commerce Solutions",
+                "desc": "High-converting online stores built on robust platforms with seamless payment integrations and inventory management."
+            },
+            {
+                "title": "Custom Applications",
+                "desc": "Bespoke web and mobile applications tailored to your specific business workflows and customer needs."
+            }
+        ]
+    },
+    "strategy": {
+        "subtitle": "Strategic Approach",
+        "title": "The Path to <span class=\"font-bold\">Digital Excellence</span>",
+        "steps": [
+            {
+                "title": "Discovery",
+                "desc": "Deep dive into your brand, audience, and market landscape."
+            },
+            {
+                "title": "Strategy",
+                "desc": "Crafting a bespoke roadmap tailored to your specific goals."
+            },
+            {
+                "title": "Execution",
+                "desc": "Pixel-perfect design and robust technical implementation."
+            },
+            {
+                "title": "Evolution",
+                "desc": "Continuous optimization, scaling, and performance tracking."
+            }
+        ]
+    },
+    "work": {
+        "subtitle": "Featured Work",
+        "title": "Explore Our <span class=\"font-bold\">Digital Dust.</span>",
+        "view_all": "View All Projects",
+        "projects": [
+            {
+                "tag1": "Fintech",
+                "tag2": "Web App",
+                "title": "Nexus Analytics Platform",
+                "desc": "Complete UX/UI redesign and frontend architecture for a global financial data provider.",
+                "btn": "VIEW CASE STUDY"
+            },
+            {
+                "tag1": "Social",
+                "tag2": "Mobile",
+                "title": "Vibe Social Network",
+                "desc": "Omnichannel marketing campaign and native mobile application development.",
+                "btn": "VIEW CASE STUDY"
+            }
+        ]
+    },
+    "stats": {
+        "s1_num": "200",
+        "s1_label": "Projects Delivered",
+        "s2_num": "15",
+        "s2_label": "Industry Awards",
+        "s3_num": "98",
+        "s3_label": "Client Retention",
+        "s4_num": "10",
+        "s4_label": "Years Experience"
+    },
+    "testimonial": {
+        "quote": "\"Apex Digital completely transformed our online presence. Their strategic approach resulting in a 300% increase in organic traffic within six months.\"",
+        "author": "Sarah Jenkins",
+        "role": "CMO, TechFlow Solutions"
+    },
+    "cta": {
+        "title": "Ready to start your<br/>\n<span class=\"font-bold\">digital transformation?</span>",
+        "desc": "Let's build something extraordinary together. Our team of experts is ready to take your brand to the next level.",
+        "btn_talk": "LET'S TALK",
+        "btn_consult": "Book a Consult"
+    },
+    "blog_preview": {
+        "subtitle": "Latest Insights",
+        "title": "Stay <span class=\"font-bold\">Ahead of the Curve.</span>",
+        "view_all": "View All Posts",
+        "posts": [
+            {
+                "tag": "Technology",
+                "date": "Oct 24, 2024",
+                "title": "Modern Web Development Trends",
+                "desc": "Discover the latest cutting-edge technologies and frameworks shaping the future."
+            },
+            {
+                "tag": "Marketing",
+                "date": "Nov 05, 2024",
+                "title": "SEO Strategies for AI Search",
+                "desc": "How to adapt your content strategy as search engines integrate Generative AI."
+            },
+            {
+                "tag": "Design",
+                "date": "Dec 12, 2024",
+                "title": "Mastering GSAP Animations",
+                "desc": "Learn how to properly integrate and clean up GSAP ScrollTriggers in modern SPAs."
+            }
+        ]
+    }
+}

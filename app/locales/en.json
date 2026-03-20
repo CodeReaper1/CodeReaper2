@@ -1,0 +1,171 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "portfolio": "Projects",
+    "blog": "Blog",
+    "contact": "Contact",
+    "seo": "SEO",
+    "web_dev": "Web Development",
+    "digital_marketing": "Digital Marketing",
+    "privacy": "Privacy Policy"
+  },
+  "layout": {
+    "preloader": {
+      "l1": "Pioneering",
+      "l2": "Creative",
+      "l3": "Excellence",
+      "l4": "APEX DIGITAL"
+    },
+    "menu": {
+      "projects": "Projects",
+      "project1": "Project 1",
+      "project2": "Project 2"
+    },
+    "frame": {
+      "back_to_top": "Back to top"
+    },
+    "cursor": {
+      "more": "More",
+      "choose": "Choose"
+    }
+  },
+  "services_page": {
+    "title_part1": "This is",
+    "title_part2": "what",
+    "title_part3": "we do",
+    "title_part4": "best",
+    "btn_our_services": "Our services",
+    "btn_read_more": "Read more",
+    "web_dev": {
+      "title": "Web <br>Development",
+      "desc": "We believe that your website is the heart of your online presence.",
+      "f1": "Competitive Rates",
+      "f2": "Custom Development",
+      "f3": "Accessibility & SEO First",
+      "f4": "Dedicated Hosting & Support"
+    },
+    "seo": {
+      "title": "Search Engine <br>Optimization",
+      "desc": "We believe in optimizing not only to look great on paper, but to bring results and growth as well.",
+      "f1": "Organic Traffic",
+      "f2": "Conversions",
+      "f3": "Expertise & Authority"
+    },
+    "marketing": {
+      "title": "Digital <br>Marketing",
+      "desc": "Let us handle everything concerning digital marketing for you.",
+      "f1": "PPC",
+      "f2": "AD Creation",
+      "f3": "Social Media Management",
+      "f4": "Budget Optimization"
+    }
+  },
+  "contact": {
+    "title": "Contact Us"
+  },
+  "error": {
+    "fallback": "Oops! Something went wrong :(",
+    "back_home": "Back to homepage"
+  },
+  "home_new": {
+    "trusted": "Trusted by industry leaders",
+    "expertise": {
+      "title": "Our <span class=\"font-[100]\">Expertise</span>",
+      "subtitle": "Comprehensive digital solutions designed to elevate your brand and drive measurable results across all touchpoints.",
+      "cards": {
+        "0": {
+          "title": "Performance Optimization",
+          "desc": "Lightning-fast load times and optimized core web vitals to ensure seamless user experiences and better search rankings."
+        },
+        "1": {
+          "title": "Technical SEO",
+          "desc": "Deep-dive structural improvements, schema markup, and advanced crawlability enhancements for maximum visibility."
+        },
+        "2": {
+          "title": "E-commerce Solutions",
+          "desc": "High-converting online stores built on robust platforms with seamless payment integrations and inventory management."
+        },
+        "3": {
+          "title": "Custom Applications",
+          "desc": "Bespoke web and mobile applications tailored to your specific business workflows and customer needs."
+        }
+      }
+    },
+    "strategy": {
+      "subtitle": "Strategic Approach",
+      "title": "The Path to <span class=\"font-bold\">Digital Excellence</span>",
+      "steps": {
+        "0": {
+          "title": "Discovery",
+          "desc": "Deep dive into your brand, audience, and market landscape."
+        },
+        "1": {
+          "title": "Strategy",
+          "desc": "Crafting a bespoke roadmap tailored to your specific goals."
+        },
+        "2": {
+          "title": "Execution",
+          "desc": "Pixel-perfect design and robust technical implementation."
+        },
+        "3": {
+          "title": "Evolution",
+          "desc": "Continuous optimization, scaling, and performance tracking."
+        }
+      }
+    },
+    "work": {
+      "subtitle": "Featured Work",
+      "title": "Explore Our <span class=\"font-bold\">Digital Dust.</span>",
+      "view_all": "View All Projects",
+      "projects": {
+        "0": {
+          "tag1": "Fintech",
+          "tag2": "Web App",
+          "title": "Nexus Analytics Platform",
+          "desc": "Complete UX/UI redesign and frontend architecture for a global financial data provider.",
+          "btn": "VIEW CASE STUDY"
+        },
+        "1": {
+          "tag1": "Social",
+          "tag2": "Mobile",
+          "title": "Vibe Social Network",
+          "desc": "Omnichannel marketing campaign and native mobile application development.",
+          "btn": "VIEW CASE STUDY"
+        }
+      }
+    },
+    "stats": {
+      "s1_num": "200",
+      "s1_label": "Projects Delivered",
+      "s2_num": "15",
+      "s2_label": "Industry Awards",
+      "s3_num": "98",
+      "s3_label": "Client Retention",
+      "s4_num": "10",
+      "s4_label": "Years Experience"
+    },
+    "testimonial": {
+      "quote": "\"Apex Digital completely transformed our online presence. Their strategic approach to our web design and SEO resulted in a 300% increase in organic traffic within six months.\"",
+      "author": "Sarah Jenkins",
+      "role": "CMO, TechFlow Solutions"
+    },
+    "cta": {
+      "title": "Ready to start your<br/>\n<span class=\"font-bold\">digital transformation?</span>",
+      "desc": "Let's build something extraordinary together. Our team of experts is ready to take your brand to the next level.",
+      "btn_talk": "LET'S TALK",
+      "btn_consult": "Book a Consult"
+    }
+  },
+  "home": {
+    "banner": {
+      "title_main": "Pioneering",
+      "title_sub1": "Creative",
+      "title_sub2": "Excellence",
+      "desc": "We believe that your digital presence is the heart of your business operations.",
+      "btn_services": "Our Services",
+      "btn_portfolio": "View Portfolio",
+      "scroll_down": "Scroll Down"
+    }
+  }
+}

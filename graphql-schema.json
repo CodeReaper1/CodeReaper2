@@ -1,0 +1,66 @@
+﻿{
+    "data":  {
+                 "portfolioItems":  {
+                                        "nodes":  [
+                                                      {
+                                                          "id":  "cG9zdDo0NTI=",
+                                                          "title":  "FoodHub",
+                                                          "slug":  "foodhub"
+                                                      },
+                                                      {
+                                                          "id":  "cG9zdDoyNDE=",
+                                                          "title":  "Hotel Vivendi",
+                                                          "slug":  "hotel-vivendi"
+                                                      },
+                                                      {
+                                                          "id":  "cG9zdDozMzY=",
+                                                          "title":  "Euphoria",
+                                                          "slug":  "euphoria"
+                                                      },
+                                                      {
+                                                          "id":  "cG9zdDoxOTQ=",
+                                                          "title":  "PhytoLife",
+                                                          "slug":  "titlea"
+                                                      },
+                                                      {
+                                                          "id":  "cG9zdDoyNDQ=",
+                                                          "title":  "Augé Service",
+                                                          "slug":  "auge-service"
+                                                      },
+                                                      {
+                                                          "id":  "cG9zdDoyNDU=",
+                                                          "title":  "Manekin",
+                                                          "slug":  "manekin"
+                                                      },
+                                                      {
+                                                          "id":  "cG9zdDoyNDY=",
+                                                          "title":  "Robin Ruth",
+                                                          "slug":  "robin-ruth"
+                                                      },
+                                                      {
+                                                          "id":  "cG9zdDoyNDc=",
+                                                          "title":  "Pins Bremen",
+                                                          "slug":  "pins-bremen"
+                                                      },
+                                                      {
+                                                          "id":  "cG9zdDoyNDk=",
+                                                          "title":  "Dom na Podwalu",
+                                                          "slug":  "dom-na-podwalu"
+                                                      },
+                                                      {
+                                                          "id":  "cG9zdDozMzQ=",
+                                                          "title":  "Fit Residence",
+                                                          "slug":  "fit-residence"
+                                                      }
+                                                  ]
+                                    }
+             },
+    "extensions":  {
+                       "debug":  [
+                                     {
+                                         "type":  "DEBUG_LOGS_INACTIVE",
+                                         "message":  "GraphQL Debug logging is not active. To see debug logs, GRAPHQL_DEBUG must be enabled."
+                                     }
+                                 ]
+                   }
+}

@@ -1,0 +1,342 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "portfolio": "Projects",
+    "blog": "Blog",
+    "contact": "Contact",
+    "seo": "SEO",
+    "web_dev": "Web Development",
+    "digital_marketing": "Digital Marketing",
+    "privacy": "Privacy Policy",
+    "marketing": "Digital Marketing",
+    "webdev": "Web Development"
+  },
+  "layout": {
+    "preloader": {
+      "l1": "Pioneering",
+      "l2": "Creative",
+      "l3": "Excellence",
+      "l4": "APEX DIGITAL"
+    },
+    "menu": {
+      "projects": "Projects",
+      "project1": "Project 1",
+      "project2": "Project 2"
+    },
+    "frame": {
+      "back_to_top": "Back to top"
+    },
+    "cursor": {
+      "more": "More",
+      "choose": "Choose"
+    }
+  },
+  "services_page": {
+    "title_part1": "This is",
+    "title_part2": "what",
+    "title_part3": "we do",
+    "title_part4": "best",
+    "btn_our_services": "Our services",
+    "btn_read_more": "Read more",
+    "web_dev": {
+      "title": "Web Development",
+      "desc": "We believe that your website is the heart of your online presence.",
+      "f1": "Competitive Rates",
+      "f2": "Custom Development",
+      "f3": "Accessibility & SEO First",
+      "f4": "Dedicated Hosting & Support"
+    },
+    "seo": {
+      "title": "Search Engine Optimization",
+      "desc": "We believe in optimizing not only to look great on paper, but to bring results and growth as well.",
+      "f1": "Organic Traffic",
+      "f2": "Conversions",
+      "f3": "Expertise & Authority"
+    },
+    "marketing": {
+      "title": "Digital Marketing",
+      "desc": "Let us handle everything concerning digital marketing for you.",
+      "f1": "PPC",
+      "f2": "AD Creation",
+      "f3": "Social Media Management",
+      "f4": "Budget Optimization"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "info_title": "Get in Touch",
+    "info_desc": "We'd love to hear from you. Fill out the form or use our contact information below.",
+    "email_label": "Email Us",
+    "email": "hello{'@'}apexdigital.com",
+    "phone_label": "Call Us",
+    "phone": "+1 (555) 123-4567",
+    "address_label": "Visit Us",
+    "address_val1": "123 Innovation Drive",
+    "address_val2": "Tech City, TC 90210",
+    "form": {
+      "name": "Your Name",
+      "email": "Your Email",
+      "phone": "Your Phone",
+      "budget": "Project Budget",
+      "message": "Tell us about your project...",
+      "submit": "Send Message"
+    }
+  },
+  "error": {
+    "fallback": "Oops! Something went wrong :(",
+    "back_home": "Back to homepage"
+  },
+  "home_new": {
+    "trusted": "Trusted by industry leaders",
+    "about": {
+      "title": "We don’t just build websites.",
+      "p1": "We engineer digital experiences that captivate, convert, and scale.",
+      "p2": "At Apex Digital, our philosophy is simple: combine cutting-edge technology with world-class design to set new industry standards.",
+      "p3": "Whether you need a blazing-fast e-commerce platform or a complex web application, our expert team is ready to deliver."
+    },
+    "expertise": {
+      "title": "Our Expertise",
+      "subtitle": "Comprehensive digital solutions designed to elevate your brand and drive measurable results across all touchpoints.",
+      "cards": {
+        "0": {
+          "title": "Performance Optimization",
+          "desc": "Lightning-fast load times and optimized core web vitals to ensure seamless user experiences and better search rankings."
+        },
+        "1": {
+          "title": "Technical SEO",
+          "desc": "Deep-dive structural improvements, schema markup, and advanced crawlability enhancements for maximum visibility."
+        },
+        "2": {
+          "title": "E-commerce Solutions",
+          "desc": "High-converting online stores built on robust platforms with seamless payment integrations and inventory management."
+        },
+        "3": {
+          "title": "Custom Applications",
+          "desc": "Bespoke web and mobile applications tailored to your specific business workflows and customer needs."
+        }
+      }
+    },
+    "strategy": {
+      "subtitle": "Strategic Approach",
+      "title": "The Path to Digital Excellence",
+      "steps": {
+        "0": {
+          "title": "Discovery",
+          "desc": "Deep dive into your brand, audience, and market landscape."
+        },
+        "1": {
+          "title": "Strategy",
+          "desc": "Crafting a bespoke roadmap tailored to your specific goals."
+        },
+        "2": {
+          "title": "Execution",
+          "desc": "Pixel-perfect design and robust technical implementation."
+        },
+        "3": {
+          "title": "Evolution",
+          "desc": "Continuous optimization, scaling, and performance tracking."
+        }
+      }
+    },
+    "work": {
+      "subtitle": "Featured Work",
+      "title": "Explore Our Digital Dust.",
+      "view_all": "View All Projects",
+      "projects": {
+        "0": {
+          "tag1": "Fintech",
+          "tag2": "Web App",
+          "title": "Nexus Analytics Platform",
+          "desc": "Complete UX/UI redesign and frontend architecture for a global financial data provider.",
+          "btn": "VIEW CASE STUDY"
+        },
+        "1": {
+          "tag1": "Social",
+          "tag2": "Mobile",
+          "title": "Vibe Social Network",
+          "desc": "Omnichannel marketing campaign and native mobile application development.",
+          "btn": "VIEW CASE STUDY"
+        }
+      }
+    },
+    "stats": {
+      "s1_num": "200",
+      "s1_label": "Projects Delivered",
+      "s2_num": "15",
+      "s2_label": "Industry Awards",
+      "s3_num": "98",
+      "s3_label": "Client Retention",
+      "s4_num": "10",
+      "s4_label": "Years Experience"
+    },
+    "testimonial": {
+      "quote": "\"Apex Digital completely transformed our online presence. Their strategic approach to our web design and SEO resulted in a 300% increase in organic traffic within six months.\"",
+      "author": "Sarah Jenkins",
+      "role": "CMO, TechFlow Solutions"
+    },
+    "cta": {
+      "title": "Ready to start your digital transformation?",
+      "desc": "Let's build something extraordinary together. Our team of experts is ready to take your brand to the next level.",
+      "btn_talk": "LET'S TALK",
+      "btn_consult": "Book a Consult"
+    }
+  },
+  "home": {
+    "banner": {
+      "title_main": "APEX DIGITAL",
+      "title_sub1": "The Agency that meets",
+      "title_sub2": "all digital needs.",
+      "desc": "We at Apex Digital are honored to partake in the success of every business we have worked with.",
+      "btn_services": "Our Services",
+      "btn_portfolio": "Portfolio",
+      "scroll_down": "Scroll down - Scroll down - "
+    }
+  },
+  "footer": {
+    "subscribe": "Subscribe to our newsletter",
+    "email": "Enter your email"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "who_we_are_title": "Who we are",
+    "who_we_are_desc": "Our website address is: https://apexdigital.dev.",
+    "comments_title": "Comments",
+    "comments_desc1": "When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor's IP address and browser user agent string to help spam detection.",
+    "comments_desc2": "An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: https://automattic.com/privacy/. After approval of your comment, your profile picture is visible to the public in the context of your comment.",
+    "media_title": "Media",
+    "media_desc": "If you upload images to the website, you should avoid uploading images with embedded location data (EXIF GPS) included. Visitors to the website can download and extract any location data from images on the website.",
+    "cookies_title": "Cookies",
+    "cookies_desc1": "If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.",
+    "cookies_desc2": "If you visit our login page, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.",
+    "cookies_desc3": "When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select \"Remember Me\", your login will persist for two weeks. If you log out of your account, the login cookies will be removed.",
+    "cookies_desc4": "If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.",
+    "embedded_title": "Embedded content from other websites",
+    "embedded_desc1": "Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.",
+    "embedded_desc2": "These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracking your interaction with the embedded content if you have an account and are logged in to that website.",
+    "share_title": "Who we share your data with",
+    "share_desc": "If you request a password reset, your IP address will be included in the reset email.",
+    "retain_title": "How long we retain your data",
+    "retain_desc1": "If you leave a comment, the comment and its metadata are retained indefinitely. This is so we can recognize and approve any follow-up comments automatically instead of holding them in a moderation queue.",
+    "retain_desc2": "For users that register on our website (if any), we also store the personal information they provide in their user profile. All users can see, edit, or delete their personal information at any time (except they cannot change their username). Website administrators can also see and edit that information.",
+    "rights_title": "What rights you have over your data",
+    "rights_desc": "If you have an account on this site, or have left comments, you can request to receive an exported file of the personal data we hold about you, including any data you have provided to us. You can also request that we erase any personal data we hold about you. This does not include any data we are obliged to keep for administrative, legal, or security purposes.",
+    "where_title": "Where your data is sent",
+    "where_desc": "Visitor comments may be checked through an automated spam detection service."
+  },
+  "projects": {
+    "mobile": "Mobile",
+    "desktop": "Desktop",
+    "client": "Client",
+    "date": "Date",
+    "view_project": "View Project"
+  },
+  "services_inner": {
+    "about_service": "About the service",
+    "individual_meeting": "Individual Meeting",
+    "individual_solution": "Individual Solution",
+    "portfolio_title": "Our Portfolio",
+    "prices_title1": "Our",
+    "prices_title2": "Pricing",
+    "process_title1": "Our",
+    "process_title2": "Process",
+    "prices_title3": "Plans",
+    "prices_title4": "for Web Development",
+    "prices_title4_seo": "for SEO",
+    "step": "Step",
+    "step1": "01",
+    "step2": "02",
+    "step3": "03",
+    "step4": "04",
+    "view_all": "View All",
+    "view_portfolio": "View Portfolio",
+    "view_works": "View Works",
+    "marketing": {
+      "acc1_name": "Search Engine Optimization (SEO)",
+      "acc1_p1": "Improve your online visibility and rank higher on search engines.",
+      "acc2_name": "Pay-Per-Click Advertising (PPC)",
+      "acc2_p1": "Drive targeted traffic to your website with cost-effective PPC campaigns.",
+      "acc3_name": "Social Media Marketing",
+      "acc3_p1": "Engage your audience and build brand awareness on social platforms.",
+      "acc4_name": "Content Marketing",
+      "acc4_p1": "Create valuable content to attract and retain customers.",
+      "approach1": "Data-Driven",
+      "approach2": "Marketing",
+      "approach3": "Strategies",
+      "approach4": "for Growth",
+      "approach_desc": "We use analytics and insights to craft marketing campaigns that deliver measurable results.",
+      "banner1": "Digital",
+      "banner2": "Marketing",
+      "banner3": "Solutions",
+      "prices_desc": "Choose the right marketing plan to scale your business.",
+      "step1_desc": "We analyze your target audience and competitors to create a customized marketing strategy.",
+      "step1_title": "Strategy & Planning",
+      "step2_desc": "We launch and manage your marketing campaigns across multiple channels.",
+      "step2_title": "Campaign Execution",
+      "step3_desc": "We monitor campaign performance and optimize strategies to maximize ROI.",
+      "step3_title": "Monitoring & Optimization"
+    },
+    "seo": {
+      "acc1_name": "On-Page SEO",
+      "acc1_p1": "We optimize individual web pages to rank higher and earn more relevant traffic.",
+      "acc1_p2": "This includes optimizing content, HTML source code, and images.",
+      "acc1_p3": "We ensure your website is user-friendly and fully accessible.",
+      "acc2_name": "Off-Page SEO",
+      "acc2_p1": "Build your site's authority with high-quality backlinks and social signals.",
+      "acc2_p2": "We focus on increasing your domain authority and online presence.",
+      "acc3_name": "Technical SEO",
+      "acc3_p1": "Improve your site's technical aspects to enhance search engine crawling and indexing.",
+      "acc3_p2": "We optimize site speed, mobile-friendliness, and site architecture.",
+      "acc3_p3": "Ensure your website meets all technical requirements of modern search engines.",
+      "acc4_name": "Local SEO",
+      "acc4_p1": "Optimize your online presence to attract more business from relevant local searches.",
+      "acc4_p2": "We manage your Google My Business profile and local citations.",
+      "acc4_p3": "Improve your visibility in local search results and Google Maps.",
+      "approach1": "Data-Driven",
+      "approach2": "SEO",
+      "approach3": "Strategies",
+      "approach4": "for Growth",
+      "approach_desc": "We use analytics and insights to craft SEO campaigns that deliver measurable results.",
+      "banner1": "Search Engine",
+      "banner2": "Optimization",
+      "banner3": "Services",
+      "prices_desc": "Choose the right SEO plan to boost your online visibility.",
+      "step1_desc": "We conduct a comprehensive audit of your website to identify SEO opportunities.",
+      "step1_title": "SEO Audit",
+      "step2_desc": "We develop a customized SEO strategy based on your business goals.",
+      "step2_title": "Strategy Development",
+      "step3_desc": "We implement on-page, off-page, and technical SEO optimizations.",
+      "step3_title": "Implementation",
+      "step4_desc": "We continuously monitor your site's performance and make necessary adjustments.",
+      "step4_title": "Monitoring & Reporting"
+    },
+    "webdev": {
+      "acc1_name": "Custom Website Design",
+      "acc1_p1": "We create unique and visually appealing websites tailored to your brand.",
+      "acc1_p2": "Our designs are fully responsive and optimized for all devices.",
+      "acc2_name": "E-Commerce Development",
+      "acc2_p1": "Build a robust and scalable online store to sell your products and services.",
+      "acc3_name": "Content Management Systems (CMS)",
+      "acc3_p1": "Manage your website content easily with a powerful CMS like WordPress.",
+      "acc4_name": "Web Application Development",
+      "acc4_p1": "Develop custom web applications to streamline your business processes.",
+      "approach1": "Innovative",
+      "approach2": "Web",
+      "approach3": "Development",
+      "approach4": "Solutions",
+      "approach_desc": "We use the latest technologies to build fast, secure, and scalable websites.",
+      "banner1": "Custom Web",
+      "banner2": "Development",
+      "banner3": "Services",
+      "prices_desc": "Choose the right web development plan for your business needs.",
+      "step1_desc": "We understand your requirements and define the project scope.",
+      "step1_title": "Discovery & Planning",
+      "step2_desc": "We create wireframes and UI/UX designs for your approval.",
+      "step2_title": "Design & Prototyping",
+      "step3_desc": "We develop the website using the best coding practices.",
+      "step3_title": "Development",
+      "step4_desc": "We test the website thoroughly and launch it successfully.",
+      "step4_title": "Testing & Deployment"
+    }
+  }
+}

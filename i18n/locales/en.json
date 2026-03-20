@@ -338,5 +338,52 @@
       "step4_desc": "We test the website thoroughly and launch it successfully.",
       "step4_title": "Testing & Deployment"
     }
+  },
+  "strategy": {
+    "title_part1": "The",
+    "title_part2": "Process",
+    "steps": [
+      {
+        "title": "Discovery",
+        "desc": "Deep dive into your brand, audience, and market landscape."
+      },
+      {
+        "title": "Strategy",
+        "desc": "Crafting a bespoke roadmap tailored to your specific goals."
+      },
+      {
+        "title": "Execution",
+        "desc": "Pixel-perfect design and robust technical implementation."
+      },
+      {
+        "title": "Evolution",
+        "desc": "Continuous optimization, scaling, and performance tracking."
+      }
+    ]
+  },
+  "blog_preview": {
+    "subtitle": "Latest Insights",
+    "title": "Stay <span class=\"font-bold\">Ahead of the Curve.</span>",
+    "view_all": "View All Posts",
+    "posts": [
+      {
+        "tag": "Technology",
+        "date": "Oct 24, 2024",
+        "title": "Modern Web Development Trends",
+        "desc": "Discover the latest cutting-edge technologies and frameworks shaping the future."
+      },
+      {
+        "tag": "Marketing",
+        "date": "Nov 05, 2024",
+        "title": "SEO Strategies for AI Search",
+        "desc": "How to adapt your content strategy as search engines integrate Generative AI."
+      },
+      {
+        "tag": "Design",
+        "date": "Dec 12, 2024",
+        "title": "Mastering GSAP Animations",
+        "desc": "Learn how to properly integrate and clean up GSAP ScrollTriggers in modern SPAs."
+      }
+    ]
   }
 }

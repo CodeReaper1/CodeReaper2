@@ -38,7 +38,7 @@
     "btn_our_services": "Our services",
     "btn_read_more": "Read more",
     "web_dev": {
-      "title": "Web <br>Development",
+      "title": "Web Development",
       "desc": "We believe that your website is the heart of your online presence.",
       "f1": "Competitive Rates",
       "f2": "Custom Development",
@@ -46,14 +46,14 @@
       "f4": "Dedicated Hosting & Support"
     },
     "seo": {
-      "title": "Search Engine <br>Optimization",
+      "title": "Search Engine Optimization",
       "desc": "We believe in optimizing not only to look great on paper, but to bring results and growth as well.",
       "f1": "Organic Traffic",
       "f2": "Conversions",
       "f3": "Expertise & Authority"
     },
     "marketing": {
-      "title": "Digital <br>Marketing",
+      "title": "Digital Marketing",
       "desc": "Let us handle everything concerning digital marketing for you.",
       "f1": "PPC",
       "f2": "AD Creation",
@@ -62,7 +62,17 @@
     }
   },
   "contact": {
-    "title": "Contact Us"
+    "title": "Contact Us",
+    "info_title": "Get in Touch",
+    "info_desc": "We would love to hear from you. Fill out the form below.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "budget": "Budget",
+      "message": "Message",
+      "submit": "Submit"
+    }
   },
   "error": {
     "fallback": "Oops! Something went wrong :(",
@@ -71,69 +81,69 @@
   "home_new": {
     "trusted": "Trusted by industry leaders",
     "expertise": {
-      "title": "Our <span class=\"font-[100]\">Expertise</span>",
+      "title": "Our Expertise",
       "subtitle": "Comprehensive digital solutions designed to elevate your brand and drive measurable results across all touchpoints.",
-      "cards": {
-        "0": {
+      "cards": [
+        {
           "title": "Performance Optimization",
           "desc": "Lightning-fast load times and optimized core web vitals to ensure seamless user experiences and better search rankings."
         },
-        "1": {
+        {
           "title": "Technical SEO",
           "desc": "Deep-dive structural improvements, schema markup, and advanced crawlability enhancements for maximum visibility."
         },
-        "2": {
+        {
           "title": "E-commerce Solutions",
           "desc": "High-converting online stores built on robust platforms with seamless payment integrations and inventory management."
         },
-        "3": {
+        {
           "title": "Custom Applications",
           "desc": "Bespoke web and mobile applications tailored to your specific business workflows and customer needs."
         }
-      }
+      ]
     },
     "strategy": {
       "subtitle": "Strategic Approach",
-      "title": "The Path to <span class=\"font-bold\">Digital Excellence</span>",
-      "steps": {
-        "0": {
+      "title": "The Path to Digital Excellence",
+      "steps": [
+        {
           "title": "Discovery",
           "desc": "Deep dive into your brand, audience, and market landscape."
         },
-        "1": {
+        {
           "title": "Strategy",
           "desc": "Crafting a bespoke roadmap tailored to your specific goals."
         },
-        "2": {
+        {
           "title": "Execution",
           "desc": "Pixel-perfect design and robust technical implementation."
         },
-        "3": {
+        {
           "title": "Evolution",
           "desc": "Continuous optimization, scaling, and performance tracking."
         }
-      }
+      ]
     },
     "work": {
       "subtitle": "Featured Work",
-      "title": "Explore Our <span class=\"font-bold\">Digital Dust.</span>",
+      "title": "Explore Our Digital Dust.",
       "view_all": "View All Projects",
-      "projects": {
-        "0": {
+      "projects": [
+        {
           "tag1": "Fintech",
           "tag2": "Web App",
           "title": "Nexus Analytics Platform",
           "desc": "Complete UX/UI redesign and frontend architecture for a global financial data provider.",
           "btn": "VIEW CASE STUDY"
         },
-        "1": {
+        {
           "tag1": "Social",
           "tag2": "Mobile",
           "title": "Vibe Social Network",
           "desc": "Omnichannel marketing campaign and native mobile application development.",
           "btn": "VIEW CASE STUDY"
         }
-      }
+      ]
     },
     "stats": {
       "s1_num": "200",
@@ -150,8 +160,33 @@
       "author": "Sarah Jenkins",
       "role": "CMO, TechFlow Solutions"
     },
+    "blog_preview": {
+      "subtitle": "Latest Insights",
+      "title": "Stay Ahead of the Curve.",
+      "view_all": "View All Posts",
+      "posts": [
+        {
+          "tag": "Technology",
+          "date": "Oct 24, 2024",
+          "title": "Modern Web Development Trends",
+          "desc": "Discover the latest cutting-edge technologies and frameworks shaping the future."
+        },
+        {
+          "tag": "Marketing",
+          "date": "Nov 05, 2024",
+          "title": "SEO Strategies for AI Search",
+          "desc": "How to adapt your content strategy as search engines integrate Generative AI."
+        },
+        {
+          "tag": "Design",
+          "date": "Dec 12, 2024",
+          "title": "Mastering GSAP Animations",
+          "desc": "Learn how to properly integrate and clean up GSAP ScrollTriggers in modern SPAs."
+        }
+      ]
+    },
     "cta": {
-      "title": "Ready to start your<br/>\n<span class=\"font-bold\">digital transformation?</span>",
+      "title": "Ready to start your digital transformation?",
       "desc": "Let's build something extraordinary together. Our team of experts is ready to take your brand to the next level.",
       "btn_talk": "LET'S TALK",
       "btn_consult": "Book a Consult"
@@ -159,13 +194,13 @@
   },
   "home": {
     "banner": {
-      "title_main": "Pioneering",
-      "title_sub1": "Creative",
-      "title_sub2": "Excellence",
-      "desc": "We believe that your digital presence is the heart of your business operations.",
+      "title_main": "APEX DIGITAL",
+      "title_sub1": "The Agency that meets",
+      "title_sub2": "all digital needs.",
+      "desc": "We at Apex Digital are honored to partake in the success of every business we have worked with.",
       "btn_services": "Our Services",
-      "btn_portfolio": "View Portfolio",
-      "scroll_down": "Scroll Down"
+      "btn_portfolio": "Portfolio",
+      "scroll_down": "Scroll down"
     }
   }
 }

@@ -22,6 +22,8 @@ window.ApexThemeInit = function ($) {
     ***************************/
     function initGsapPlugins() {
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+        // Performance defaults
+        gsap.defaults({ lazy: false });
     }
     initGsapPlugins();
 
@@ -322,6 +324,7 @@ window.ApexThemeInit = function ($) {
         gsap.set(cursor, {
             xPercent: -50,
             yPercent: -50,
+            force3D: true
         });
 
         document.addEventListener('pointermove', movecursor);

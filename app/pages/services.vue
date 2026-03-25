@@ -132,60 +132,85 @@ onMounted(() => {
 function initServicesGSAP(gsap, ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
     
-    // Force ticker wake
+    // Global defaults for performance
+    gsap.defaults({ force3D: true, lazy: false });
     gsap.ticker.wake();
+    gsap.ticker.lagSmoothing(0);
     
     nextTick(() => {
         setTimeout(() => {
-            ctx = gsap.context(() => {
-                
-                // 1. Hero Entrance Animation
-                const heroLines = document.querySelectorAll('.title-line');
-                const heroTl = gsap.timeline();
-                
-                heroTl.fromTo(heroLines, 
-                    { y: 150, opacity: 0, rotateZ: 5 },
-                    { y: 0, opacity: 1, rotateZ: 0, duration: 1.2, stagger: 0.15, ease: "power4.out" }
-                )
-                .to('.scroll-indicator', { opacity: 1, y: -20, duration: 1, ease: 'power2.out' }, "-=0.5");
+            let mm = gsap.matchMedia();
 
-                // 2. Fullscreen Stacking Panels
-                const panels = gsap.utils.toArray('.stack-panel');
-                
-                panels.forEach((panel, i) => {
-                    // For all panels except the last one, we pin them
-                    if (i < panels.length - 1) {
-                        ScrollTrigger.create({
-                            trigger: panel,
-                            start: "top top",
-                            pin: true,
-                            pinSpacing: false,
+            mm.add("(min-width: 768px)", () => {
+                ctx = gsap.context(() => {
+                    
+                    // 1. Hero Entrance Animation
+                    const heroLines = document.querySelectorAll('.title-line');
+                    const heroTl = gsap.timeline();
+                    
+                    heroTl.fromTo(heroLines, 
+                        { y: 150, opacity: 0, rotateZ: 5, transformOrigin: "left center" },
+                        { y: 0, opacity: 1, rotateZ: 0, duration: 1.5, stagger: 0.15, ease: "power4.out" }
+                    )
+                    .to('.scroll-indicator', { opacity: 1, y: -20, duration: 1, ease: 'power2.out' }, "-=0.5");
+
+                    // 2. Fullscreen Stacking Panels
+                    const panels = gsap.utils.toArray('.stack-panel');
+                    
+                    panels.forEach((panel, i) => {
+                        // For all panels except the last one, we pin them
+                        if (i < panels.length - 1) {
+                            ScrollTrigger.create({
+                                trigger: panel,
+                                start: "top top",
+                                pin: true,
+                                pinSpacing: false,
+                                scrub: true
+                            });
+                        }
+                        
+                        // Entrance animation for content inside the panel
+                        const content = panel.querySelector('.panel-content');
+                        const bg = panel.querySelector('.panel-bg');
+                        
+                        const tl = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: panel,
+                                start: "top 60%",
+                                toggleActions: "play none none reverse"
+                            }
                         });
-                    }
-                    
-                    // Entrance animation for content inside the panel
-                    const content = panel.querySelector('.panel-content');
-                    const bg = panel.querySelector('.panel-bg');
-                    
-                    const tl = gsap.timeline({
+
+                        tl.fromTo(bg, 
+                            { scale: 1.2, filter: "grayscale(100%) brightness(0.3)" },
+                            { scale: 1, filter: "grayscale(70%) brightness(0.8)", duration: 2.5, ease: "power2.out" }
+                        )
+                        .fromTo(content,
+                            { y: 120, opacity: 0, skewY: 2 },
+                            { y: 0, opacity: 1, duration: 1.5, skewY: 0, ease: "power4.out" },
+                            "<0.2"
+                        );
+                    });
+
+                    ScrollTrigger.refresh();
+                });
+            });
+
+            mm.add("(max-width: 767px)", () => {
+                // Simplified mobile animations
+                gsap.from('.services-hero-title', { opacity: 0, y: 50, duration: 1.2, ease: "power3.out" });
+                gsap.utils.toArray('.stack-panel').forEach(panel => {
+                    gsap.from(panel.querySelector('.panel-content'), {
+                        opacity: 0,
+                        y: 30,
+                        duration: 1,
                         scrollTrigger: {
                             trigger: panel,
-                            start: "top 60%", // Start animating content when panel is partially in view
+                            start: "top 80%",
                             toggleActions: "play none none reverse"
                         }
                     });
-
-                    tl.fromTo(bg, 
-                        { scale: 1.1, filter: "grayscale(100%) brightness(0.5)" },
-                        { scale: 1, filter: "grayscale(70%) brightness(0.8)", duration: 2, ease: "power2.out" }
-                    )
-                    .fromTo(content,
-                        { y: 100, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
-                        "<0.2"
-                    );
                 });
-
             });
         }, 100);
     });
@@ -195,3 +220,12 @@ onUnmounted(() => {
     if (ctx) ctx.revert();
 });
 </script>
+
+<style scoped>
+    .title-line,
+    .panel-content,
+    .panel-bg {
+        will-change: transform, opacity;
+        backface-visibility: hidden;
+    }
+</style>

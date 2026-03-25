@@ -116,8 +116,12 @@
         </div>
     </section>
 
-    <!-- 3. Deep Parallax About -->
-    <section class="deep-parallax-section relative h-[100vh] md:h-[130vh] bg-background-dark overflow-hidden flex items-center justify-center border-y border-gray-900 z-0">
+    <!-- Stacking Sections Container -->
+    <div ref="stackWrapper" class="mil-fade-wrapper relative overflow-hidden h-screen bg-[#050505]">
+        <!-- Atmospheric Particle Layer -->
+        <canvas ref="dustCanvas" class="absolute inset-0 z-[5] pointer-events-none opacity-0"></canvas>
+        <!-- 3. Deep Parallax About -->
+        <section class="deep-parallax-section mil-stack-section relative bg-background-dark overflow-hidden flex items-center justify-center py-20 border-y border-gray-900 z-10">
         <!-- Background Layer (Slower Reverse) -->
         <div class="parallax-layer absolute inset-0 opacity-10 flex flex-col justify-between p-10 pointer-events-none z-0" data-speed="0.2">
             <div class="text-[12rem] md:text-[20rem] font-black text-white tracking-tighter leading-none text-left w-full mix-blend-overlay">A.</div>
@@ -149,7 +153,7 @@
     </section>
 
     <!-- 4. The Process Flow -->
-    <section class="process-flow-section py-24 md:py-32 bg-white dark:bg-[#0a0a0a] overflow-hidden relative">
+    <section class="process-flow-section mil-stack-section relative bg-white dark:bg-[#0a0a0a] overflow-hidden flex items-center">
         <div class="container mx-auto px-6 md:px-20 relative">
             <div class="flex flex-col md:flex-row gap-12 md:gap-24 relative">
                 <!-- Left: Progress Line Container -->
@@ -178,7 +182,7 @@
     </section>
 
     <!-- 5. Latest Insights Grid -->
-    <section class="insights-grid-section py-24 md:py-48 bg-background-light dark:bg-[#111] overflow-hidden">
+    <section class="insights-grid-section mil-stack-section relative bg-background-light dark:bg-[#111] overflow-hidden flex items-center">
         <div class="container mx-auto px-6 md:px-20">
             <div class="flex flex-col lg:flex-row justify-between items-end mb-24 gap-12">
                 <div class="max-w-3xl">
@@ -223,7 +227,7 @@
 
 
     <!-- 6. Cinematic Blur CTA -->
-    <section class="cinematic-cta-section relative h-[80vh] md:h-screen flex items-center justify-center bg-[#050505] overflow-hidden p-6 md:p-12">
+    <section class="cinematic-cta-section mil-stack-section relative min-h-screen flex items-center justify-center bg-[#050505] overflow-hidden p-6 md:p-12">
         <div class="cta-scalable-wrapper w-full h-full md:max-h-[80vh] bg-gradient-to-br from-[#111] to-[#0a0a0a] rounded-[30px] md:rounded-[50px] border border-gray-800 flex flex-col items-center justify-center text-center px-6 md:px-20 relative overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)]">
             <!-- Glow effect inside -->
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,153,0,0.1)_0%,transparent_60%)]"></div>
@@ -237,15 +241,18 @@
             </NuxtLink>
         </div>
     </section>
+    </div>
 
   </main>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, nextTick } from 'vue';
+import { onMounted, onUnmounted, nextTick, ref } from 'vue';
 import { useHead, useLocalePath } from '#imports';
 
 const localePath = useLocalePath();
+const stackWrapper = ref(null);
+const dustCanvas = ref(null);
 
 useHead({
   link: [
@@ -256,6 +263,51 @@ useHead({
 });
 
 let ctx;
+
+// --- Atmospheric Particle System ---
+class DustSystem {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.particles = [];
+        this.intensity = 0; // 0 to 1
+        this.resize();
+        this.createParticles();
+    }
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+    createParticles() {
+        for (let i = 0; i < 40; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                size: Math.random() * 3 + 1,
+                speedX: (Math.random() - 0.5) * 0.2,
+                speedY: (Math.random() - 0.5) * 0.2,
+                alpha: Math.random() * 0.5
+            });
+        }
+    }
+    update() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.particles.forEach(p => {
+            p.x += p.speedX * (1 + this.intensity * 2);
+            p.y += p.speedY * (1 + this.intensity * 2);
+            
+            if (p.x < 0) p.x = this.canvas.width;
+            if (p.x > this.canvas.width) p.x = 0;
+            if (p.y < 0) p.y = this.canvas.height;
+            if (p.y > this.canvas.height) p.y = 0;
+
+            this.ctx.beginPath();
+            this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            this.ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha * (0.2 + this.intensity)})`;
+            this.ctx.fill();
+        });
+    }
+}
 
 // Utility for splitting text manually inline (simulates SplitText)
 function splitTextToChars(element) {
@@ -284,10 +336,11 @@ onMounted(() => {
 });
 
 function initHomepageGSAP(gsap, ScrollTrigger) {
-    gsap.registerPlugin(ScrollTrigger);
+    if (window.ScrollToPlugin) gsap.registerPlugin(ScrollTrigger, window.ScrollToPlugin);
+    else gsap.registerPlugin(ScrollTrigger);
     
     // Global defaults for performance
-    gsap.defaults({ force3D: true, lazy: false });
+    gsap.defaults({ lazy: false });
     gsap.ticker.wake();
     gsap.ticker.lagSmoothing(0);
 
@@ -295,6 +348,13 @@ function initHomepageGSAP(gsap, ScrollTrigger) {
     document.querySelectorAll('.hp-hero-title .split-line, .huge-text .split-line').forEach(splitTextToChars);
 
     nextTick(() => {
+        // Initialize Dust System
+        let dust;
+        if (dustCanvas.value) {
+            dust = new DustSystem(dustCanvas.value);
+            gsap.ticker.add(() => dust.update());
+        }
+
         setTimeout(() => {
             let mm = gsap.matchMedia();
 
@@ -302,7 +362,7 @@ function initHomepageGSAP(gsap, ScrollTrigger) {
                 ctx = gsap.context(() => {
                     
                     // --- 0. Homepage Hero Entrance (REFINED) ---
-                    const heroChars = document.querySelectorAll('.hp-hero-title .char-animate');
+                    const heroChars = gsap.utils.toArray('.hp-hero-title .char-animate');
                     const heroTl = gsap.timeline({ defaults: { ease: "power4.out" } });
                     
                     heroTl.fromTo('.hero-subtitle', 
@@ -357,7 +417,7 @@ function initHomepageGSAP(gsap, ScrollTrigger) {
                     // --- 2. Horizontal Showcase Pinned Scroll ---
                     const showcaseContainer = document.querySelector(".horizontal-container");
                     if (showcaseContainer) {
-                        gsap.to(".horizontal-container", {
+                        gsap.to(showcaseContainer, {
                             x: () => -(showcaseContainer.scrollWidth - window.innerWidth) + "px",
                             ease: "none",
                             scrollTrigger: {
@@ -365,6 +425,122 @@ function initHomepageGSAP(gsap, ScrollTrigger) {
                                 pin: true,
                                 scrub: 1,
                                 end: () => "+=" + showcaseContainer.scrollWidth
+                            }
+                        });
+                    }
+
+                    // --- Stationary Cross-Fade with Internal Scroll ---
+                    const sections = gsap.utils.toArray('.mil-stack-section');
+                    
+                    if (sections.length && stackWrapper.value) {
+                        // Initial setup
+                        gsap.set(sections, { 
+                            position: "absolute", 
+                            top: 0, 
+                            left: 0, 
+                            width: "100%",
+                            opacity: (i) => i === 0 ? 1 : 0,
+                            pointerEvents: (i) => i === 0 ? "auto" : "none",
+                            zIndex: (i) => 10 + i 
+                        });
+
+                        const mainTl = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: stackWrapper.value,
+                                start: "top top",
+                                end: () => {
+                                    let total = 0;
+                                    sections.forEach((s, idx) => {
+                                        const h = s.offsetHeight;
+                                        const dist = Math.max(0, h - window.innerHeight);
+                                        total += dist;
+                                        // Only add transition distance if it's NOT the last section UNLESS there is content after the pile
+                                        if (idx < sections.length - 1) {
+                                            total += (window.innerHeight * 1.5); 
+                                        }
+                                    });
+                                    // Add a small buffer at the very end
+                                    return `+=${total + 100}`;
+                                },
+                                scrub: 1.5,
+                                pin: true,
+                                pinSpacing: true,
+                                invalidateOnRefresh: true
+                            }
+                        });
+
+                        sections.forEach((section, i) => {
+                            const scrollDistance = Math.max(0, section.offsetHeight - window.innerHeight);
+                            
+                            // Initialize Section State
+                            if (i > 0) {
+                                gsap.set(section, { scale: 1.1, filter: "blur(20px)", brightness: 1.5 });
+                            }
+                            
+                            // Initialize Logo Color (force white while pile exists)
+                            mainTl.set(".mil-logo", { color: "#fff", immediateRender: true }, 0);
+
+                            // 1. Internal scroll (with breathing room)
+                            if (scrollDistance > 0) {
+                                mainTl.to(section, {
+                                    y: -scrollDistance,
+                                    duration: scrollDistance / 400,
+                                    ease: "none"
+                                });
+                            }
+
+                            // 2. Atmospheric Cross-fade to next
+                            if (i < sections.length - 1) {
+                                const nextSection = sections[i + 1];
+                                
+                                // Detect if next section is light or dark to toggle logo color
+                                const isNextLight = nextSection.classList.contains('bg-white') || nextSection.classList.contains('bg-background-light');
+                                
+                                // Pause before transition
+                                mainTl.to({}, { duration: 0.5 });
+
+                                // Pulse Particles
+                                if (dust) {
+                                    mainTl.to(dustCanvas.value, { opacity: 0.4, duration: 0.5 }, "<");
+                                    mainTl.to(dust, { intensity: 1, duration: 1 }, "<");
+                                }
+
+                                // Toggle Logo Color
+                                mainTl.to(".mil-logo", { 
+                                    color: isNextLight ? "#000" : "#fff", 
+                                    duration: 0.8,
+                                    ease: "power2.inOut" 
+                                }, "<");
+
+                                // Outgoing Section Fade-Out-Place
+                                mainTl.to(section, { 
+                                    opacity: 0, 
+                                    scale: 0.9, 
+                                    filter: "blur(20px)", 
+                                    pointerEvents: "none", 
+                                    duration: 1.5,
+                                    ease: "power2.inOut"
+                                });
+
+                                // Incoming Section Reveal-Place
+                                mainTl.to(nextSection, { 
+                                    opacity: 1, 
+                                    scale: 1, 
+                                    filter: "blur(0px)", 
+                                    brightness: 1,
+                                    pointerEvents: "auto", 
+                                    duration: 1.5,
+                                    ease: "power2.out"
+                                }, "<"); 
+
+                                // Fade out particles after transition
+                                if (dust) {
+                                    mainTl.to(dustCanvas.value, { opacity: 0, duration: 0.5 });
+                                    mainTl.to(dust, { intensity: 0, duration: 1 }, "<");
+                                }
+
+                                // Pause after transition
+                                mainTl.to({}, { duration: 0.5 });
                             }
                         });
                     }

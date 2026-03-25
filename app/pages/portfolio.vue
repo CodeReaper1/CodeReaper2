@@ -95,10 +95,13 @@ import { ref, computed, onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Removed layout: false to restore the global layout (menu, dodecahedron figures, footer)
-// definePageMeta({
-//   layout: false 
-// });
+// Added page transition to overcome abrupt navigation
+definePageMeta({
+  pageTransition: {
+    name: 'portfolio',
+    mode: 'out-in'
+  }
+});
 
 // Import the missing "Outfit" font locally via Head manipulation
 useHead({
@@ -176,7 +179,11 @@ const projectInfoTop = ref(null);
 const actionCard = ref(null);
 const sliderNav = ref(null);
 
+let ctx;
+
 const animateTransition = (direction) => {
+  if (!ctx) return;
+  
   const tl = gsap.timeline();
   
   tl.to([mainImage.value, projectInfoTop.value], {
@@ -222,56 +229,82 @@ const prevSlide = () => {
 };
 
 onMounted(() => {
-  // Register ScrollTrigger
+  // Register ScrollTrigger and set defaults
   if (typeof window !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
+      gsap.defaults({ force3D: true, lazy: false });
   }
 
-  // Setup 3D perspective for the slider wrapper
-  gsap.set(imageWrapper.value, { perspective: 800 });
+  ctx = gsap.context(() => {
+    // Setup 3D perspective for the slider wrapper
+    gsap.set(imageWrapper.value, { perspective: 800 });
 
-  gsap.from(imageWrapper.value, {
-    opacity: 0,
-    scale: 0.9,
-    y: 40,
-    duration: 1.2,
-    ease: "expo.out",
-    scrollTrigger: {
-        trigger: ".stitch-portfolio-v2",
-        start: "top 75%"
-    }
-  });
-  
-  gsap.from([projectInfoTop.value, sliderNav.value], {
-    opacity: 0,
-    y: 30,
-    duration: 1,
-    stagger: 0.2,
-    ease: "power3.out",
-    scrollTrigger: {
-        trigger: ".stitch-portfolio-v2",
-        start: "top 70%"
-    }
-  });
+    gsap.from(imageWrapper.value, {
+      opacity: 0,
+      scale: 0.9,
+      y: 40,
+      duration: 1.2,
+      ease: "expo.out",
+      scrollTrigger: {
+          trigger: ".stitch-portfolio-v2",
+          start: "top 75%"
+      }
+    });
+    
+    gsap.from([projectInfoTop.value, sliderNav.value], {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      stagger: 0.2,
+      ease: "power3.out",
+      scrollTrigger: {
+          trigger: ".stitch-portfolio-v2",
+          start: "top 70%"
+      }
+    });
 
-  // Floating particles
-  gsap.to(".particle", {
-    y: "random(-100, 100)",
-    x: "random(-100, 100)",
-    rotation: "random(0, 360)",
-    duration: "random(4, 10)",
-    repeat: -1,
-    yoyo: true,
-    ease: "sine.inOut",
-    stagger: {
-      amount: 4,
-      each: 0.5
-    }
+    // Floating particles
+    gsap.to(".particle", {
+      y: "random(-100, 100)",
+      x: "random(-100, 100)",
+      rotation: "random(0, 360)",
+      duration: "random(4, 10)",
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      stagger: {
+        amount: 4,
+        each: 0.5
+      }
+    });
   });
+});
+
+onUnmounted(() => {
+  if (ctx) ctx.revert();
 });
 </script>
 
 <style scoped>
+/* Page Transition rules for the portfolio route */
+.portfolio-enter-active,
+.portfolio-leave-active {
+  transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.portfolio-enter-from,
+.portfolio-leave-to {
+  opacity: 0;
+  filter: blur(10px);
+  transform: scale(0.98);
+}
+
+.particle,
+.device-wrapper,
+.main-image,
+.project-info-bottom {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
 /* Core Variables & Reset */
 .stitch-portfolio-v2 {
   --primary-orange: #ff9900;

@@ -222,7 +222,55 @@
     </section>
 
 
-    <!-- 6. Cinematic Blur CTA -->
+    <!-- 6.5 Today's Blog Posts -->
+    <section class="todays-blog-section py-24 md:py-32 bg-[#050505] overflow-hidden">
+        <div class="container mx-auto px-6 md:px-20">
+            <!-- Section Header -->
+            <div class="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8">
+                <div>
+                    <span class="block text-[11px] font-bold tracking-[0.45em] text-[#FF9900] uppercase mb-4">Published Today</span>
+                    <h2 class="text-5xl md:text-[5.5rem] font-[100] text-white leading-[0.95] tracking-tighter">
+                        Today's<br><span class="font-bold">Blog Posts</span>
+                    </h2>
+                </div>
+                <NuxtLink :to="localePath('/blog')" class="group flex items-center gap-3 text-gray-400 hover:text-[#FF9900] transition-colors duration-300 pb-2 text-sm font-bold tracking-[0.2em] uppercase">
+                    <span>All Posts</span>
+                    <span class="w-8 h-8 rounded-full border border-gray-700 group-hover:border-[#FF9900] flex items-center justify-center transition-colors duration-300">→</span>
+                </NuxtLink>
+            </div>
+
+            <!-- Blog Cards Grid -->
+            <div class="today-blog-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <NuxtLink
+                    v-for="(post, i) in todaysPosts"
+                    :key="post.slug"
+                    :to="localePath('/blog/' + post.slug)"
+                    class="today-blog-card group block rounded-3xl border border-gray-800 bg-[#0d0d0d] overflow-hidden hover:border-[#FF9900]/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_80px_rgba(255,153,0,0.08)]"
+                >
+                    <!-- Card top accent -->
+                    <div class="h-1 w-full bg-gradient-to-r from-[#FF9900]/0 via-[#FF9900] to-[#FF9900]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="p-8 flex flex-col h-full">
+                        <!-- Category + Read Time -->
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="px-3 py-1 rounded-full bg-[#FF9900]/10 text-[#FF9900] text-[10px] font-bold tracking-[0.2em] uppercase">{{ post.category }}</span>
+                            <span class="text-[10px] font-bold tracking-widest text-gray-600 uppercase bg-gray-800/60 px-3 py-1 rounded-full">{{ post.readTime }}</span>
+                        </div>
+                        <!-- Title -->
+                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight group-hover:text-[#FF9900] transition-colors duration-400 line-clamp-2">{{ post.title }}</h3>
+                        <!-- Excerpt -->
+                        <p class="text-gray-500 text-base font-light leading-relaxed mb-8 line-clamp-3 flex-1">{{ post.excerpt }}</p>
+                        <!-- Footer -->
+                        <div class="flex items-center justify-between pt-6 border-t border-gray-800 group-hover:border-[#FF9900]/20 transition-colors duration-500">
+                            <span class="text-gray-600 text-xs tracking-widest font-bold uppercase">{{ post.date }}</span>
+                            <span class="text-[#FF9900] text-sm font-bold tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Read →</span>
+                        </div>
+                    </div>
+                </NuxtLink>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Cinematic Blur CTA -->
     <section class="cinematic-cta-section relative h-[80vh] md:h-screen flex items-center justify-center bg-[#050505] overflow-hidden p-6 md:p-12">
         <div class="cta-scalable-wrapper w-full h-full md:max-h-[80vh] bg-gradient-to-br from-[#111] to-[#0a0a0a] rounded-[30px] md:rounded-[50px] border border-gray-800 flex flex-col items-center justify-center text-center px-6 md:px-20 relative overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)]">
             <!-- Glow effect inside -->
@@ -246,6 +294,9 @@ import { onMounted, onUnmounted, nextTick } from 'vue';
 import { useHead, useLocalePath } from '#imports';
 
 const localePath = useLocalePath();
+
+// Shared blog posts — read time is calculated from wordCount in the composable
+const { posts: todaysPosts } = useBlogPosts();
 
 useHead({
   link: [
@@ -471,7 +522,21 @@ function initHomepageGSAP(gsap, ScrollTrigger) {
                         });
                     });
 
-                    // --- 6. Cinematic Blur CTA ---
+                    // --- 6.5. Today's Blog Posts ---
+                    gsap.from(gsap.utils.toArray(".today-blog-card"), {
+                        y: 80,
+                        opacity: 0,
+                        duration: 1.2,
+                        stagger: 0.12,
+                        ease: "power4.out",
+                        scrollTrigger: {
+                            trigger: ".todays-blog-section",
+                            start: "top 75%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+
+                    // --- 7. Cinematic Blur CTA ---
                     gsap.fromTo(".cta-scalable-wrapper",
                         { scale: 0.9, filter: "blur(10px)" },
                         {

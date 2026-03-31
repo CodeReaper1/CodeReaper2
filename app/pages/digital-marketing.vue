@@ -29,6 +29,9 @@
             </div>
         </section>
 
+        <!-- T1: Vertical Curtain Wipe (Hero → Approach transition) -->
+        <div class="dm-transition-curtain absolute left-0 right-0 h-screen bg-[#0a0a0a] z-[25] origin-top pointer-events-none" style="top: 100vh;"></div>
+
         <!-- 2. Typography Approach Reveal (Masking) -->
         <section class="dm-approach-section relative py-32 bg-white text-black dark:bg-[#0a0a0a] dark:text-white rounded-t-[3rem] -mt-10 z-20">
             <div class="container px-6 md:px-12">
@@ -304,6 +307,21 @@ function initGSAPAnimations(gsap, ScrollTrigger) {
                     "-=0.8"
                 );
 
+                // --- T1: Vertical Curtain Wipe (Hero → Approach) ---
+                gsap.fromTo('.dm-transition-curtain',
+                    { scaleY: 1 },
+                    {
+                        scaleY: 0,
+                        ease: "power3.inOut",
+                        scrollTrigger: {
+                            trigger: ".dm-approach-section",
+                            start: "top 100%",
+                            end: "top 40%",
+                            scrub: 0.8
+                        }
+                    }
+                );
+
                 // --- 2. Approach Reveal ---
                 const approachTl = gsap.timeline({
                     scrollTrigger: {
@@ -404,6 +422,23 @@ function initGSAPAnimations(gsap, ScrollTrigger) {
                         });
                     }
                 });
+
+                // --- T4: Rack Focus (Process → CTA) ---
+                // Blur the last process card as CTA comes into focus
+                const lastCard = processCards[processCards.length - 1];
+                if (lastCard) {
+                    gsap.to(lastCard, {
+                        filter: "blur(4px)",
+                        opacity: 0.3,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: ".dm-cta-section",
+                            start: "top 100%",
+                            end: "top 60%",
+                            scrub: 1
+                        }
+                    });
+                }
 
                 // --- 5. Cinematic Footer CTA ---
                 gsap.fromTo(".dm-cta-wrapper",

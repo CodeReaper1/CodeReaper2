@@ -552,6 +552,51 @@ function initHomepageGSAP(gsap, ScrollTrigger) {
                         }
                     );
 
+                    // --- 8. Master Section Overlap & Morphing ---
+                    const mainSections = gsap.utils.toArray('main > section:not(.mil-banner):not(.horizontal-showcase-section)');
+                    
+                    mainSections.forEach((section, i) => {
+                        // Dynamically determine pin offset. If height > viewport, stick when bottom reaches bottom.
+                        const isTall = section.offsetHeight > window.innerHeight;
+                        const pinStart = isTall ? "bottom bottom" : "top top";
+
+                        // 1. PIN THE SECTION
+                        // We do not pin the absolute last section to allow natural page ending
+                        if (i !== mainSections.length - 1) {
+                            ScrollTrigger.create({
+                                trigger: section,
+                                start: pinStart,
+                                pin: true,
+                                pinSpacing: false, // Ensures next section slides directly over it
+                                id: `pin-morph-${i}`
+                            });
+                        }
+
+                        // 2. MORPH REVEAL (For all sections except the first one)
+                        // As the section natively scrolls up over the previously pinned section, it morphs into view.
+                        if (i !== 0) {
+                            gsap.fromTo(section, 
+                                { 
+                                    opacity: 0, 
+                                    filter: "blur(10px)",
+                                    clipPath: "inset(10% 10% 10% 10% round 40px)"
+                                },
+                                {
+                                    opacity: 1,
+                                    filter: "blur(0px)",
+                                    clipPath: "inset(0% 0% 0% 0% round 0px)",
+                                    ease: "power2.inOut",
+                                    scrollTrigger: {
+                                        trigger: section,
+                                        start: "top 85%", // Morph begins slightly after it visually crosses the viewport
+                                        end: "top top",
+                                        scrub: 1
+                                    }
+                                }
+                            );
+                        }
+                    });
+
                     ScrollTrigger.refresh();
                 });
             });

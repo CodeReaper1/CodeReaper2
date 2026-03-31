@@ -62,14 +62,14 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="form-group flex flex-col gap-2">
                                 <label for="name" class="text-sm font-medium text-gray-400">{{ $t('contact.form.name') }}</label>
-                                <input type="text" id="name" required
-                                    class="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFA500] focus:ring-1 focus:ring-[#FFA500] transition-all" 
+                                <input type="text" id="name" v-model="form.name" required
+                                    class="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFA500] focus:ring-1 focus:ring-[#FFA500] transition-all"
                                     placeholder="John Doe" />
                             </div>
                             <div class="form-group flex flex-col gap-2">
                                 <label for="phone" class="text-sm font-medium text-gray-400">{{ $t('contact.form.phone') }}</label>
-                                <input type="tel" id="phone" 
-                                    class="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFA500] focus:ring-1 focus:ring-[#FFA500] transition-all" 
+                                <input type="tel" id="phone" v-model="form.phone"
+                                    class="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFA500] focus:ring-1 focus:ring-[#FFA500] transition-all"
                                     placeholder="+1 234 567 890" />
                             </div>
                         </div>
@@ -78,13 +78,13 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="form-group flex flex-col gap-2">
                                 <label for="email" class="text-sm font-medium text-gray-400">{{ $t('contact.form.email') }}</label>
-                                <input type="email" id="email" required
-                                    class="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFA500] focus:ring-1 focus:ring-[#FFA500] transition-all" 
+                                <input type="email" id="email" v-model="form.email" required
+                                    class="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFA500] focus:ring-1 focus:ring-[#FFA500] transition-all"
                                     placeholder="john@example.com" />
                             </div>
                             <div class="form-group flex flex-col gap-2">
                                 <label for="budget" class="text-sm font-medium text-gray-400">{{ $t('contact.form.budget') }}</label>
-                                <select id="budget" 
+                                <select id="budget" v-model="form.budget"
                                     class="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-[#FFA500] focus:ring-1 focus:ring-[#FFA500] transition-all appearance-none cursor-pointer">
                                     <option value="" disabled selected>Select range</option>
                                     <option value="under5k">< $5,000</option>
@@ -98,18 +98,29 @@
                         <!-- Message Box -->
                         <div class="form-group flex flex-col gap-2">
                             <label for="message" class="text-sm font-medium text-gray-400">{{ $t('contact.form.message') }}</label>
-                            <textarea id="message" rows="5" required
-                                class="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFA500] focus:ring-1 focus:ring-[#FFA500] transition-all resize-none" 
+                            <textarea id="message" rows="5" v-model="form.message" required
+                                class="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFA500] focus:ring-1 focus:ring-[#FFA500] transition-all resize-none"
                                 placeholder="Project details..."></textarea>
+                        </div>
+
+                        <!-- Status Messages -->
+                        <div v-if="submitStatus === 'success'" class="form-group rounded-xl bg-green-500/10 border border-green-500/30 px-4 py-3 text-green-400 text-sm">
+                            {{ $t('contact.form.success') || 'Thank you! Your message has been sent successfully.' }}
+                        </div>
+                        <div v-if="submitStatus === 'error'" class="form-group rounded-xl bg-red-500/10 border border-red-500/30 px-4 py-3 text-red-400 text-sm">
+                            {{ submitError || $t('contact.form.error') || 'Something went wrong. Please try again.' }}
                         </div>
 
                         <!-- Submit Button -->
                         <div class="form-group mt-4">
-                            <button type="submit" 
-                                class="group relative w-full overflow-hidden rounded-xl bg-white px-8 py-5 text-lg font-medium text-black transition-transform hover:scale-[1.02] focus:outline-none">
+                            <button type="submit" :disabled="isSubmitting"
+                                class="group relative w-full overflow-hidden rounded-xl bg-white px-8 py-5 text-lg font-medium text-black transition-transform hover:scale-[1.02] focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
                                 <span class="relative z-10 flex items-center justify-center gap-3">
-                                    {{ $t('contact.form.submit') }}
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    <template v-if="isSubmitting">Sending...</template>
+                                    <template v-else>
+                                        {{ $t('contact.form.submit') }}
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </template>
                                 </span>
                             </button>
                         </div>
@@ -123,7 +134,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { useHead, useLocalePath } from '#imports';
 
 const localePath = useLocalePath();
@@ -135,9 +146,51 @@ useHead({
   ]
 });
 
-const handleSubmit = () => {
-    // Basic prevent default logic. Extend for actual API handling later.
-    alert("Form submitted! (Demo)");
+const CF7_ENDPOINT = 'https://api.apexdigital.dev/wp-json/contact-form-7/v1/contact-forms/13da736/feedback';
+
+const form = ref({
+    name: '',
+    phone: '',
+    email: '',
+    budget: '',
+    message: '',
+});
+
+const isSubmitting = ref(false);
+const submitStatus = ref(''); // '', 'success', 'error'
+const submitError = ref('');
+
+const handleSubmit = async () => {
+    isSubmitting.value = true;
+    submitStatus.value = '';
+    submitError.value = '';
+
+    const formData = new FormData();
+    formData.append('your-name', form.value.name);
+    formData.append('your-email', form.value.email);
+    formData.append('your-phone', form.value.phone);
+    formData.append('your-budget', form.value.budget);
+    formData.append('your-message', form.value.message);
+
+    try {
+        const response = await $fetch(CF7_ENDPOINT, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (response.status === 'mail_sent') {
+            submitStatus.value = 'success';
+            form.value = { name: '', phone: '', email: '', budget: '', message: '' };
+        } else {
+            submitStatus.value = 'error';
+            submitError.value = response.message || 'Failed to send message.';
+        }
+    } catch (err) {
+        submitStatus.value = 'error';
+        submitError.value = err?.data?.message || 'Network error. Please try again.';
+    } finally {
+        isSubmitting.value = false;
+    }
 };
 
 // Helper for splitting text into words and spans for SplitText simulation

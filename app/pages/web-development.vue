@@ -3,7 +3,7 @@
     <div class="mil-content">
       <div id="swupMain" class="mil-main-transition">
 
-        <!-- 1. Cinematic Hero Section with Geometric Canvas -->
+        <!-- 1. Cinematic Hero Section with Geometric Canvas — Typewriter Left-to-Right Decode -->
         <section class="wd-hero-section relative min-h-screen flex items-center justify-center overflow-hidden mil-banner mil-dark-bg">
             <!-- Geometric Background Layer -->
             <div class="absolute inset-0 z-0 wd-hero-bg opacity-40">
@@ -17,7 +17,7 @@
                 <!-- Gradient Overlay for Contrast -->
                 <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0a]/50 to-[#0a0a0a] z-10 pointer-events-none"></div>
             </div>
-            
+
             <div class="container relative z-20 px-6 md:px-12 text-center pt-32">
                 <ul class="flex justify-center gap-4 text-sm text-gray-400 mb-8 wd-fade-up">
                     <li><NuxtLink :to="localePath('/')" class="hover:text-white transition-colors">{{ $t('nav.home') }}</NuxtLink></li>
@@ -36,36 +36,44 @@
             </div>
         </section>
 
-        <!-- 2. Typography Approach Reveal (Masking) -->
-        <section class="wd-approach-section relative py-32 bg-white text-black dark:bg-[#0a0a0a] dark:text-white rounded-t-[3rem] -mt-10 z-30">
+        <!-- 2. Approach Section — Morphing Circle Reveal (with diagonal clip-path wipe transition) -->
+        <section class="wd-approach-section relative py-32 bg-white text-black dark:bg-[#0a0a0a] dark:text-white z-30" style="will-change: clip-path;">
             <div class="container px-6 md:px-12">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <div class="wd-mask-container relative h-[500px] md:h-[700px] w-full overflow-hidden rounded-[2rem]">
-                        <div class="wd-mask-overlay absolute inset-0 bg-white dark:bg-[#0a0a0a] z-10 origin-bottom"></div>
-                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" class="w-full h-full object-cover scale-125 wd-mask-img" alt="Strategy" />
+                    <div class="wd-approach-left">
+                        <div class="wd-approach-image-wrapper relative h-[500px] md:h-[700px] w-full overflow-hidden transform-gpu" style="border-radius: 50%; opacity: 0;">
+                            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" class="w-full h-full object-cover" alt="Strategy" />
+                        </div>
                     </div>
-                    <div class="wd-approach-text">
-                        <h2 class="text-4xl md:text-6xl text-black dark:text-white font-medium tracking-tight mb-8 wd-stagger-text">
-                            {{ $t('services_inner.webdev.approach1') }} <span class="font-light text-gray-500">{{ $t('services_inner.webdev.approach2') }}</span> <br/>
-                            {{ $t('services_inner.webdev.approach3') }} <span class="font-light text-gray-500">{{ $t('services_inner.webdev.approach4') }}</span>
-                        </h2>
-                        <div class="wd-fade-up">
-                            <NuxtLink :to="localePath('/portfolio')" class="inline-flex items-center gap-4 text-lg font-medium hover:text-[#FFA500] transition-colors">
-                                {{ $t('services_inner.view_works') }}
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform -rotate-45"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </NuxtLink>
+                    <div class="wd-approach-right">
+                        <div class="wd-approach-text">
+                            <h2 class="text-4xl md:text-6xl text-black dark:text-white font-medium tracking-tight mb-8 wd-stagger-text">
+                                {{ $t('services_inner.webdev.approach1') }} <span class="font-light text-gray-500">{{ $t('services_inner.webdev.approach2') }}</span> <br/>
+                                {{ $t('services_inner.webdev.approach3') }} <span class="font-light text-gray-500">{{ $t('services_inner.webdev.approach4') }}</span>
+                            </h2>
+                            <div class="wd-fade-up">
+                                <NuxtLink :to="localePath('/portfolio')" class="inline-flex items-center gap-4 text-lg font-medium hover:text-[#FFA500] transition-colors">
+                                    {{ $t('services_inner.view_works') }}
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform -rotate-45"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </NuxtLink>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. Pinned Horizontal Services -->
+        <!-- 3. Pinned Horizontal Services (already unique — keep as-is, add progress bar) -->
         <section class="wd-horizontal-section relative h-screen bg-[#111] overflow-hidden">
+            <!-- Progress indicator -->
+            <div class="absolute top-0 left-0 right-0 h-[2px] z-20 bg-white/5">
+                <div class="wd-scroll-progress h-full bg-[#FFA500] origin-left" style="transform: scaleX(0);"></div>
+            </div>
+
             <div class="absolute top-12 left-12 text-sm max-w-[200px] text-gray-400 z-10">
                 SCROLL TO EXPLORE EXPERTISE
             </div>
-            
+
             <div class="wd-horizontal-container flex h-full items-center pl-[10vw] pr-[5vw] gap-[5vw] w-[400vw]">
                 <!-- Item 1 -->
                 <div class="w-[85vw] md:w-[60vw] flex-shrink-0 flex flex-col justify-center">
@@ -113,8 +121,8 @@
             </div>
         </section>
 
-        <!-- 4. Process Sequence (GSAP Accordions) -->
-        <section class="wd-pricing-section relative pt-48 pb-32 bg-[#050505] overflow-hidden">
+        <!-- 4. Process Sequence — Accordion Unfold (with vertical accordion unfold transition) -->
+        <section class="wd-pricing-section relative pt-48 pb-32 bg-[#050505] overflow-hidden" style="will-change: transform;">
             <div class="container relative z-10 px-6 max-w-5xl mx-auto">
                 <div class="text-center mb-24 wd-pricing-header">
                     <h2 class="text-4xl md:text-6xl text-gray-400 font-light mb-6">
@@ -207,13 +215,22 @@
             </div>
         </section>
 
-        <!-- 5. Cinematic Footer CTA -->
+        <!-- Parallax Depth Layer (process→CTA transition) -->
+        <div class="wd-parallax-layer absolute w-full pointer-events-none z-[5]" style="height: 200px; margin-top: -100px;">
+            <div class="flex justify-between px-[10%] opacity-20">
+                <div class="w-32 h-32 border border-[#FFA500]/20 rounded-2xl rotate-12"></div>
+                <div class="w-24 h-24 border border-[#6C63FF]/20 rounded-full -rotate-6"></div>
+                <div class="w-40 h-40 border border-white/10 rounded-3xl rotate-[20deg]"></div>
+            </div>
+        </div>
+
+        <!-- 5. Cinematic Footer CTA — Inset Clip-Path Reveal -->
         <section class="wd-cta-section relative min-h-screen flex items-center justify-center bg-[#0a0a0a] overflow-hidden pt-32 pb-32">
-            <div class="wd-cta-wrapper w-full max-w-[95vw] h-[80vh] rounded-[3rem] overflow-hidden relative flex flex-col items-center justify-center text-center px-6">
+            <div class="wd-cta-wrapper w-full max-w-[95vw] h-[80vh] overflow-hidden relative flex flex-col items-center justify-center text-center px-6" style="clip-path: inset(10% round 3rem);">
                 <!-- Using a code-themed background for Web Dev CTA -->
-                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-50" />
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-50 wd-cta-bg-img" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                
+
                 <h2 class="relative z-10 text-white text-5xl md:text-8xl font-medium tracking-tight mb-8 max-w-4xl">
                     Ready to build your <span class="italic text-gray-300">digital future</span>?
                 </h2>
@@ -237,14 +254,13 @@ const localePath = useLocalePath();
 const activeIndex = ref(-1);
 
 const toggleDropdown = (index) => {
-    // Only run if GSAP is ready
     if (!window.gsap) return;
 
     const isCurrentlyActive = activeIndex.value === index;
     const contents = document.querySelectorAll('.wd-dropdown-content');
     const icons = document.querySelectorAll('.wd-dropdown-icon');
     const titles = document.querySelectorAll('.wd-process-title');
-    
+
     // Close all
     window.gsap.to(contents, { height: 0, opacity: 0, duration: 0.5, ease: "power2.inOut" });
     window.gsap.to(icons, { rotation: 0, duration: 0.5, ease: "power2.inOut" });
@@ -267,30 +283,31 @@ useHead({
   ]
 });
 
-// Helper for splitting text
+// Char splitter for typewriter effect (left-to-right, unique to WD)
 function splitTextToChars(element) {
     if (!element) return;
     const text = element.innerText;
     element.innerHTML = '';
-    
-    // Split text into words to preserve word wrapping
+
     const words = text.split(' ');
-    
     words.forEach((word, wordIndex) => {
         const wordSpan = document.createElement('span');
         wordSpan.style.display = 'inline-block';
         wordSpan.style.whiteSpace = 'nowrap';
-        
+
         const chars = word.split('');
         chars.forEach(char => {
             const charSpan = document.createElement('span');
-            charSpan.className = 'char-animate block opacity-0 translate-y-[100px]';
-            charSpan.style.display = 'inline-block'; 
+            charSpan.className = 'char-animate';
+            charSpan.style.display = 'inline-block';
             charSpan.style.transformOrigin = '0% 50%';
+            charSpan.style.opacity = '0';
+            charSpan.style.transform = 'translateX(30px)';
+            charSpan.style.filter = 'blur(4px)';
             charSpan.innerText = char;
             wordSpan.appendChild(charSpan);
         });
-        
+
         element.appendChild(wordSpan);
         if (wordIndex < words.length - 1) {
             const space = document.createElement('span');
@@ -301,12 +318,10 @@ function splitTextToChars(element) {
     });
 }
 
-// Variables for GSAP cleanup
 let pollingInterval;
 let ctx;
 
 onMounted(() => {
-    // We must wait for `window.gsap` & `window.ScrollTrigger` from the generic script tag injection
     const checkGSAP = () => {
         if (window.gsap && window.ScrollTrigger) {
             clearInterval(pollingInterval);
@@ -315,7 +330,6 @@ onMounted(() => {
     };
     pollingInterval = setInterval(checkGSAP, 50);
 
-    // Also trigger global generic refresh if it exists
     if (window.refreshScrollAnimations) {
         window.refreshScrollAnimations();
     }
@@ -323,38 +337,37 @@ onMounted(() => {
 
 onUnmounted(() => {
     if (pollingInterval) clearInterval(pollingInterval);
-    if (ctx) ctx.revert(); 
+    if (ctx) ctx.revert();
 });
 
 function initGSAP() {
-    // Enforce ScrollTrigger refresh
     window.ScrollTrigger.refresh();
 
     nextTick(() => {
-        // Create a GSAP Context for safe cleanup
         ctx = window.gsap.context(() => {
+            const gsap = window.gsap;
 
-            // --- 1. Hero Text Reveal & Parallax ---
+            // --- 1. Hero: Typewriter Left-to-Right Decode ---
             document.querySelectorAll('.split-line').forEach(el => splitTextToChars(el));
-            
-            const heroTl = window.gsap.timeline();
+
+            const heroTl = gsap.timeline();
             heroTl.to('.char-animate', {
-                y: 0,
+                x: 0,
                 opacity: 1,
-                duration: 1.2,
-                stagger: 0.02,
-                ease: 'expo.out'
+                filter: "blur(0px)",
+                duration: 0.6,
+                ease: 'power4.out',
+                stagger: { each: 0.025, from: "start" }
             })
-            .fromTo('.wd-fade-up', 
-                { opacity: 0, y: 30 }, 
+            .fromTo('.wd-fade-up',
+                { opacity: 0, y: 30 },
                 { opacity: 1, y: 0, duration: 1, ease: 'power2.out', stagger: 0.2 },
                 "-=0.8"
             );
 
-            // Let the geometric shapes do their thing via existing CSS/old JS overrides,
-            // but we can ensure the wd-hero-bg shifts on scroll
-            window.gsap.to('.wd-hero-bg', {
-                yPercent: 30, // move down slightly to create parallax
+            // Geometric bg parallax
+            gsap.to('.wd-hero-bg', {
+                yPercent: 30,
                 ease: "none",
                 scrollTrigger: {
                     trigger: ".wd-hero-section",
@@ -364,52 +377,111 @@ function initGSAP() {
                 }
             });
 
-            // --- 2. Approach Mask Reveal ---
-            const approachTl = window.gsap.timeline({
+            // --- T1: Hero → Approach — Diagonal Clip-Path Wipe ---
+            gsap.fromTo('.wd-approach-section',
+                { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" },
+                {
+                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                    ease: "power2.inOut",
+                    scrollTrigger: {
+                        trigger: ".wd-approach-section",
+                        start: "top 90%",
+                        end: "top 30%",
+                        scrub: 1
+                    }
+                }
+            );
+
+            // --- 2. Approach: Morphing Circle Reveal ---
+            const approachTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".wd-approach-section",
-                    start: "top 70%",
+                    start: "top 60%",
+                    toggleActions: "play none none reverse"
                 }
             });
 
-            approachTl.to('.wd-mask-overlay', {
-                scaleY: 0,
-                duration: 1.5,
-                ease: 'expo.inOut'
-            })
-            .fromTo('.wd-mask-img', 
-                { scale: 1.2 }, 
-                { scale: 1, duration: 1.5, ease: 'power2.out' }, 
-                "-=1.5"
-            )
-            .fromTo('.wd-stagger-text', 
-                { opacity: 0, y: 40 },
-                { opacity: 1, y: 0, duration: 1, ease: 'power2.out' },
-                "-=1"
-            );
+            approachTl
+                .fromTo('.wd-approach-image-wrapper',
+                    { scale: 0.3, borderRadius: "50%", opacity: 0 },
+                    { scale: 1, borderRadius: "2rem", opacity: 1, duration: 1.5, ease: "expo.out" }
+                )
+                .fromTo('.wd-stagger-text',
+                    { rotateX: 15, opacity: 0, y: 20, transformOrigin: "center bottom" },
+                    { rotateX: 0, opacity: 1, y: 0, duration: 0.8, ease: "power2.out", stagger: 0.15 },
+                    "-=0.8"
+                )
+                .fromTo('.wd-approach-section .wd-fade-up',
+                    { opacity: 0, y: 20 },
+                    { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+                    "-=0.5"
+                );
 
-            // --- 3. Pinned Horizontal Services ---
-            const horizontalScroll = window.gsap.to('.wd-horizontal-container', {
-                xPercent: -75, // Move left based on width (400vw total = 3 panels hidden = -75%)
+            // --- T2: Approach → Horizontal Scroll — Split-Screen Diverge ---
+            gsap.to('.wd-approach-left', {
+                xPercent: -50,
+                opacity: 0,
                 ease: "none",
                 scrollTrigger: {
                     trigger: ".wd-horizontal-section",
-                    start: "top top",
-                    end: "+=3000", // The amount of scrolling needed
-                    pin: true,
+                    start: "top 100%",
+                    end: "top 50%",
+                    scrub: 1
+                }
+            });
+            gsap.to('.wd-approach-right', {
+                xPercent: 50,
+                opacity: 0,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".wd-horizontal-section",
+                    start: "top 100%",
+                    end: "top 50%",
                     scrub: 1
                 }
             });
 
-            // --- 4. Process Sequence Cards ---
-            const pricingTl = window.gsap.timeline({
+            // --- 3. Pinned Horizontal Scroll + Progress Bar ---
+            const horizontalST = gsap.to('.wd-horizontal-container', {
+                xPercent: -75,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".wd-horizontal-section",
+                    start: "top top",
+                    end: "+=3000",
+                    pin: true,
+                    scrub: 1,
+                    onUpdate: (self) => {
+                        // Update progress bar
+                        gsap.set('.wd-scroll-progress', { scaleX: self.progress });
+                    }
+                }
+            });
+
+            // --- T3: Horizontal → Process — Vertical Accordion Unfold ---
+            gsap.fromTo('.wd-pricing-section',
+                { scaleY: 0, transformOrigin: "top center" },
+                {
+                    scaleY: 1,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: ".wd-pricing-section",
+                        start: "top 90%",
+                        end: "top 40%",
+                        scrub: 1
+                    }
+                }
+            );
+
+            // --- 4. Process Accordion Cards ---
+            const pricingTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".wd-pricing-section",
                     start: "top 70%",
                 }
             });
 
-            pricingTl.fromTo('.wd-pricing-header', 
+            pricingTl.fromTo('.wd-pricing-header',
                 { opacity: 0, y: 50 },
                 { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }
             ).fromTo('.wd-process-dropdown',
@@ -418,17 +490,61 @@ function initGSAP() {
                 "-=0.5"
             );
 
-            // --- 5. Cinematic Footer CTA ---
-            const ctaTl = window.gsap.timeline({
+            // --- T4: Process → CTA — Parallax Depth Layers ---
+            gsap.to('.wd-pricing-section .container', {
+                yPercent: -15,
+                opacity: 0.5,
+                ease: "none",
                 scrollTrigger: {
                     trigger: ".wd-cta-section",
-                    start: "top 80%",
+                    start: "top 100%",
+                    end: "top 50%",
+                    scrub: 1
                 }
             });
 
-            ctaTl.fromTo('.wd-cta-wrapper',
-                { scale: 0.9, filter: "blur(10px)" },
-                { scale: 1, filter: "blur(0px)", duration: 1.5, ease: "power3.out" }
+            gsap.fromTo('.wd-parallax-layer',
+                { yPercent: 30 },
+                {
+                    yPercent: -30,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".wd-cta-section",
+                        start: "top 120%",
+                        end: "top 0%",
+                        scrub: 1
+                    }
+                }
+            );
+
+            // --- 5. CTA: Inset Clip-Path Reveal ---
+            gsap.fromTo('.wd-cta-wrapper',
+                { clipPath: "inset(10% round 3rem)" },
+                {
+                    clipPath: "inset(0% round 3rem)",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".wd-cta-section",
+                        start: "top 80%",
+                        end: "center center",
+                        scrub: 1
+                    }
+                }
+            );
+
+            // Reverse Ken Burns on CTA image
+            gsap.fromTo('.wd-cta-bg-img',
+                { scale: 1.3 },
+                {
+                    scale: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".wd-cta-section",
+                        start: "top 80%",
+                        end: "center center",
+                        scrub: 1
+                    }
+                }
             );
 
         }); // end context
@@ -437,12 +553,10 @@ function initGSAP() {
 </script>
 
 <style scoped>
-/* Preserve smooth font rendering, overrides and masks */
 .wd-huge-text {
-    font-family: "Clash Display", sans-serif; /* Adjust to project font if different */
+    font-family: "Clash Display", sans-serif;
 }
-.wd-mask-container {
-    mask-image: radial-gradient(white, black);
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
+.char-animate {
+  will-change: transform, opacity, filter;
 }
 </style>

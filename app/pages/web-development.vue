@@ -3,9 +3,9 @@
     <div class="mil-content">
       <div id="swupMain" class="mil-main-transition">
 
-        <!-- 1. Cinematic Hero Section with Geometric Canvas — Typewriter Left-to-Right Decode -->
-        <section class="wd-hero-section relative min-h-screen flex items-center justify-center overflow-hidden mil-banner mil-dark-bg">
-            <!-- Geometric Background Layer -->
+        <!-- 1. Cinematic Hero — Split Reveal with Geometric Canvas -->
+        <section class="wd-hero-section relative min-h-screen flex items-center overflow-hidden mil-banner mil-dark-bg">
+            <!-- Geometric Background Layer (dodecatrons preserved exactly) -->
             <div class="absolute inset-0 z-0 wd-hero-bg opacity-40">
                 <div class="mi-invert-fix">
                     <div class="mil-animation-frame">
@@ -14,25 +14,61 @@
                         <div class="mil-animation mil-position-3 mil-scale" data-value-1="1.2" data-value-2=".1"></div>
                     </div>
                 </div>
-                <!-- Gradient Overlay for Contrast -->
                 <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0a]/50 to-[#0a0a0a] z-10 pointer-events-none"></div>
             </div>
 
-            <div class="container relative z-20 px-6 md:px-12 text-center pt-32">
-                <ul class="flex justify-center gap-4 text-sm text-gray-400 mb-8 wd-fade-up">
-                    <li><NuxtLink :to="localePath('/')" class="hover:text-white transition-colors">{{ $t('nav.home') }}</NuxtLink></li>
-                    <li>/</li>
-                    <li><NuxtLink :to="localePath('/services')" class="hover:text-white transition-colors">{{ $t('nav.services') }}</NuxtLink></li>
-                    <li>/</li>
-                    <li class="text-white">{{ $t('nav.webdev') }}</li>
-                </ul>
-                <h1 class="wd-huge-text text-white text-5xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none mb-6">
-                    <span class="block split-line">{{ $t('services_inner.webdev.banner1') }}</span>
-                    <span class="block split-line font-light text-gray-400">{{ $t('services_inner.webdev.banner2') }} <span class="text-white">{{ $t('services_inner.webdev.banner3') }}</span></span>
-                </h1>
-                <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed wd-fade-up">
-                    {{ $t('services_inner.webdev.approach_desc') }}
-                </p>
+            <!-- Ambient glow pulse -->
+            <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] rounded-full bg-[#FF9900]/[0.04] blur-[120px] pointer-events-none z-[1] wd-glow-pulse"></div>
+
+            <div class="container relative z-20 px-6 md:px-12 pt-32 pb-20">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[70vh]">
+                    <!-- Left: Text Content -->
+                    <div class="lg:col-span-7 xl:col-span-6">
+                        <ul class="flex gap-4 text-sm text-gray-400 mb-8 wd-fade-up">
+                            <li><NuxtLink :to="localePath('/')" class="hover:text-white transition-colors">{{ $t('nav.home') }}</NuxtLink></li>
+                            <li>/</li>
+                            <li><NuxtLink :to="localePath('/services')" class="hover:text-white transition-colors">{{ $t('nav.services') }}</NuxtLink></li>
+                            <li>/</li>
+                            <li class="text-[#FF9900]">{{ $t('nav.webdev') }}</li>
+                        </ul>
+
+                        <h1 class="wd-huge-text text-white text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.95] mb-8">
+                            <span class="block split-line">{{ $t('services_inner.webdev.banner1') }}</span>
+                            <span class="block split-line font-light text-gray-400 mt-2">{{ $t('services_inner.webdev.banner2') }} <span class="text-white">{{ $t('services_inner.webdev.banner3') }}</span></span>
+                        </h1>
+
+                        <p class="text-xl md:text-2xl text-gray-400 max-w-xl font-light leading-relaxed mb-12 wd-fade-up">
+                            {{ $t('services_inner.webdev.approach_desc') }}
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row items-start gap-5 wd-fade-up">
+                            <NuxtLink :to="localePath('/contact')" class="group relative px-10 py-4 bg-white text-black rounded-full overflow-hidden font-bold text-sm tracking-[0.15em] uppercase">
+                                <span class="relative z-10">Start a Project</span>
+                                <div class="absolute inset-0 bg-[#FF9900] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
+                            </NuxtLink>
+                            <NuxtLink :to="localePath('/portfolio')" class="inline-flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm tracking-widest uppercase font-bold py-4">
+                                {{ $t('services_inner.view_works') }}
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform -rotate-45"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </NuxtLink>
+                        </div>
+                    </div>
+
+                    <!-- Right: Floating Metric Cards -->
+                    <div class="lg:col-span-5 xl:col-span-6 relative hidden lg:flex items-center justify-center h-[500px]">
+                        <div class="wd-metric-card absolute top-[5%] right-[10%] bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-6 transform rotate-3">
+                            <div class="text-4xl font-bold text-[#FF9900] mb-1">99.9%</div>
+                            <div class="text-xs tracking-widest text-gray-500 uppercase">Uptime SLA</div>
+                        </div>
+                        <div class="wd-metric-card absolute top-[35%] left-[0%] bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-6 transform -rotate-2">
+                            <div class="text-4xl font-bold text-white mb-1">&lt;0.8s</div>
+                            <div class="text-xs tracking-widest text-gray-500 uppercase">Avg Load Time</div>
+                        </div>
+                        <div class="wd-metric-card absolute bottom-[10%] right-[5%] bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-6 transform rotate-1">
+                            <div class="text-4xl font-bold text-white mb-1">100</div>
+                            <div class="text-xs tracking-widest text-gray-500 uppercase">PageSpeed Score</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -251,6 +287,9 @@ import { useHead, useLocalePath } from '#imports';
 
 const localePath = useLocalePath();
 
+const { settings: siteSettings } = useSiteSettings();
+const { sections: wdSections, getSection } = usePageSections('web-development');
+
 const activeIndex = ref(-1);
 
 const toggleDropdown = (index) => {
@@ -365,6 +404,33 @@ function initGSAP() {
                 "-=0.8"
             );
 
+            // Floating metric cards entrance
+            gsap.fromTo('.wd-metric-card',
+                { y: 60, opacity: 0, scale: 0.8 },
+                { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: 'back.out(1.5)', stagger: 0.2, delay: 0.6 }
+            );
+
+            // Subtle float animation for metric cards
+            document.querySelectorAll('.wd-metric-card').forEach((card, i) => {
+                gsap.to(card, {
+                    y: i % 2 === 0 ? -12 : 12,
+                    duration: 3 + i * 0.5,
+                    ease: 'sine.inOut',
+                    repeat: -1,
+                    yoyo: true,
+                });
+            });
+
+            // Ambient glow pulse
+            gsap.to('.wd-glow-pulse', {
+                scale: 1.2,
+                opacity: 0.8,
+                duration: 4,
+                ease: 'sine.inOut',
+                repeat: -1,
+                yoyo: true,
+            });
+
             // Geometric bg parallax
             gsap.to('.wd-hero-bg', {
                 yPercent: 30,
@@ -377,7 +443,7 @@ function initGSAP() {
                 }
             });
 
-            // --- T1: Hero → Approach — Diagonal Clip-Path Wipe ---
+            // --- T1: Hero → Approach — smooth transition, next section replaces current ---
             gsap.fromTo('.wd-approach-section',
                 { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" },
                 {
@@ -417,21 +483,18 @@ function initGSAP() {
                     "-=0.5"
                 );
 
-            // --- T2: Approach → Horizontal Scroll — Split-Screen Diverge ---
-            gsap.to('.wd-approach-left', {
-                xPercent: -50,
-                opacity: 0,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: ".wd-horizontal-section",
-                    start: "top 100%",
-                    end: "top 50%",
-                    scrub: 1
-                }
+            // --- T2: Approach → Horizontal Scroll — Blur-fade + next section slides in ---
+            ScrollTrigger.create({
+                trigger: ".wd-approach-section",
+                start: "top top",
+                pin: true,
+                pinSpacing: false,
             });
-            gsap.to('.wd-approach-right', {
-                xPercent: 50,
+
+            gsap.to('.wd-approach-section', {
                 opacity: 0,
+                filter: "blur(12px)",
+                scale: 0.95,
                 ease: "none",
                 scrollTrigger: {
                     trigger: ".wd-horizontal-section",
@@ -558,5 +621,9 @@ function initGSAP() {
 }
 .char-animate {
   will-change: transform, opacity, filter;
+}
+.wd-metric-card {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 </style>

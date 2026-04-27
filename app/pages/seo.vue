@@ -20,7 +20,7 @@
                     <li>/</li>
                     <li><NuxtLink :to="localePath('/services')" class="hover:text-white transition-colors">{{ $t('nav.services') }}</NuxtLink></li>
                     <li>/</li>
-                    <li class="text-[#00C9A7]">{{ $t('nav.seo') }}</li>
+                    <li class="text-[#FF9900]">{{ $t('nav.seo') }}</li>
                 </ul>
                 <h1 class="seo-huge-text text-white text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none mb-6">
                     <span class="block split-line">{{ $t('services_inner.seo.banner1') }}</span>
@@ -33,11 +33,11 @@
                 <!-- Counter Tickers -->
                 <div class="flex justify-center gap-12 md:gap-20 mt-16 seo-fade-up">
                     <div class="text-center">
-                        <div class="seo-counter text-4xl md:text-5xl font-bold text-[#00C9A7]" data-target="97.3">0</div>
+                        <div class="seo-counter text-4xl md:text-5xl font-bold text-[#FF9900]" data-target="97.3">0</div>
                         <div class="text-sm text-gray-500 mt-2 tracking-wider uppercase">Avg. Score</div>
                     </div>
                     <div class="text-center">
-                        <div class="seo-counter text-4xl md:text-5xl font-bold text-[#00C9A7]" data-target="2.1">0</div>
+                        <div class="seo-counter text-4xl md:text-5xl font-bold text-[#FF9900]" data-target="2.1">0</div>
                         <div class="text-sm text-gray-500 mt-2 tracking-wider uppercase">Traffic Growth</div>
                     </div>
                     <div class="text-center">
@@ -64,7 +64,7 @@
                             {{ $t('services_inner.seo.approach_desc') }}
                         </p>
                         <div class="seo-stagger-text">
-                            <NuxtLink :to="localePath('/portfolio')" class="inline-flex items-center gap-4 text-lg border-b border-[#00C9A7] pb-2 text-[#00C9A7] hover:text-white hover:border-white transition-all">
+                            <NuxtLink :to="localePath('/portfolio')" class="inline-flex items-center gap-4 text-lg border-b border-[#FF9900] pb-2 text-[#FF9900] hover:text-white hover:border-white transition-all">
                                 <span>{{ $t('services_inner.view_works') }}</span>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transform -rotate-45"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                             </NuxtLink>
@@ -81,15 +81,15 @@
         <section class="seo-showcase-section relative py-32 bg-[#050505] overflow-hidden" style="transform-style: preserve-3d;">
             <div class="container relative z-10 px-6 md:px-12 max-w-6xl mx-auto">
                 <div class="text-center mb-20 seo-showcase-header">
-                    <span class="text-[#00C9A7] tracking-[0.3em] text-sm font-bold uppercase mb-4 block">OPTIMIZATION PILLARS</span>
+                    <span class="text-[#FF9900] tracking-[0.3em] text-sm font-bold uppercase mb-4 block">OPTIMIZATION PILLARS</span>
                     <h2 class="text-4xl md:text-6xl text-white font-light">Dominating <span class="text-gray-500 italic">Search Real Estate</span></h2>
                 </div>
 
                 <!-- Waterfall Cards (vertical cascade, NOT 2x2 grid) -->
                 <div class="flex flex-col gap-8 max-w-4xl mx-auto">
                     <!-- Card 1 -->
-                    <div class="seo-showcase-card bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-10 transform-gpu relative overflow-hidden group flex gap-8 items-start" style="border-left: 3px solid rgba(0, 201, 167, 0.4);">
-                        <div class="flex-shrink-0 w-14 h-14 rounded-full border border-[#00C9A7]/30 flex items-center justify-center text-[#00C9A7]">
+                    <div class="seo-showcase-card bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-10 transform-gpu relative overflow-hidden group flex gap-8 items-start" style="border-left: 3px solid rgba(255, 153, 0, 0.4);">
+                        <div class="flex-shrink-0 w-14 h-14 rounded-full border border-[#FF9900]/30 flex items-center justify-center text-[#FF9900]">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
                         </div>
                         <div>
@@ -99,8 +99,8 @@
                     </div>
 
                     <!-- Card 2 -->
-                    <div class="seo-showcase-card bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-10 transform-gpu relative overflow-hidden group flex gap-8 items-start" style="border-left: 3px solid rgba(0, 201, 167, 0.5);">
-                        <div class="flex-shrink-0 w-14 h-14 rounded-full border border-[#00C9A7]/30 flex items-center justify-center text-[#00C9A7]">
+                    <div class="seo-showcase-card bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-10 transform-gpu relative overflow-hidden group flex gap-8 items-start" style="border-left: 3px solid rgba(255, 153, 0, 0.5);">
+                        <div class="flex-shrink-0 w-14 h-14 rounded-full border border-[#FF9900]/30 flex items-center justify-center text-[#FF9900]">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                         </div>
                         <div>
@@ -110,8 +110,8 @@
                     </div>
 
                     <!-- Card 3 -->
-                    <div class="seo-showcase-card bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-10 transform-gpu relative overflow-hidden group flex gap-8 items-start" style="border-left: 3px solid rgba(0, 201, 167, 0.6);">
-                        <div class="flex-shrink-0 w-14 h-14 rounded-full border border-[#00C9A7]/30 flex items-center justify-center text-[#00C9A7]">
+                    <div class="seo-showcase-card bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-10 transform-gpu relative overflow-hidden group flex gap-8 items-start" style="border-left: 3px solid rgba(255, 153, 0, 0.6);">
+                        <div class="flex-shrink-0 w-14 h-14 rounded-full border border-[#FF9900]/30 flex items-center justify-center text-[#FF9900]">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                         </div>
                         <div>
@@ -121,8 +121,8 @@
                     </div>
 
                     <!-- Card 4 -->
-                    <div class="seo-showcase-card bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-10 transform-gpu relative overflow-hidden group flex gap-8 items-start" style="border-left: 3px solid rgba(0, 201, 167, 0.7);">
-                        <div class="flex-shrink-0 w-14 h-14 rounded-full border border-[#00C9A7]/30 flex items-center justify-center text-[#00C9A7]">
+                    <div class="seo-showcase-card bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-10 transform-gpu relative overflow-hidden group flex gap-8 items-start" style="border-left: 3px solid rgba(255, 153, 0, 0.7);">
+                        <div class="flex-shrink-0 w-14 h-14 rounded-full border border-[#FF9900]/30 flex items-center justify-center text-[#FF9900]">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         </div>
                         <div>
@@ -156,16 +156,16 @@
                 <div class="relative">
                     <!-- Central Drawing Line -->
                     <div class="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 hidden md:block">
-                        <div class="seo-timeline-line w-full h-full bg-[#00C9A7]/40 origin-top" style="transform: scaleY(0);"></div>
+                        <div class="seo-timeline-line w-full h-full bg-[#FF9900]/40 origin-top" style="transform: scaleY(0);"></div>
                     </div>
 
                     <div class="flex flex-col gap-24">
                         <!-- Step 1 (left) -->
                         <div class="seo-timeline-card md:grid md:grid-cols-2 md:gap-16 items-center">
                             <div class="bg-[#111] border border-white/5 rounded-[2rem] p-10 md:p-12 relative overflow-hidden">
-                                <div class="absolute inset-0 bg-gradient-to-br from-[#00C9A7]/5 to-transparent pointer-events-none"></div>
+                                <div class="absolute inset-0 bg-gradient-to-br from-[#FF9900]/5 to-transparent pointer-events-none"></div>
                                 <div class="relative z-10">
-                                    <span class="text-[#00C9A7] tracking-[0.3em] text-sm font-bold uppercase mb-4 block">{{ $t('services_inner.step1') }}</span>
+                                    <span class="text-[#FF9900] tracking-[0.3em] text-sm font-bold uppercase mb-4 block">{{ $t('services_inner.step1') }}</span>
                                     <div class="text-6xl font-[100] text-white/10 leading-none mb-4">01</div>
                                     <h4 class="text-2xl md:text-3xl text-white font-medium mb-4 leading-tight" v-html="$t('services_inner.seo.step1_title')"></h4>
                                     <p class="text-lg text-gray-400 font-light leading-relaxed">{{ $t('services_inner.seo.step1_desc') }}</p>
@@ -178,9 +178,9 @@
                         <div class="seo-timeline-card md:grid md:grid-cols-2 md:gap-16 items-center">
                             <div class="hidden md:block"></div>
                             <div class="bg-[#131313] border border-white/5 rounded-[2rem] p-10 md:p-12 relative overflow-hidden">
-                                <div class="absolute inset-0 bg-gradient-to-bl from-[#00C9A7]/8 to-transparent pointer-events-none"></div>
+                                <div class="absolute inset-0 bg-gradient-to-bl from-[#FF9900]/8 to-transparent pointer-events-none"></div>
                                 <div class="relative z-10">
-                                    <span class="text-[#00C9A7] tracking-[0.3em] text-sm font-bold uppercase mb-4 block">{{ $t('services_inner.step2') }}</span>
+                                    <span class="text-[#FF9900] tracking-[0.3em] text-sm font-bold uppercase mb-4 block">{{ $t('services_inner.step2') }}</span>
                                     <div class="text-6xl font-[100] text-white/10 leading-none mb-4">02</div>
                                     <h4 class="text-2xl md:text-3xl text-white font-medium mb-4 leading-tight" v-html="$t('services_inner.seo.step2_title')"></h4>
                                     <p class="text-lg text-gray-400 font-light leading-relaxed">{{ $t('services_inner.seo.step2_desc') }}</p>
@@ -190,10 +190,10 @@
 
                         <!-- Step 3 (left) -->
                         <div class="seo-timeline-card md:grid md:grid-cols-2 md:gap-16 items-center">
-                            <div class="bg-[#161616] border border-[#00C9A7]/15 rounded-[2rem] p-10 md:p-12 relative overflow-hidden">
-                                <div class="absolute inset-0 bg-gradient-to-br from-[#00C9A7]/10 to-transparent pointer-events-none"></div>
+                            <div class="bg-[#161616] border border-[#FF9900]/15 rounded-[2rem] p-10 md:p-12 relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-[#FF9900]/10 to-transparent pointer-events-none"></div>
                                 <div class="relative z-10">
-                                    <span class="text-[#00C9A7] tracking-[0.3em] text-sm font-bold uppercase mb-4 block">{{ $t('services_inner.step3') }}</span>
+                                    <span class="text-[#FF9900] tracking-[0.3em] text-sm font-bold uppercase mb-4 block">{{ $t('services_inner.step3') }}</span>
                                     <div class="text-6xl font-[100] text-white/10 leading-none mb-4">03</div>
                                     <h4 class="text-2xl md:text-3xl text-white font-medium mb-4 leading-tight" v-html="$t('services_inner.seo.step3_title')"></h4>
                                     <p class="text-lg text-gray-400 font-light leading-relaxed">{{ $t('services_inner.seo.step3_desc') }}</p>
@@ -205,10 +205,10 @@
                         <!-- Step 4 (right) -->
                         <div class="seo-timeline-card md:grid md:grid-cols-2 md:gap-16 items-center">
                             <div class="hidden md:block"></div>
-                            <div class="bg-[#1a1a1a] border border-[#00C9A7]/25 rounded-[2rem] p-10 md:p-12 relative overflow-hidden">
-                                <div class="absolute inset-0 bg-gradient-to-bl from-[#00C9A7]/15 to-transparent pointer-events-none"></div>
+                            <div class="bg-[#1a1a1a] border border-[#FF9900]/25 rounded-[2rem] p-10 md:p-12 relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-bl from-[#FF9900]/15 to-transparent pointer-events-none"></div>
                                 <div class="relative z-10">
-                                    <span class="text-[#00C9A7] tracking-[0.3em] text-sm font-bold uppercase mb-4 block">{{ $t('services_inner.step4') }}</span>
+                                    <span class="text-[#FF9900] tracking-[0.3em] text-sm font-bold uppercase mb-4 block">{{ $t('services_inner.step4') }}</span>
                                     <div class="text-6xl font-[100] text-white/10 leading-none mb-4">04</div>
                                     <h4 class="text-2xl md:text-3xl text-white font-medium mb-4 leading-tight" v-html="$t('services_inner.seo.step4_title')"></h4>
                                     <p class="text-lg text-gray-400 font-light leading-relaxed">{{ $t('services_inner.seo.step4_desc') }}</p>
@@ -227,9 +227,9 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
 
                     <h2 class="relative z-10 text-white text-5xl md:text-8xl font-medium tracking-tight mb-8 max-w-4xl">
-                        Ready to elevate your <span class="italic text-[#00C9A7]/80">search rankings</span>?
+                        Ready to elevate your <span class="italic text-[#FF9900]/80">search rankings</span>?
                     </h2>
-                    <NuxtLink :to="localePath('/contact')" class="seo-cta-button relative z-10 bg-[#00C9A7] text-black px-10 py-5 rounded-full text-xl font-medium hover:scale-105 transition-transform" style="opacity: 0; transform: scale(0.5);">
+                    <NuxtLink :to="localePath('/contact')" class="seo-cta-button relative z-10 bg-[#FF9900] text-black px-10 py-5 rounded-full text-xl font-medium hover:scale-105 transition-transform" style="opacity: 0; transform: scale(0.5);">
                         {{ $t('services_inner.individual_meeting') }}
                     </NuxtLink>
                 </div>
@@ -247,6 +247,9 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { useHead, useLocalePath } from '#imports';
 
 const localePath = useLocalePath();
+
+const { settings: siteSettings } = useSiteSettings();
+const { sections: seoSections, getSection } = usePageSections('seo');
 
 useHead({
   title: 'Search Engine Optimization | Apex Digital',
@@ -323,7 +326,7 @@ function initGSAPAnimations(gsap, ScrollTrigger) {
                     y: 0, opacity: 1,
                     duration: 0.8, ease: "power3.out",
                     stagger: 0.12,
-                    force3D: true
+                    
                 }).fromTo('.seo-fade-up',
                     { y: 30, opacity: 0 },
                     { y: 0, opacity: 1, duration: 1, ease: "power2.out", stagger: 0.2 },
@@ -569,8 +572,8 @@ onUnmounted(() => {
 }
 .seo-grid-overlay {
   background-image:
-    linear-gradient(rgba(0, 201, 167, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 201, 167, 0.3) 1px, transparent 1px);
+    linear-gradient(rgba(255, 153, 0, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 153, 0, 0.3) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 </style>

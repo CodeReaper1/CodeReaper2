@@ -133,7 +133,7 @@ function initServicesGSAP(gsap, ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
     
     // Global defaults for performance
-    gsap.defaults({ force3D: true, lazy: false });
+    gsap.defaults({ lazy: false });
     gsap.ticker.wake();
     gsap.ticker.lagSmoothing(0);
     
@@ -198,18 +198,24 @@ function initServicesGSAP(gsap, ScrollTrigger) {
 
             mm.add("(max-width: 767px)", () => {
                 // Simplified mobile animations
-                gsap.from('.services-hero-title', { opacity: 0, y: 50, duration: 1.2, ease: "power3.out" });
+                gsap.fromTo('.title-line', 
+                    { opacity: 0, y: 50 },
+                    { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", stagger: 0.1 }
+                );
                 gsap.utils.toArray('.stack-panel').forEach(panel => {
-                    gsap.from(panel.querySelector('.panel-content'), {
-                        opacity: 0,
-                        y: 30,
-                        duration: 1,
-                        scrollTrigger: {
-                            trigger: panel,
-                            start: "top 80%",
-                            toggleActions: "play none none reverse"
+                    gsap.fromTo(panel.querySelector('.panel-content'), 
+                        { opacity: 0, y: 30 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            scrollTrigger: {
+                                trigger: panel,
+                                start: "top 80%",
+                                toggleActions: "play none none reverse"
+                            }
                         }
-                    });
+                    );
                 });
             });
         }, 100);
@@ -222,6 +228,19 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+    /* Hide animated elements immediately via CSS to prevent flash */
+    .title-line {
+        opacity: 0;
+        transform: translateY(150px);
+    }
+    .panel-content {
+        opacity: 0;
+        transform: translateY(120px);
+    }
+    .scroll-indicator {
+        opacity: 0;
+    }
+    
     .title-line,
     .panel-content,
     .panel-bg {

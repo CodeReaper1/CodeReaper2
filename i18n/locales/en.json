@@ -149,14 +149,14 @@
           "tag2": "Web App",
           "title": "Nexus Analytics Platform",
           "desc": "Complete UX/UI redesign and frontend architecture for a global financial data provider.",
-          "btn": "VIEW CASE STUDY"
+          "btn": "VIEW PROJECT"
         },
         {
           "tag1": "Social",
           "tag2": "Mobile",
           "title": "Vibe Social Network",
           "desc": "Omnichannel marketing campaign and native mobile application development.",
-          "btn": "VIEW CASE STUDY"
+          "btn": "VIEW PROJECT"
         }
       ]
     },
@@ -201,10 +201,13 @@
       ]
     },
     "cta": {
+      "subtitle": "Start your journey",
       "title": "Ready to start your digital transformation?",
       "desc": "Let's build something extraordinary together. Our team of experts is ready to take your brand to the next level.",
       "btn_talk": "LET'S TALK",
-      "btn_consult": "Book a Consult"
+      "btn_consult": "Book a Consult",
+      "stat_label": "Hours of work",
+      "orbit_label_default": "Specialists"
     }
   },
   "home": {

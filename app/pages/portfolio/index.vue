@@ -232,7 +232,7 @@ onMounted(() => {
   // Register ScrollTrigger and set defaults
   if (typeof window !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
-      gsap.defaults({ force3D: true, lazy: false });
+      gsap.defaults({ lazy: false });
   }
 
   ctx = gsap.context(() => {

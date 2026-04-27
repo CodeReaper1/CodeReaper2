@@ -215,6 +215,9 @@ import { useHead, useLocalePath } from '#imports';
 
 const localePath = useLocalePath();
 
+const { settings: siteSettings } = useSiteSettings();
+const { sections: dmSections, getSection } = usePageSections('digital-marketing');
+
 
 
 useHead({
@@ -300,7 +303,7 @@ function initGSAPAnimations(gsap, ScrollTrigger) {
 
                 heroTl.fromTo('.dm-hero-section .char-animate',
                     { y: 150, opacity: 0, rotationZ: 10, scale: 0.8 },
-                    { y: 0, opacity: 1, rotationZ: 0, scale: 1, duration: 1.2, ease: "back.out(1.2)", stagger: 0.03, force3D: true }
+                    { y: 0, opacity: 1, rotationZ: 0, scale: 1, duration: 1.2, ease: "back.out(1.2)", stagger: 0.03 }
                 ).fromTo('.dm-fade-up',
                     { y: 30, opacity: 0 },
                     { y: 0, opacity: 1, duration: 1, ease: "power2.out", stagger: 0.2 },
@@ -344,35 +347,46 @@ function initGSAPAnimations(gsap, ScrollTrigger) {
                     { y: 0, opacity: 1, duration: 1, ease: "power2.out", stagger: 0.15 }, "-=1"
                 );
 
-                // --- 3. The Growth Matrix (Assemble & Zoom) ---
+                // --- 3. The Growth Matrix (Assemble & Blur-Fade Out) ---
                 const matrixTl = gsap.timeline({
                     scrollTrigger: {
                         trigger: ".dm-matrix-section",
                         pin: true,
-                        scrub: 1, // Smooth scrolling physics
+                        scrub: 1,
                         start: "top top",
-                        end: "+=200%" // Pin for 2 viewport heights to handle both assembly and zoom out
+                        end: "+=200%"
                     }
                 });
 
-                // Phase 1: Assembly (Cards fly in from off-canvas to assemble grid)
                 matrixTl.fromTo(".dm-card-1", { xPercent: -100, yPercent: -100, opacity: 0 }, { xPercent: 0, yPercent: 0, opacity: 1, ease: "power2.out" }, 0)
                         .fromTo(".dm-card-2", { xPercent: 100, yPercent: -100, opacity: 0 }, { xPercent: 0, yPercent: 0, opacity: 1, ease: "power2.out" }, 0)
                         .fromTo(".dm-card-3", { xPercent: -100, yPercent: 100, opacity: 0 }, { xPercent: 0, yPercent: 0, opacity: 1, ease: "power2.out" }, 0)
                         .fromTo(".dm-card-4", { xPercent: 100, yPercent: 100, opacity: 0 }, { xPercent: 0, yPercent: 0, opacity: 1, ease: "power2.out" }, 0)
-                        // Also fade in the titles and center orb during assembly
                         .fromTo(".dm-matrix-titles, .dm-matrix-center-orb", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, ease: "back.out(1.2)" }, 0);
 
-                // Pause slightly in the timeline so the assembled grid is readable
                 matrixTl.to({}, { duration: 0.5 }); 
 
-                // Phase 2: Zoom Through (Massive scale up and fade out to reveal next section)
                 matrixTl.to(".dm-matrix-wrapper", {
-                    scale: 5, // Huge scale to fly "through" the center
                     opacity: 0,
                     filter: "blur(20px)",
-                    ease: "power3.in"
+                    scale: 0.92,
+                    ease: "power2.inOut"
                 });
+
+                // Next section (process) slides smoothly into the matrix section's space
+                gsap.fromTo('.dm-pricing-section',
+                    { opacity: 0, y: 60 },
+                    {
+                        opacity: 1, y: 0,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: ".dm-pricing-section",
+                            start: "top 95%",
+                            end: "top 40%",
+                            scrub: 1
+                        }
+                    }
+                );
 
                 // --- 4. Process Stacking Sequence ---
                 const processCards = gsap.utils.toArray('.dm-stack-card');

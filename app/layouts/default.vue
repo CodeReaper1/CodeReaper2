@@ -293,3 +293,31 @@ onMounted(() => {
   });
 });
 </script>
+
+<style>
+/* Fix for logo and hamburger menu on dark backgrounds (All screens) */
+.mil-frame .mil-frame-top .mil-logo {
+  color: rgb(255, 255, 255) !important;
+  mix-blend-mode: difference;
+}
+
+.mil-frame .mil-frame-top .mil-menu-btn {
+  mix-blend-mode: difference;
+}
+
+.mil-frame .mil-frame-top .mil-menu-btn span, 
+.mil-frame .mil-frame-top .mil-menu-btn span:after, 
+.mil-frame .mil-frame-top .mil-menu-btn span:before {
+  background: rgb(255, 255, 255) !important;
+}
+
+/* Make mobile header transparent so mix-blend-mode works on page content */
+@media screen and (max-width: 1200px) {
+  .mil-frame .mil-frame-top {
+    background-color: transparent !important;
+    border-bottom: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+</style>

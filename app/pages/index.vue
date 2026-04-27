@@ -1,7 +1,7 @@
 <template>
   <main ref="mainRef">
     <!-- banner -->
-    <section class="mil-banner mil-dark-bg">
+    <section class="mil-banner mil-dark-bg" data-nav-theme="dark">
         <div class="mi-invert-fix">
             <div class="mil-animation-frame">
                 <div class="mil-animation mil-position-1 mil-scale" data-value-1="7" data-value-2="1.6"></div>
@@ -46,7 +46,7 @@
     <!-- banner end -->
 
     <!-- 1. Typography Services Reveal -->
-    <section class="services-reveal-section py-24 md:py-32 bg-white dark:bg-[#0a0a0a] overflow-hidden">
+    <section class="services-reveal-section py-24 md:py-32 bg-white dark:bg-[#0a0a0a] overflow-hidden" data-nav-theme="light">
         <div class="container mx-auto px-6 md:px-20">
             <h2 class="huge-text text-5xl md:text-7xl lg:text-[7rem] font-[100] leading-none mb-12 tracking-tighter text-gray-900 dark:text-white uppercase">
                 <div class="split-line overflow-hidden pb-4">{{ siteSettings?.homepageExpertiseTitle || $t('home_new.expertise.title') }}</div>
@@ -66,7 +66,7 @@
     </section>
 
     <!-- 2. Horizontal Showcase Pinned Scroll -->
-    <section class="horizontal-showcase-section bg-background-light dark:bg-[#111] overflow-hidden relative h-screen">
+    <section class="horizontal-showcase-section bg-background-light dark:bg-[#111] overflow-hidden relative h-screen" data-nav-theme="light">
         <div class="horizontal-container flex h-full items-center w-max px-6 md:px-20">
             <!-- Intro Panel -->
             <div class="showcase-panel w-[100vw] h-full flex flex-col justify-center shrink-0 pr-20 relative">
@@ -106,7 +106,7 @@
     </section>
 
     <!-- 3. Deep Parallax About -->
-    <section class="deep-parallax-section relative h-[100vh] md:h-[130vh] bg-background-dark overflow-hidden flex items-center justify-center border-y border-gray-900 z-0">
+    <section class="deep-parallax-section relative h-[100vh] md:h-[130vh] bg-background-dark overflow-hidden flex items-center justify-center border-y border-gray-900 z-0" data-nav-theme="dark">
         <!-- Background Layer (Slower Reverse) -->
         <div class="parallax-layer absolute inset-0 opacity-10 flex flex-col justify-between p-10 pointer-events-none z-0" data-speed="0.2">
             <div class="text-[12rem] md:text-[20rem] font-black text-white tracking-tighter leading-none text-left w-full mix-blend-overlay">A.</div>
@@ -138,7 +138,7 @@
     </section>
 
     <!-- 4. The Process Flow -->
-    <section class="process-flow-section py-24 md:py-32 bg-white dark:bg-[#0a0a0a] overflow-hidden relative">
+    <section class="process-flow-section py-24 md:py-32 bg-white dark:bg-[#0a0a0a] overflow-hidden relative" data-nav-theme="light">
         <div class="container mx-auto px-6 md:px-20 relative">
             <div class="flex flex-col md:flex-row gap-12 md:gap-24 relative">
                 <!-- Left: Progress Line Container -->
@@ -168,7 +168,7 @@
     </section>
 
     <!-- 5. Tech Stack & Tools -->
-    <section class="stack-section py-24 md:py-40 bg-white dark:bg-[#0a0a0a] overflow-hidden relative">
+    <section class="stack-section py-24 md:py-40 bg-white dark:bg-[#0a0a0a] overflow-hidden relative" data-nav-theme="light">
         <!-- Floating background category strip -->
         <div class="stack-marquee absolute inset-x-0 top-16 md:top-24 pointer-events-none select-none opacity-[0.04] dark:opacity-[0.07] whitespace-nowrap text-[8rem] md:text-[14rem] font-black tracking-tighter uppercase text-gray-900 dark:text-white leading-none">
             <span class="inline-block pr-20">{{ stackTitle }}</span>
@@ -216,7 +216,7 @@
     </section>
 
     <!-- 6. FAQ -->
-    <section class="faq-section py-24 md:py-40 bg-[#f7f7f5] dark:bg-[#0d0d0d] overflow-hidden relative">
+    <section class="faq-section py-24 md:py-40 bg-[#f7f7f5] dark:bg-[#0d0d0d] overflow-hidden relative" data-nav-theme="light">
         <div class="container mx-auto px-6 md:px-20">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20">
                 <!-- Left: intro -->
@@ -262,7 +262,7 @@
     </section>
 
     <!-- 7. CTA — Orbital "Specialists" panel -->
-    <section class="cta-section relative bg-[#050505] overflow-hidden px-4 md:px-8 py-12 md:py-20">
+    <section class="cta-section relative bg-[#050505] overflow-hidden px-4 md:px-8 py-12 md:py-20" data-nav-theme="dark">
         <div class="cta-card relative mx-auto max-w-[1400px] rounded-[32px] md:rounded-[48px] overflow-hidden">
             <!-- Gradient backdrop (animated) -->
             <div class="cta-bg absolute inset-0">

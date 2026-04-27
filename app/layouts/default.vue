@@ -317,63 +317,65 @@ onUnmounted(() => {
 
 <style>
 /* ── Nav color inversion system ──────────────────────────────────
-   Default: black logo & burger (works on light backgrounds).
-   When `.mil-frame-dark` is added, they switch to white (dark backgrounds).
-   Toggled automatically via ScrollTrigger in the script below.
+   Uses [data-nav-theme] on sections to switch logo/burger color.
+   Falls back to auto-detection if attribute is missing.
 */
 
-/* Default state — dark (black) logo + burger for light backgrounds */
+/* Default: Dark elements for light backgrounds */
 .mil-frame .mil-frame-top .mil-logo {
-  color: rgb(0, 0, 0);
-  transition: color 0.35s ease;
+  color: #000;
+  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .mil-frame .mil-frame-top .mil-menu-btn span,
 .mil-frame .mil-frame-top .mil-menu-btn span:after,
 .mil-frame .mil-frame-top .mil-menu-btn span:before {
-  background: rgb(0, 0, 0);
-  transition: background 0.35s ease;
+  background: #000;
+  transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Dark-mode state — white logo + burger for dark backgrounds */
-.mil-frame.mil-frame-dark .mil-frame-top .mil-logo {
-  color: rgb(255, 255, 255) !important;
-}
-.mil-frame.mil-frame-dark .mil-frame-top .mil-menu-btn span,
-.mil-frame.mil-frame-dark .mil-frame-top .mil-menu-btn span:after,
-.mil-frame.mil-frame-dark .mil-frame-top .mil-menu-btn span:before {
-  background: rgb(255, 255, 255) !important;
-}
-
-/* Bottom frame elements (page label, back-to-top) */
+/* Page name and back-to-top */
 .mil-frame .mil-frame-bottom .mil-current-page {
-  transition: color 0.35s ease;
+  color: #000;
+  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.mil-frame.mil-frame-dark .mil-frame-bottom .mil-current-page {
-  color: rgb(255, 255, 255);
-}
-.mil-frame.mil-frame-dark .mil-frame-bottom .mil-back-to-top a,
-.mil-frame.mil-frame-dark .mil-frame-bottom .mil-back-to-top a span {
-  color: rgb(255, 255, 255) !important;
+.mil-frame .mil-frame-bottom .mil-back-to-top a,
+.mil-frame .mil-frame-bottom .mil-back-to-top a span {
+  color: #000;
+  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Mobile: keep original dark header bar behavior */
+/* Frame Dark Theme: White elements for dark backgrounds */
+.mil-frame[data-nav-theme="dark"] .mil-frame-top .mil-logo {
+  color: #fff !important;
+}
+.mil-frame[data-nav-theme="dark"] .mil-frame-top .mil-menu-btn span,
+.mil-frame[data-nav-theme="dark"] .mil-frame-top .mil-menu-btn span:after,
+.mil-frame[data-nav-theme="dark"] .mil-frame-top .mil-menu-btn span:before {
+  background: #fff !important;
+}
+.mil-frame[data-nav-theme="dark"] .mil-frame-bottom .mil-current-page {
+  color: #fff !important;
+}
+.mil-frame[data-nav-theme="dark"] .mil-frame-bottom .mil-back-to-top a,
+.mil-frame[data-nav-theme="dark"] .mil-frame-bottom .mil-back-to-top a span {
+  color: #fff !important;
+}
+
+/* Mobile: Force dark header bar (standard theme behavior) */
 @media screen and (max-width: 1200px) {
   .mil-frame .mil-frame-top .mil-logo {
-    color: rgb(255, 255, 255) !important;
+    color: #fff !important;
   }
   .mil-frame .mil-frame-top .mil-menu-btn span,
   .mil-frame .mil-frame-top .mil-menu-btn span:after,
   .mil-frame .mil-frame-top .mil-menu-btn span:before {
-    background: rgb(255, 255, 255) !important;
+    background: #fff !important;
   }
 }
 </style>
 
 <script>
-// ── ScrollTrigger-based nav color inversion ─────────────────────
-// Runs once globally in the layout. Detects which section is behind the
-// fixed frame header and toggles .mil-frame-dark accordingly.
-
+// ── Nav color inversion system ─────────────────────
 import { onMounted, onUnmounted } from 'vue';
 
 let navColorCleanup = null;
@@ -387,34 +389,48 @@ function initNavColorInversion() {
   const frame = document.querySelector('.mil-frame');
   if (!frame) return;
 
-  // Sections and their background type. We detect this from class names / bg colors.
-  // "dark" sections get white nav; "light" sections get black nav.
   const triggers = [];
-
-  // Gather all top-level sections from the page content
   const contentArea = document.querySelector('.mil-content');
   if (!contentArea) return;
 
-  const sections = contentArea.querySelectorAll('section, footer, .mil-dark-bg');
+  // Find all sections, footers and any div with bg classes
+  const sections = Array.from(contentArea.querySelectorAll('section, footer, header, .mil-dark-bg, [data-nav-theme]'));
 
   sections.forEach((section) => {
     const isDark = isDarkSection(section);
-
+    
+    // Create ScrollTrigger for each section
     const st = ScrollTrigger.create({
       trigger: section,
-      start: 'top top+=60',   // when section top reaches ~60px from viewport top
-      end: 'bottom top+=60',  // when section bottom passes that point
-      onEnter: () => setFrameMode(frame, isDark),
-      onEnterBack: () => setFrameMode(frame, isDark),
+      start: "top 50px", // Trigger when section top hits the frame bottom area
+      end: "bottom 50px",
+      onToggle: (self) => {
+        if (self.isActive) {
+          setFrameMode(frame, isDark);
+        }
+      },
+      // Ensure it works on initial load if we're already scrolled
+      onUpdate: (self) => {
+        if (self.isActive) {
+          setFrameMode(frame, isDark);
+        }
+      }
     });
     triggers.push(st);
   });
 
-  // Set initial state based on the first visible section
-  const firstSection = contentArea.querySelector('section, .mil-dark-bg');
-  if (firstSection) {
-    setFrameMode(frame, isDarkSection(firstSection));
-  }
+  // Fallback: Check if we are inside any section on load
+  setTimeout(() => {
+    let found = false;
+    triggers.forEach(t => {
+      if (t.isActive) {
+        setFrameMode(frame, isDarkSection(t.trigger));
+        found = true;
+      }
+    });
+    // If not in any section, default to light
+    if (!found) setFrameMode(frame, false);
+  }, 100);
 
   navColorCleanup = () => {
     triggers.forEach((st) => st.kill());
@@ -423,45 +439,55 @@ function initNavColorInversion() {
 }
 
 function isDarkSection(el) {
-  // Check for explicit dark-bg class
+  // 1. Check explicit data attribute (Priority)
+  const explicitTheme = el.getAttribute('data-nav-theme');
+  if (explicitTheme === 'dark') return true;
+  if (explicitTheme === 'light') return false;
+
+  // 2. Check explicit classes
   if (el.classList.contains('mil-dark-bg')) return true;
   if (el.tagName === 'FOOTER') return true;
 
-  // Check computed or inline background
-  const style = window.getComputedStyle(el);
-  const bg = style.backgroundColor;
+  // 3. Check computed background luminance
+  try {
+    const style = window.getComputedStyle(el);
+    const bg = style.backgroundColor;
+    
+    // If transparent, look at parent
+    if (bg === 'transparent' || bg === 'rgba(0, 0, 0, 0)' || bg === 'rgba(255, 255, 255, 0)') {
+      return false; 
+    }
 
-  // Parse rgb(a) values
-  const match = bg.match(/rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)/);
-  if (match) {
-    const r = parseInt(match[1]);
-    const g = parseInt(match[2]);
-    const b = parseInt(match[3]);
-    // Luminance check (perceived brightness)
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b);
-    if (luminance < 80) return true;  // dark background
+    const match = bg.match(/rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+      const r = parseInt(match[1]);
+      const g = parseInt(match[2]);
+      const b = parseInt(match[3]);
+      // Perceived brightness formula
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b);
+      return luminance < 128; // Standard midpoint threshold
+    }
+  } catch (e) {
+    // Ignore errors in computed style
   }
 
-  // Check for dark tailwind classes
+  // 4. Check for common dark Tailwind classes in className
   const cls = el.className || '';
-  if (/bg-\[(#0[0-9a-f]{5}|#1[0-9a-f]{5}|black)\]/i.test(cls)) return true;
-  if (/bg-black|bg-gray-900|bg-\[#0/.test(cls)) return true;
+  if (/bg-(black|gray-900|gray-800|zinc-950|slate-950|background-dark)/.test(cls)) return true;
+  if (cls.includes('bg-[#0')) return true; // Most #0xxxx hex codes are dark
 
   return false;
 }
 
 function setFrameMode(frame, isDark) {
   if (isDark) {
-    frame.classList.add('mil-frame-dark');
+    frame.setAttribute('data-nav-theme', 'dark');
   } else {
-    frame.classList.remove('mil-frame-dark');
+    frame.setAttribute('data-nav-theme', 'light');
   }
 }
 
-// We need a second onMounted that's separate from the main script setup
-// This is a supplementary script block.
 if (typeof window !== 'undefined') {
-  // Will be called from the setup script's onMounted
   window.__initNavColorInversion = initNavColorInversion;
   window.__cleanupNavColorInversion = () => {
     if (navColorCleanup) navColorCleanup();

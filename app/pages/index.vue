@@ -820,6 +820,12 @@ function initAnimations(gsap, ScrollTrigger) {
           });
 
           // ═══ 5. TECH STACK & TOOLS — header reveal, marquee drift, card grid stagger ═
+          // Pre-set hidden state to avoid SSR flash
+          gsap.set('.stack-section .stack-subtitle', { y: 20, autoAlpha: 0 });
+          gsap.set('.stack-section .stack-title .split-line', { clipPath: 'inset(0 0 100% 0)' });
+          gsap.set('.stack-section .stack-desc', { y: 24, autoAlpha: 0 });
+          gsap.set('.stack-section .stack-card', { yPercent: 25, autoAlpha: 0, scale: 0.92 });
+
           const stackHeaderTl = gsap.timeline({
             scrollTrigger: {
               trigger: '.stack-section',
@@ -828,14 +834,14 @@ function initAnimations(gsap, ScrollTrigger) {
             },
           });
           stackHeaderTl
-            .from('.stack-section .stack-subtitle', {
-              y: 20, autoAlpha: 0, duration: 0.7,
+            .to('.stack-section .stack-subtitle', {
+              y: 0, autoAlpha: 1, duration: 0.7,
             })
-            .from('.stack-section .stack-title .split-line', {
-              clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.out',
+            .to('.stack-section .stack-title .split-line', {
+              clipPath: 'inset(0 0 0% 0)', duration: 1.1, ease: 'expo.out',
             }, '-=0.4')
-            .from('.stack-section .stack-desc', {
-              y: 24, autoAlpha: 0, duration: 0.8,
+            .to('.stack-section .stack-desc', {
+              y: 0, autoAlpha: 1, duration: 0.8,
             }, '-=0.7');
 
           if (isDesktop) {
@@ -852,12 +858,10 @@ function initAnimations(gsap, ScrollTrigger) {
             start: 'top 88%',
             interval: 0.08,
             onEnter: (batch) => {
-              gsap.fromTo(batch,
-                { yPercent: 25, autoAlpha: 0, scale: 0.92 },
-                {
-                  yPercent: 0, autoAlpha: 1, scale: 1,
-                  duration: 0.9, stagger: 0.08, ease: 'expo.out', overwrite: true,
-                });
+              gsap.to(batch, {
+                yPercent: 0, autoAlpha: 1, scale: 1,
+                duration: 0.9, stagger: 0.08, ease: 'expo.out', overwrite: true,
+              });
             },
             once: true,
           });
@@ -884,6 +888,12 @@ function initAnimations(gsap, ScrollTrigger) {
           });
 
           // ═══ 6. FAQ — header reveal, item stagger, accordion click animation ══════
+          // Pre-set hidden state to avoid SSR flash
+          gsap.set('.faq-section .faq-subtitle', { y: 20, autoAlpha: 0 });
+          gsap.set('.faq-section .faq-title .split-line', { clipPath: 'inset(0 0 100% 0)' });
+          gsap.set('.faq-section .faq-desc', { y: 24, autoAlpha: 0 });
+          gsap.set('.faq-section .faq-item', { y: 40, autoAlpha: 0 });
+
           const faqHeaderTl = gsap.timeline({
             scrollTrigger: {
               trigger: '.faq-section',
@@ -892,14 +902,14 @@ function initAnimations(gsap, ScrollTrigger) {
             },
           });
           faqHeaderTl
-            .from('.faq-section .faq-subtitle', { y: 20, autoAlpha: 0, duration: 0.7 })
-            .from('.faq-section .faq-title .split-line', {
-              clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.out',
+            .to('.faq-section .faq-subtitle', { y: 0, autoAlpha: 1, duration: 0.7 })
+            .to('.faq-section .faq-title .split-line', {
+              clipPath: 'inset(0 0 0% 0)', duration: 1.1, ease: 'expo.out',
             }, '-=0.4')
-            .from('.faq-section .faq-desc', { y: 24, autoAlpha: 0, duration: 0.8 }, '-=0.7');
+            .to('.faq-section .faq-desc', { y: 0, autoAlpha: 1, duration: 0.8 }, '-=0.7');
 
-          gsap.from('.faq-section .faq-item', {
-            y: 40, autoAlpha: 0, stagger: 0.08, duration: 0.8, ease: 'expo.out',
+          gsap.to('.faq-section .faq-item', {
+            y: 0, autoAlpha: 1, stagger: 0.08, duration: 0.8, ease: 'expo.out',
             scrollTrigger: {
               trigger: '.faq-section .faq-item',
               start: 'top 85%',

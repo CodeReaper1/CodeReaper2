@@ -208,6 +208,38 @@
       "btn_consult": "Book a Consult",
       "stat_label": "Hours of work",
       "orbit_label_default": "Specialists"
+    },
+    "stack": {
+      "subtitle": "Tech & Tools",
+      "title": "The stack we ship with",
+      "desc": "A curated toolkit — chosen for speed, maintainability and delight. Swapped out the moment something better shows up.",
+      "items": [
+        { "name": "Figma", "category": "Design" },
+        { "name": "Nuxt", "category": "Framework" },
+        { "name": "React", "category": "Framework" },
+        { "name": "TypeScript", "category": "Language" },
+        { "name": "Tailwind CSS", "category": "Styling" },
+        { "name": "GSAP", "category": "Motion" },
+        { "name": "WordPress", "category": "CMS" },
+        { "name": "Shopify", "category": "Commerce" },
+        { "name": "Node.js", "category": "Runtime" },
+        { "name": "Supabase", "category": "Backend" },
+        { "name": "Cloudflare", "category": "Infra" },
+        { "name": "GraphQL", "category": "API" }
+      ]
+    },
+    "faq": {
+      "subtitle": "FAQ",
+      "title": "Questions, answered",
+      "desc": "Everything you need to know before we kick off. Miss something? Reach out — we reply fast.",
+      "items": [
+        { "question": "How long does a typical project take?", "answer": "Most of our engagements run 6 to 12 weeks from kickoff to launch. Larger platforms can extend to 3-6 months — we scope each one from your goals, not a template." },
+        { "question": "Do you work with in-house teams?", "answer": "Yes. We pair well with internal design, product and engineering teams — either leading the work or filling specific gaps. We scale in or out based on what you actually need." },
+        { "question": "What does pricing look like?", "answer": "Fixed-fee by project or monthly retainer. You get a line-item proposal after the discovery call — no hidden hours, no surprise change orders." },
+        { "question": "Who owns the work once it ships?", "answer": "You do. Full source, assets, accounts and documentation transfer on delivery. We will happily stay on for maintenance, but we do not hold your work hostage." },
+        { "question": "Do you do just design, or also build?", "answer": "Both. Strategy, brand, product design and production engineering (web, Shopify, headless CMS, Nuxt, Next). Most clients hire us for the full loop." },
+        { "question": "Where are you based?", "answer": "Montreal, working with clients globally. Async-first, with weekly syncs in your timezone." }
+      ]
     }
   },
   "home": {

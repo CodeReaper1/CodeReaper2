@@ -316,6 +316,28 @@ onUnmounted(() => {
 </script>
 
 <style>
+/* ── Chrome stacking overrides ───────────────────────────────────
+   The original theme uses very low z-indices on the menu (9),
+   curtain (4), and frame (2). Page sections with Tailwind z-10/z-20
+   leak through the open menu. Lift the chrome above any reasonable
+   page-level z-index so the menu fully covers content when open.
+*/
+.mil-curtain { z-index: 9990 !important; }
+.mil-menu-frame { z-index: 9991 !important; }
+.mil-frame { z-index: 9999 !important; }
+
+/* Force the always-visible logo and burger to white whenever the menu
+   is open (otherwise data-nav-theme="light" sections leave them dark
+   and they read poorly against the menu's black background). */
+.mil-menu-frame.mil-active ~ .mil-frame .mil-logo {
+  color: #fff !important;
+}
+.mil-menu-frame.mil-active ~ .mil-frame .mil-menu-btn span,
+.mil-menu-frame.mil-active ~ .mil-frame .mil-menu-btn span::before,
+.mil-menu-frame.mil-active ~ .mil-frame .mil-menu-btn span::after {
+  background: #fff !important;
+}
+
 /* ── Nav color inversion system ──────────────────────────────────
    Uses [data-nav-theme] on sections to switch logo/burger color.
    Falls back to auto-detection if attribute is missing.
@@ -438,43 +460,52 @@ function initNavColorInversion() {
   };
 }
 
-function isDarkSection(el) {
-  // 1. Check explicit data attribute (Priority)
-  const explicitTheme = el.getAttribute('data-nav-theme');
+function isDarkSection(el, depth = 0) {
+  if (!el || depth > 5) return false;
+
+  // 1. Check explicit data attribute (priority — overrides everything)
+  const explicitTheme = el.getAttribute && el.getAttribute('data-nav-theme');
   if (explicitTheme === 'dark') return true;
   if (explicitTheme === 'light') return false;
 
   // 2. Check explicit classes
-  if (el.classList.contains('mil-dark-bg')) return true;
+  if (el.classList && el.classList.contains('mil-dark-bg')) return true;
   if (el.tagName === 'FOOTER') return true;
 
-  // 3. Check computed background luminance
+  // 3. Check className for dark Tailwind / arbitrary-hex hints
+  const cls = (typeof el.className === 'string') ? el.className : '';
+  if (/bg-(black|gray-900|gray-800|zinc-950|slate-950|background-dark)/.test(cls)) return true;
+  if (cls.includes('bg-[#0')) return true; // matches bg-[#050505], bg-[#0a0a0a], etc.
+
+  // 4. Check computed background luminance
+  let isTransparent = false;
   try {
     const style = window.getComputedStyle(el);
     const bg = style.backgroundColor;
-    
-    // If transparent, look at parent
-    if (bg === 'transparent' || bg === 'rgba(0, 0, 0, 0)' || bg === 'rgba(255, 255, 255, 0)') {
-      return false; 
-    }
 
-    const match = bg.match(/rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)/);
-    if (match) {
-      const r = parseInt(match[1]);
-      const g = parseInt(match[2]);
-      const b = parseInt(match[3]);
-      // Perceived brightness formula
-      const luminance = (0.299 * r + 0.587 * g + 0.114 * b);
-      return luminance < 128; // Standard midpoint threshold
+    if (bg === 'transparent' || bg === 'rgba(0, 0, 0, 0)' || bg === 'rgba(255, 255, 255, 0)') {
+      isTransparent = true;
+    } else {
+      const match = bg.match(/rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)/);
+      if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const luminance = (0.299 * r + 0.587 * g + 0.114 * b);
+        // Section has a real background — verdict is final
+        return luminance < 128;
+      }
     }
   } catch (e) {
     // Ignore errors in computed style
   }
 
-  // 4. Check for common dark Tailwind classes in className
-  const cls = el.className || '';
-  if (/bg-(black|gray-900|gray-800|zinc-950|slate-950|background-dark)/.test(cls)) return true;
-  if (cls.includes('bg-[#0')) return true; // Most #0xxxx hex codes are dark
+  // 5. Section is transparent — walk up to the nearest ancestor with a real bg.
+  // This is what catches pages like /seo where the wrapping <main class="bg-[#0a0a0a]">
+  // is dark but inner <section>s are transparent.
+  if (isTransparent && el.parentElement) {
+    return isDarkSection(el.parentElement, depth + 1);
+  }
 
   return false;
 }

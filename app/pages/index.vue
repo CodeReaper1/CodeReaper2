@@ -65,45 +65,7 @@
         </div>
     </section>
 
-    <!-- 2. Horizontal Showcase Pinned Scroll -->
-    <section class="horizontal-showcase-section bg-background-light dark:bg-[#111] overflow-hidden relative h-screen" data-nav-theme="light">
-        <div class="horizontal-container flex h-full items-center w-max px-6 md:px-20">
-            <!-- Intro Panel -->
-            <div class="showcase-panel w-[100vw] h-full flex flex-col justify-center shrink-0 pr-20 relative">
-                <h2 class="text-sm font-bold tracking-[0.3em] text-primary mb-4 uppercase">{{ siteSettings?.homepageScrollingSubtitle || $t('home_new.work.subtitle') }}</h2>
-                <h3 class="text-5xl md:text-8xl font-[100] text-gray-900 dark:text-white leading-tight max-w-4xl" v-html="siteSettings?.homepageScrollingTitle || $t('home_new.work.title')"></h3>
-            </div>
-            
-            <!-- Dynamic Portfolio Cards from WordPress -->
-            <div
-                v-for="(project, idx) in showcaseProjects"
-                :key="project.id || idx"
-                class="showcase-panel w-[85vw] md:w-[60vw] h-[60vh] md:h-[70vh] shrink-0 mx-8 relative rounded-[40px] overflow-hidden group cursor-pointer block"
-            >
-                <img :src="project.image" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" :alt="project.imageAlt || project.title" />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                <div class="absolute bottom-10 left-10 z-10 w-full pr-10">
-                    <span class="text-primary tracking-widest uppercase text-sm md:text-base font-bold block mb-2">{{ project.client }}</span>
-                    <h4 class="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-2">{{ project.title }}</h4>
-                    <div class="mt-6 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                         <NuxtLink :to="localePath(project.link)" class="inline-flex items-center gap-3 bg-white text-black px-8 py-3 rounded-full font-bold text-sm tracking-widest hover:bg-primary transition-colors">
-                              VIEW PROJECT
-                         </NuxtLink>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Outro Panel (See All) -->
-            <div class="showcase-panel w-[85vw] md:w-[40vw] h-[60vh] md:h-[70vh] shrink-0 mx-8 relative rounded-[40px] overflow-hidden group cursor-pointer bg-gray-100 dark:bg-[#1a1a1a] flex flex-col justify-center items-center border border-gray-200 dark:border-gray-800">
-                <NuxtLink :to="localePath('/portfolio')" class="absolute inset-0 z-20"></NuxtLink>
-                <div class="w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-500">
-                     <span class="text-primary text-5xl">→</span>
-                </div>
-                <h4 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4">View All Projects</h4>
-                <p class="text-gray-500 dark:text-gray-400 text-lg">Explore our full portfolio</p>
-            </div>
-        </div>
-    </section>
+    <HomePortfolioStack :projects="showcaseProjects" />
 
     <!-- 3. Deep Parallax About -->
     <section class="deep-parallax-section relative h-[100vh] md:h-[130vh] bg-background-dark overflow-hidden flex items-center justify-center border-y border-gray-900 z-0" data-nav-theme="dark">
@@ -501,8 +463,16 @@ function animateFaqHeights() {
 
 let ctx;
 let pollInterval;
+let matchMediaCtl = null;
 
 onMounted(() => {
+  /** Theme main.js only runs initAppend once (isInitialized). Re-clone .mil-dodecahedron into hero on each home visit. */
+  nextTick(() => {
+    if (typeof window !== 'undefined' && typeof window.reinitAppend === 'function') {
+      window.reinitAppend();
+    }
+  });
+
   pollInterval = setInterval(() => {
     if (window.gsap && window.ScrollTrigger) {
       clearInterval(pollInterval);
@@ -514,6 +484,8 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (pollInterval) clearInterval(pollInterval);
+  matchMediaCtl?.revert();
+  matchMediaCtl = null;
   ctx?.revert();
 });
 
@@ -546,6 +518,7 @@ function initAnimations(gsap, ScrollTrigger) {
     const root = mainRef.value;
 
     const mm = gsap.matchMedia();
+    matchMediaCtl = mm;
 
     mm.add(
       {
@@ -576,10 +549,14 @@ function initAnimations(gsap, ScrollTrigger) {
               { y: 0, autoAlpha: 1, duration: dur ?? 1 },
               '-=0.6');
 
+          const readScalePair = (el) => {
+            const a1 = el.getAttribute('data-value-1');
+            const a2 = el.getAttribute('data-value-2');
+            return [parseFloat(a1 ?? ''), parseFloat(a2 ?? '')];
+          };
           gsap.utils.toArray('.mil-scale').forEach((el) => {
-            const v1 = parseFloat(el.dataset.value1);
-            const v2 = parseFloat(el.dataset.value2);
-            if (isNaN(v1) || isNaN(v2)) return;
+            const [v1, v2] = readScalePair(el);
+            if (!Number.isFinite(v1) || !Number.isFinite(v2)) return;
             gsap.fromTo(el,
               { scale: v1 },
               {
@@ -629,82 +606,6 @@ function initAnimations(gsap, ScrollTrigger) {
                 start: 'top bottom', end: 'bottom top', scrub: 0.5,
               },
             });
-          }
-
-          // ═══ 2. HORIZONTAL SHOWCASE — pin + per-card parallax + spotlight ═══
-          if (isDesktop) {
-            const container = root.querySelector('.horizontal-container');
-            if (container) {
-              const horizontalTween = gsap.to(container, {
-                x: () => -(container.scrollWidth - window.innerWidth) + 'px',
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: '.horizontal-showcase-section',
-                  pin: true, scrub: 1,
-                  end: () => '+=' + container.scrollWidth,
-                  invalidateOnRefresh: true,
-                },
-              });
-
-              const introPanel = container.querySelector('.showcase-panel');
-              if (introPanel) {
-                gsap.from(introPanel.querySelectorAll('h2, h3'), {
-                  yPercent: 60, autoAlpha: 0, stagger: 0.12, duration: 1.2,
-                  scrollTrigger: {
-                    trigger: '.horizontal-showcase-section',
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse',
-                  },
-                });
-              }
-
-              const cards = container.querySelectorAll('.showcase-panel.rounded-\\[40px\\]');
-              const showcaseScrub = 1.25;
-              // One timeline per card: grow + shrink share the same scroll span (left → right of viewport).
-              // Shrink gets a larger duration ratio so wide cards don't "snap" small — exit used to map to
-              // a shorter pixel range (center→right vs left→center).
-              cards.forEach((card) => {
-                const img = card.querySelector('img');
-                if (img) {
-                  gsap.fromTo(img,
-                    { xPercent: -10 },
-                    {
-                      xPercent: 10, ease: 'none',
-                      scrollTrigger: {
-                        trigger: card,
-                        containerAnimation: horizontalTween,
-                        start: 'left right', end: 'right left', scrub: showcaseScrub,
-                      },
-                    });
-                }
-                const spotlightTl = gsap.timeline({
-                  scrollTrigger: {
-                    trigger: card,
-                    containerAnimation: horizontalTween,
-                    start: 'left right',
-                    end: 'right left',
-                    scrub: showcaseScrub,
-                  },
-                });
-                spotlightTl
-                  .fromTo(
-                    card,
-                    { scale: 0.85, filter: 'brightness(0.55)' },
-                    {
-                      scale: 1,
-                      filter: 'brightness(1)',
-                      duration: 0.36,
-                      ease: 'power2.out',
-                    },
-                  )
-                  .to(card, {
-                    scale: 0.85,
-                    filter: 'brightness(0.55)',
-                    duration: 0.64,
-                    ease: 'power2.in',
-                  });
-              });
-            }
           }
 
           // ═══ 3. DEEP PARALLAX — clip-path line reveal + counting stats + drift ═
@@ -1247,4 +1148,5 @@ function initAnimations(gsap, ScrollTrigger) {
 .cta-title-word > span {
   will-change: transform;
 }
+
 </style>

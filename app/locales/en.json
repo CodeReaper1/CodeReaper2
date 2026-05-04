@@ -228,6 +228,17 @@
       ]
     }
   },
+  "case_studies": {
+    "marquee": "CASE STUDIES",
+    "nav_1": "JUST DESIGN",
+    "nav_2": "JUST CODE",
+    "nav_3": "DESIGN & CODE",
+    "read_more": "READ MORE",
+    "client": "CLIENT",
+    "budget": "BUDGET",
+    "duration": "DURATION",
+    "location_unknown": "Location on request"
+  },
   "home": {
     "banner": {
       "title_main": "APEX DIGITAL",

@@ -91,9 +91,7 @@
 import { useLocalePath } from '#i18n';
 const localePath = useLocalePath();
 
-import { ref, computed, onMounted } from 'vue';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 // Added page transition to overcome abrupt navigation
 definePageMeta({
@@ -180,10 +178,12 @@ const actionCard = ref(null);
 const sliderNav = ref(null);
 
 let ctx;
+let pollInterval;
 
 const animateTransition = (direction) => {
-  if (!ctx) return;
-  
+  if (!ctx || typeof window === 'undefined' || !window.gsap) return;
+
+  const gsap = window.gsap;
   const tl = gsap.timeline();
   
   tl.to([mainImage.value, projectInfoTop.value], {
@@ -228,15 +228,11 @@ const prevSlide = () => {
   }
 };
 
-onMounted(() => {
-  // Register ScrollTrigger and set defaults
-  if (typeof window !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
-      gsap.defaults({ lazy: false });
-  }
+function initPortfolioGSAP(gsap, ScrollTrigger) {
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.defaults({ lazy: false });
 
   ctx = gsap.context(() => {
-    // Setup 3D perspective for the slider wrapper
     gsap.set(imageWrapper.value, { perspective: 800 });
 
     gsap.from(imageWrapper.value, {
@@ -250,7 +246,7 @@ onMounted(() => {
           start: "top 75%"
       }
     });
-    
+
     gsap.from([projectInfoTop.value, sliderNav.value], {
       opacity: 0,
       y: 30,
@@ -263,7 +259,6 @@ onMounted(() => {
       }
     });
 
-    // Floating particles
     gsap.to(".particle", {
       y: "random(-100, 100)",
       x: "random(-100, 100)",
@@ -278,9 +273,24 @@ onMounted(() => {
       }
     });
   });
+}
+
+onMounted(() => {
+  pollInterval = setInterval(() => {
+    if (typeof window === 'undefined') return;
+    if (window.gsap && window.ScrollTrigger) {
+      clearInterval(pollInterval);
+      pollInterval = null;
+      initPortfolioGSAP(window.gsap, window.ScrollTrigger);
+    }
+  }, 50);
 });
 
 onUnmounted(() => {
+  if (pollInterval) {
+    clearInterval(pollInterval);
+    pollInterval = null;
+  }
   if (ctx) ctx.revert();
 });
 </script>

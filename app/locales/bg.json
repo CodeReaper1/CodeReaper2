@@ -228,6 +228,17 @@
       ]
     }
   },
+  "case_studies": {
+    "marquee": "КЕЙСОВЕ",
+    "nav_1": "САМО ДИЗАЙН",
+    "nav_2": "САМО КОД",
+    "nav_3": "ДИЗАЙН И КОД",
+    "read_more": "ВИЖ ПОВЕЧЕ",
+    "client": "КЛИЕНТ",
+    "budget": "БЮДЖЕТ",
+    "duration": "СРОК",
+    "location_unknown": "Локация по запитване"
+  },
   "home": {
     "banner": {
       "title_main": "APEX DIGITAL",

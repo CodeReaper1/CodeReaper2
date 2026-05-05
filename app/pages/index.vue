@@ -45,27 +45,67 @@
     </section>
     <!-- banner end -->
 
-    <!-- 1. Typography Services Reveal -->
-    <section class="services-reveal-section py-24 md:py-32 bg-white dark:bg-[#0a0a0a] overflow-hidden" data-nav-theme="light">
-        <div class="container mx-auto px-6 md:px-20">
-            <h2 class="huge-text text-5xl md:text-7xl lg:text-[7rem] font-[100] leading-none mb-12 tracking-tighter text-gray-900 dark:text-white uppercase">
-                <div class="split-line overflow-hidden pb-4">{{ siteSettings?.homepageExpertiseTitle || $t('home_new.expertise.title') }}</div>
-            </h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center flex-row-reverse">
-                <div class="mask-image-container relative h-[400px] md:h-[600px] w-full overflow-hidden rounded-3xl">
-                     <div class="mask-overlay absolute inset-0 bg-white dark:bg-[#0a0a0a] z-10 origin-bottom"></div>
-                     <img :src="siteSettings?.homepageExpertiseImage || 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=1080&auto=format&fit=crop'" class="w-full h-full object-cover mask-img-target" alt="Process" />
+    <!-- 2. Expertise poster -->
+    <section class="expertise-section" data-nav-theme="light">
+        <div class="expertise-bg-grid" aria-hidden="true"></div>
+        <div class="expertise-stripe" aria-hidden="true">
+            <div class="expertise-stripe-bar"></div>
+        </div>
+
+        <div class="expertise-poster">
+            <div class="expertise-title-lockup" ref="expertiseTitleRef">
+                <span class="expertise-eyebrow">Our</span>
+                <h2 class="expertise-title" aria-label="Expertise">
+                    <span
+                        v-for="(letter, i) in expertiseTitleLetters"
+                        :key="'el' + i"
+                        class="expertise-letter"
+                        v-html="letter"
+                    ></span>
+                </h2>
+            </div>
+
+            <div class="expertise-quote-card" ref="expertiseSubtitleRef">
+                <span class="expertise-quote-mark">&ldquo;</span>
+                <p class="expertise-subtitle">
+                    <span
+                        v-for="(word, i) in expertiseSubtitleWords"
+                        :key="'ew' + i"
+                        class="expertise-word"
+                    >{{ word }}</span>
+                </p>
+            </div>
+
+            <div class="expertise-image-wrap">
+                <div class="expertise-image">
+                    <img
+                        :src="siteSettings?.homepageExpertiseImage || 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1400&auto=format&fit=crop'"
+                        class="expertise-image-img"
+                        alt="Sketching digital product ideas"
+                    />
                 </div>
-                <div class="services-desc">
-                     <p class="stagger-text text-2xl md:text-4xl font-light text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl">
-                         "{{ siteSettings?.homepageExpertiseSubtitle || $t('home_new.expertise.subtitle') }}"
-                     </p>
-                </div>
+            </div>
+
+            <div class="expertise-services">
+                <span class="expertise-service-word">Digital Strategy</span>
+                <span class="expertise-service-word">Branding</span>
+                <span class="expertise-service-word">UI/UX Design</span>
+                <span class="expertise-service-word">Web Development</span>
+                <span class="expertise-service-word">Content Creation</span>
+            </div>
+
+            <div class="expertise-icon-tile" aria-hidden="true">
+                <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M38 70h20M40 80h16M29 44c0-12 8-21 19-21s19 9 19 21c0 8-4 13-9 18-3 3-4 5-4 8H42c0-3-1-5-4-8-5-5-9-10-9-18Z" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M48 12V5M20 25l-5-5M76 25l5-5M16 48H8M80 48h8" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M69 66l4-4 5 3 4-7-5-3v-6l5-3-4-7-5 3-4-4-3-5h-8l-3 5-4 4-5-3-4 7 5 3v6l-5 3 4 7 5-3 4 4 3 5h8l3-5Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                    <circle cx="62" cy="52" r="7" stroke="currentColor" stroke-width="4"/>
+                </svg>
             </div>
         </div>
     </section>
 
-    <HomePortfolioStack :projects="showcaseProjects" />
+    <HomePortfolioCinema :projects="showcaseProjects" />
 
     <!-- 3. Deep Parallax About -->
     <section class="deep-parallax-section relative h-[100vh] md:h-[130vh] bg-background-dark overflow-hidden flex items-center justify-center border-y border-gray-900 z-0" data-nav-theme="dark">
@@ -178,44 +218,42 @@
     </section>
 
     <!-- 6. FAQ -->
-    <section class="faq-section py-24 md:py-40 bg-[#f7f7f5] dark:bg-[#0d0d0d] overflow-hidden relative" data-nav-theme="light">
-        <div class="container mx-auto px-6 md:px-20">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20">
-                <!-- Left: intro -->
-                <div class="lg:col-span-5 lg:sticky lg:top-24 self-start">
-                    <h2 class="faq-subtitle text-sm font-bold tracking-[0.4em] text-primary mb-6 uppercase">{{ faqSubtitle }}</h2>
-                    <h3 class="faq-title text-5xl md:text-[5.5rem] font-[100] text-gray-900 dark:text-white leading-[1.05] tracking-tighter mb-8">
-                        <span class="split-line inline-block">{{ faqTitle }}</span>
-                    </h3>
-                    <p class="faq-desc text-lg md:text-xl text-gray-500 dark:text-gray-400 font-light leading-relaxed max-w-md">{{ faqDesc }}</p>
-                </div>
+    <section class="faq-section" data-nav-theme="light">
+        <div class="faq-shell">
+            <div class="faq-copy">
+                <h2 class="faq-subtitle">{{ faqSubtitle }}</h2>
+                <h3 class="faq-title">
+                    <span class="split-line inline-block">{{ faqTitle }}</span>
+                </h3>
+                <p class="faq-desc">{{ faqDesc }}</p>
+            </div>
 
-                <!-- Right: accordion -->
-                <div class="lg:col-span-7">
-                    <div class="flex flex-col gap-4">
-                        <div
-                            v-for="(item, idx) in faqItems"
-                            :key="idx"
-                            class="faq-item bg-white dark:bg-[#111] border border-gray-100 dark:border-gray-900 rounded-3xl overflow-hidden transition-all duration-300"
-                            :class="{ 'faq-item-open shadow-lg dark:shadow-none border-primary/20 dark:border-primary/20': openFaq === idx }"
-                        >
-                            <button
-                                type="button"
-                                class="faq-trigger w-full flex items-center justify-between gap-6 px-6 py-6 md:px-8 md:py-8 text-left group"
-                                :aria-expanded="openFaq === idx"
-                                @click="toggleFaq(idx)"
-                            >
-                                <span class="faq-question text-lg md:text-2xl font-bold text-gray-900 dark:text-white leading-tight pr-4 transition-colors group-hover:text-primary">{{ item.question }}</span>
-                                <span class="faq-icon relative w-8 h-8 md:w-10 md:h-10 shrink-0 rounded-full bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white flex items-center justify-center transition-all duration-300 group-hover:bg-primary group-hover:text-white" :class="{'bg-primary text-white': openFaq === idx}">
-                                    <span class="faq-icon-bar absolute w-3 h-[2px] bg-current transition-transform duration-300"></span>
-                                    <span class="faq-icon-bar faq-icon-bar-v absolute w-3 h-[2px] bg-current transition-transform duration-300" :class="{'rotate-90': openFaq !== idx, 'rotate-0': openFaq === idx}"></span>
-                                </span>
-                            </button>
-                            <div class="faq-answer-wrap overflow-hidden" :style="{ height: '0px' }">
-                                <div class="px-6 pb-6 md:px-8 md:pb-8 pt-0">
-                                    <p class="faq-answer text-base md:text-lg text-gray-500 dark:text-gray-400 font-light leading-relaxed max-w-2xl">{{ item.answer }}</p>
-                                </div>
-                            </div>
+            <div class="faq-divider" aria-hidden="true">
+                <span></span>
+            </div>
+
+            <div class="faq-list" aria-label="Frequently asked questions">
+                <div
+                    v-for="(item, idx) in faqItems"
+                    :key="idx"
+                    class="faq-item"
+                    :class="{ 'faq-item-open': openFaq === idx }"
+                >
+                    <button
+                        type="button"
+                        class="faq-trigger"
+                        :aria-expanded="openFaq === idx"
+                        @click="toggleFaq(idx)"
+                    >
+                        <span class="faq-question">{{ item.question }}</span>
+                        <span class="faq-icon" :class="{ 'faq-icon-open': openFaq === idx }">
+                            <span class="faq-icon-bar"></span>
+                            <span class="faq-icon-bar faq-icon-bar-v" :class="{ 'rotate-90': openFaq !== idx, 'rotate-0': openFaq === idx }"></span>
+                        </span>
+                    </button>
+                    <div class="faq-answer-wrap" :style="{ height: '0px' }">
+                        <div class="faq-answer-inner">
+                            <p class="faq-answer">{{ item.answer }}</p>
                         </div>
                     </div>
                 </div>
@@ -368,6 +406,29 @@ const fallbackProjects = [
 const showcaseProjects = computed(() =>
   wpProjects.value?.length ? wpProjects.value.slice(0, 3) : fallbackProjects
 );
+
+// ── Expertise section (CMS-driven, GSAP animated) ────────────────────────
+const expertiseTitleRef = ref(null);
+const expertiseSubtitleRef = ref(null);
+
+const expertiseTitleText = computed(() =>
+  siteSettings.value?.homepageExpertiseTitle || t('home_new.expertise.title')
+);
+const expertiseSubtitleText = computed(() =>
+  siteSettings.value?.homepageExpertiseSubtitle || t('home_new.expertise.subtitle')
+);
+
+// Split title into per-letter spans (preserve spaces with NBSP) for stagger animation.
+const expertiseTitleLetters = computed(() => {
+  const raw = String(expertiseTitleText.value)
+    .replace(/<[^>]+>/g, '')
+    .replace(/^our\s+/i, '');
+  return Array.from(raw).map((ch) => (ch === ' ' ? '&nbsp;' : ch));
+});
+const expertiseSubtitleWords = computed(() => {
+  const raw = String(expertiseSubtitleText.value).replace(/<[^>]+>/g, '').trim();
+  return raw.length ? raw.split(/\s+/) : [];
+});
 
 // ── Stack section ────────────────────────────────────────────────────────
 const stackSubtitle = computed(() => siteSettings.value?.homepageStackSubtitle || t('home_new.stack.subtitle'));
@@ -567,44 +628,185 @@ function initAnimations(gsap, ScrollTrigger) {
 
           // If the user prefers reduced motion, skip the choreographed sections entirely
           if (reduceMotion) {
+            gsap.set([
+              '.expertise-section .expertise-stripe-bar',
+              '.expertise-section .expertise-image',
+              '.expertise-section .expertise-image-img',
+              '.expertise-section .expertise-letter',
+              '.expertise-section .expertise-word',
+              '.expertise-section .expertise-eyebrow',
+              '.expertise-section .expertise-quote-mark',
+              '.expertise-section .expertise-quote-card',
+              '.expertise-section .expertise-services',
+              '.expertise-section .expertise-service-word',
+              '.expertise-section .expertise-icon-tile',
+            ], {
+              clearProps: 'all',
+              autoAlpha: 1,
+            });
             ScrollTrigger.refresh();
             return;
           }
 
-          // ═══ 1. SERVICES REVEAL — clip-path image wipe + title & quote sweeps ═
-          gsap.set('.services-reveal-section .mask-overlay', { autoAlpha: 0 });
+          // ═══ 1. EXPERTISE — diagonal sweep + hex image + per-letter title ═══
+          // Initial states (set without flicker — done in onMounted before triggers fire)
+          gsap.set('.expertise-section .expertise-stripe-bar', {
+            scaleX: 0,
+            transformOrigin: 'left center',
+          });
+          gsap.set('.expertise-section .expertise-image', {
+            clipPath: 'inset(100% 0 0 0)',
+          });
+          gsap.set('.expertise-section .expertise-image-img', {
+            scale: 1.25,
+          });
+          gsap.set('.expertise-section .expertise-letter', {
+            yPercent: 110,
+            autoAlpha: 0,
+          });
+          gsap.set('.expertise-section .expertise-word', {
+            yPercent: 60,
+            autoAlpha: 0,
+          });
+          gsap.set('.expertise-section .expertise-eyebrow', {
+            xPercent: -20,
+            autoAlpha: 0,
+          });
+          gsap.set('.expertise-section .expertise-quote-mark', {
+            scale: 0,
+            autoAlpha: 0,
+            transformOrigin: 'center center',
+          });
+          gsap.set('.expertise-section .expertise-quote-card', {
+            xPercent: 8,
+            y: 24,
+            autoAlpha: 0,
+          });
+          gsap.set('.expertise-section .expertise-services', {
+            yPercent: 18,
+            autoAlpha: 0,
+          });
+          gsap.set('.expertise-section .expertise-service-word', {
+            x: -28,
+            autoAlpha: 0,
+          });
+          gsap.set('.expertise-section .expertise-icon-tile', {
+            scale: 0.72,
+            rotation: -5,
+            autoAlpha: 0,
+          });
 
-          const servicesTl = gsap.timeline({
+          const expertiseTl = gsap.timeline({
             scrollTrigger: {
-              trigger: '.services-reveal-section',
-              start: 'top 70%',
+              trigger: '.expertise-section',
+              start: 'top 72%',
               toggleActions: 'play none none reverse',
             },
+            defaults: { ease: 'expo.out' },
           });
-          servicesTl
-            .from('.services-reveal-section .huge-text .split-line', {
-              clipPath: 'inset(0 0 100% 0)',
-              stagger: 0.08, duration: 1.1, ease: 'expo.out',
-            })
-            .fromTo('.mask-image-container',
-              { clipPath: 'inset(100% 0 0 0)' },
-              { clipPath: 'inset(0% 0 0 0)', duration: 1.2, ease: 'expo.inOut' },
-              '-=0.8')
-            .from('.mask-img-target',
-              { scale: 1.3, duration: 1.6, ease: 'expo.out' },
-              '<')
-            .from('.services-reveal-section .stagger-text', {
-              clipPath: 'inset(0 100% 0 0)',
-              duration: 1.2, ease: 'expo.out',
-            }, '-=0.9');
 
+          expertiseTl
+            // 1. Orange diagonal stripe sweeps in from the left
+            .to('.expertise-section .expertise-stripe-bar', {
+              scaleX: 1,
+              duration: 1.2,
+              ease: 'expo.inOut',
+            })
+            .to('.expertise-section .expertise-quote-card', {
+              xPercent: 0,
+              y: 0,
+              autoAlpha: 1,
+              duration: 0.9,
+            }, '-=0.75')
+            // 2. Image clip-path expands to its final hex shape, image un-zooms
+            .to('.expertise-section .expertise-image', {
+              clipPath: 'inset(0% 0 0 0)',
+              duration: 1.1,
+              ease: 'expo.inOut',
+            }, '-=0.85')
+            .to('.expertise-section .expertise-image-img', {
+              scale: 1,
+              duration: 1.6,
+              ease: 'expo.out',
+            }, '<')
+            // 3. Eyebrow slides in
+            .to('.expertise-section .expertise-eyebrow', {
+              xPercent: 0,
+              autoAlpha: 1,
+              duration: 0.7,
+            }, '-=1.4')
+            // 4. Title letters rise per-letter
+            .to('.expertise-section .expertise-letter', {
+              yPercent: 0,
+              autoAlpha: 1,
+              duration: 1.0,
+              stagger: { each: 0.035, from: 'start' },
+              ease: 'power3.out',
+            }, '-=1.2')
+            // 5. Quote mark pops, then subtitle words rise
+            .to('.expertise-section .expertise-quote-mark', {
+              scale: 1,
+              autoAlpha: 1,
+              duration: 0.5,
+              ease: 'back.out(1.6)',
+            }, '-=0.7')
+            .to('.expertise-section .expertise-word', {
+              yPercent: 0,
+              autoAlpha: 1,
+              duration: 0.7,
+              stagger: 0.035,
+              ease: 'power3.out',
+            }, '-=0.4')
+            .to('.expertise-section .expertise-services', {
+              yPercent: 0,
+              autoAlpha: 1,
+              duration: 0.75,
+            }, '-=0.75')
+            .to('.expertise-section .expertise-service-word', {
+              x: 0,
+              autoAlpha: 1,
+              duration: 0.6,
+              stagger: 0.06,
+              ease: 'power3.out',
+            }, '-=0.55')
+            .to('.expertise-section .expertise-icon-tile', {
+              scale: 1,
+              rotation: 0,
+              autoAlpha: 1,
+              duration: 0.65,
+              ease: 'back.out(1.5)',
+            }, '-=0.8');
+
+          // Continuous parallax on the image while the section is in view (desktop only)
           if (isDesktop) {
-            gsap.to('.services-reveal-section .mask-img-target', {
-              yPercent: -8, ease: 'none',
+            gsap.to('.expertise-section .expertise-image-img', {
+              yPercent: -10,
+              ease: 'none',
               scrollTrigger: {
-                trigger: '.services-reveal-section',
-                start: 'top bottom', end: 'bottom top', scrub: 0.5,
+                trigger: '.expertise-section',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.2,
               },
+            });
+            gsap.to('.expertise-section .expertise-stripe-bar', {
+              xPercent: 6,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.expertise-section',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.4,
+              },
+            });
+          }
+
+          // Magnetic hover on each subtitle word (fine pointer only)
+          if (window.matchMedia('(pointer: fine)').matches) {
+            const words = root.querySelectorAll('.expertise-section .expertise-word');
+            words.forEach((el) => {
+              const cleanup = makeMagnetic(gsap, el, 0.35, 0.45);
+              magneticCleanups.push(cleanup);
             });
           }
 
@@ -1009,12 +1211,270 @@ function initAnimations(gsap, ScrollTrigger) {
 }
 
 /* ═══ FAQ ═══════════════════════════════════════════════════════════════ */
+.faq-section {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  padding: clamp(5.5rem, 11vh, 8rem) clamp(1.25rem, 5vw, 5rem);
+  background:
+    radial-gradient(circle at 50% 86%, rgba(255, 153, 0, 0.12), transparent 18rem),
+    radial-gradient(circle at 8% 12%, rgba(255, 153, 0, 0.06), transparent 18rem),
+    #f7f6f1;
+  color: #070707;
+  font-family: Outfit, Arial, sans-serif;
+}
+
+.faq-section::before,
+.faq-section::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.faq-section::before {
+  inset: 0;
+  opacity: 0.42;
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+}
+
+.faq-section::after {
+  top: 18%;
+  right: -7rem;
+  width: 20rem;
+  height: 20rem;
+  border: 1px solid rgba(255, 153, 0, 0.16);
+  opacity: 0.42;
+  transform: rotate(45deg);
+}
+
+.faq-shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) 56px minmax(360px, 1.22fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  width: min(100%, 1180px);
+  min-height: 68vh;
+  margin: 0 auto;
+}
+
+.faq-copy {
+  max-width: 430px;
+}
+
+.faq-subtitle {
+  margin: 0 0 1.65rem;
+  color: #c7831b;
+  font-size: 0.75rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+}
+
+.faq-title {
+  margin: 0 0 1.75rem;
+  color: #080808;
+  font-size: clamp(3.5rem, 6.4vw, 5.9rem);
+  font-weight: 100;
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+
+.faq-title .split-line {
+  display: inline-block;
+}
+
+.faq-desc {
+  max-width: 420px;
+  margin: 0;
+  color: #141414;
+  font-size: clamp(1rem, 1.6vw, 1.14rem);
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.faq-divider {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  min-height: 520px;
+}
+
+.faq-divider::before {
+  content: "";
+  width: 10px;
+  min-height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.02));
+}
+
+.faq-divider span {
+  position: absolute;
+  top: 32%;
+  width: 28px;
+  height: 340px;
+  border-radius: 999px;
+  background: #ff9900;
+  box-shadow:
+    0 18px 45px rgba(255, 153, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.faq-divider span::after {
+  content: "→";
+  position: absolute;
+  top: 1.1rem;
+  left: 50%;
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  transform: translateX(-50%);
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.faq-item {
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 153, 0, 0.64);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow:
+    0 18px 45px rgba(255, 153, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease,
+    border-color 240ms ease,
+    background-color 240ms ease;
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.faq-item:hover {
+  border-color: rgba(255, 153, 0, 0.92);
+  box-shadow:
+    0 24px 58px rgba(255, 153, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  transform: translateY(-2px);
+}
+
+.faq-item-open {
+  border-color: #ff9900;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 30px 70px rgba(255, 153, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.faq-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 74px;
+  padding: 1.2rem 1.55rem 1.15rem;
+  border: 0;
+  gap: 1.5rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-question {
+  color: #0b0b0b;
+  font-size: clamp(1.15rem, 1.8vw, 1.42rem);
+  font-weight: 800;
+  line-height: 1.18;
+}
+
+.faq-icon {
+  position: relative;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #d28410;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+}
+
+.faq-icon-open {
+  color: #ffffff;
+}
+
 .faq-answer-wrap {
+  overflow: hidden;
   will-change: height;
 }
 
+.faq-answer-inner {
+  padding: 0 1.55rem 1.55rem;
+}
+
+.faq-answer {
+  max-width: 640px;
+  margin: 0;
+  color: #171717;
+  font-size: clamp(0.95rem, 1.25vw, 1.05rem);
+  font-weight: 400;
+  line-height: 1.55;
+}
+
 .faq-icon-bar {
+  position: absolute;
+  width: 13px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
   transform-origin: center center;
+}
+
+@media (max-width: 1024px) {
+  .faq-section {
+    min-height: auto;
+  }
+
+  .faq-shell {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .faq-copy {
+    max-width: 620px;
+  }
+
+  .faq-divider {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .faq-section {
+    padding-inline: 1rem;
+  }
+
+  .faq-trigger {
+    min-height: 68px;
+    padding: 1rem 1.1rem;
+  }
+
+  .faq-answer-inner {
+    padding: 0 1.1rem 1.2rem;
+  }
 }
 
 /* ═══ CTA — ORBITAL STAGE ═══════════════════════════════════════════════ */
@@ -1147,6 +1607,304 @@ function initAnimations(gsap, ScrollTrigger) {
 }
 .cta-title-word > span {
   will-change: transform;
+}
+
+/* Expertise poster */
+.expertise-section {
+  position: relative;
+  min-height: clamp(720px, 92vh, 900px);
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(255, 153, 0, 0.08) 0 12%, transparent 12% 100%),
+    linear-gradient(315deg, rgba(255, 153, 0, 0.1) 0 14%, transparent 14% 100%),
+    #f4f4f1;
+  color: #090909;
+  font-family: Outfit, Arial, sans-serif;
+}
+
+.expertise-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(10,10,10,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,10,10,0.08) 1px, transparent 1px),
+    linear-gradient(135deg, transparent 0 47%, rgba(255,153,0,0.18) 47% 48%, transparent 48% 100%);
+  background-size: 92px 92px, 92px 92px, 260px 260px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.expertise-stripe {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.expertise-stripe-bar {
+  position: absolute;
+  left: 5vw;
+  right: 4vw;
+  top: 8%;
+  height: 78%;
+  transform-origin: left center;
+  background:
+    linear-gradient(135deg, rgba(255,153,0,0.98), #ff9900 56%, #d87800);
+  border: 2px solid #090909;
+  box-shadow: 18px 18px 0 #0a0a0a;
+}
+
+.expertise-poster {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto auto auto;
+  gap: 0;
+  width: min(100% - 2rem, 1240px);
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4.5rem) 0 clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.expertise-title-lockup {
+  grid-column: 1 / 7;
+  grid-row: 1;
+  z-index: 5;
+  display: flex;
+  align-items: end;
+  gap: 0;
+  padding-top: 0.35rem;
+}
+
+.expertise-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: clamp(5rem, 8vw, 6.6rem);
+  padding: 0.55rem 1.35rem 0.7rem;
+  background: #0a0a0a;
+  border: 2px solid #0a0a0a;
+  color: #ff9900;
+  font-size: clamp(2.8rem, 5vw, 4.6rem);
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  box-shadow: 12px 12px 0 rgba(0,0,0,0.28);
+  transform: skewX(-13deg);
+}
+
+.expertise-eyebrow::first-letter {
+  transform: skewX(13deg);
+}
+
+.expertise-title {
+  display: flex;
+  align-items: center;
+  min-height: clamp(4.5rem, 7.1vw, 5.9rem);
+  margin: 0 0 0 -0.55rem;
+  padding: 0.55rem 1.45rem 0.7rem 2rem;
+  background: #fffdfa;
+  border: 2px solid #0a0a0a;
+  color: #ff9900;
+  font-size: clamp(2.65rem, 4.4vw, 4.2rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  transform: skewX(-13deg);
+}
+
+.expertise-letter {
+  display: inline-block;
+  transform: skewX(13deg);
+  will-change: transform, opacity;
+}
+
+.expertise-quote-card {
+  grid-column: 7 / 13;
+  grid-row: 1 / 3;
+  z-index: 4;
+  min-height: clamp(260px, 29vw, 335px);
+  margin-top: 1.6rem;
+  padding: clamp(2rem, 4vw, 3.1rem);
+  background: #fffdfa;
+  border: 2px solid #0a0a0a;
+  box-shadow: 18px 18px 0 #0a0a0a;
+}
+
+.expertise-quote-mark {
+  display: inline-block;
+  margin-right: 0.15em;
+  color: #ff9900;
+  font-size: clamp(4.5rem, 7vw, 6.5rem);
+  font-weight: 900;
+  line-height: 0.3;
+  vertical-align: -0.25em;
+  will-change: transform, opacity;
+}
+
+.expertise-subtitle {
+  display: inline;
+  margin: 0;
+  color: #ff9900;
+  font-size: clamp(2.4rem, 4.2vw, 4.6rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+.expertise-word {
+  display: inline-block;
+  margin-right: 0.18em;
+  will-change: transform, opacity;
+}
+
+.expertise-image-wrap {
+  grid-column: 1 / 7;
+  grid-row: 2 / 4;
+  z-index: 3;
+  margin-top: 1.8rem;
+}
+
+.expertise-image {
+  aspect-ratio: 1.55 / 1;
+  overflow: hidden;
+  border: 2px solid #0a0a0a;
+  background: #111;
+  box-shadow: 12px 12px 0 rgba(0,0,0,0.2);
+}
+
+.expertise-image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1);
+}
+
+.expertise-services {
+  grid-column: 6 / 12;
+  grid-row: 3;
+  z-index: 2;
+  align-self: end;
+  margin-top: -1rem;
+  padding: clamp(1.45rem, 3vw, 2.3rem) clamp(1.5rem, 4vw, 3.3rem);
+  background: #ff9900;
+  border: 2px solid #0a0a0a;
+  box-shadow: 14px 14px 0 #0a0a0a;
+}
+
+.expertise-service-word {
+  display: block;
+  color: #fffdfa;
+  font-size: clamp(1.5rem, 2.7vw, 2.55rem);
+  font-weight: 900;
+  line-height: 1.22;
+  text-transform: uppercase;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.22);
+  will-change: transform, opacity;
+}
+
+.expertise-icon-tile {
+  grid-column: 10 / 12;
+  grid-row: 2 / 4;
+  z-index: 6;
+  align-self: center;
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  width: clamp(118px, 13vw, 164px);
+  aspect-ratio: 1;
+  margin-right: -1rem;
+  background: #0a0a0a;
+  border: 2px solid #0a0a0a;
+  color: #ff9900;
+  box-shadow: 12px 12px 0 rgba(0,0,0,0.28);
+}
+
+.expertise-icon-tile svg {
+  width: 72%;
+  height: 72%;
+}
+
+@media (max-width: 1024px) {
+  .expertise-section {
+    min-height: auto;
+  }
+
+  .expertise-poster {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-block: 4rem;
+  }
+
+  .expertise-title-lockup,
+  .expertise-quote-card,
+  .expertise-image-wrap,
+  .expertise-services,
+  .expertise-icon-tile {
+    grid-column: 1;
+    grid-row: auto;
+    margin: 0;
+  }
+
+  .expertise-title-lockup {
+    flex-wrap: wrap;
+  }
+
+  .expertise-quote-card {
+    min-height: auto;
+    box-shadow: 10px 10px 0 #0a0a0a;
+  }
+
+  .expertise-services {
+    box-shadow: 10px 10px 0 #0a0a0a;
+  }
+
+  .expertise-icon-tile {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 560px) {
+  .expertise-poster {
+    width: min(100% - 1rem, 1240px);
+  }
+
+  .expertise-title-lockup {
+    display: block;
+  }
+
+  .expertise-eyebrow,
+  .expertise-title {
+    width: fit-content;
+    min-height: auto;
+  }
+
+  .expertise-title {
+    margin: 0.6rem 0 0;
+  }
+}
+
+/* Expertise section — pre-paint the from-state so there is no flash
+   before GSAP loads. GSAP overwrites these values when it runs. */
+.expertise-section .expertise-stripe-bar {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.expertise-section .expertise-image {
+  clip-path: inset(100% 0 0 0);
+}
+.expertise-section .expertise-image-img {
+  transform: scale(1.25);
+}
+.expertise-section .expertise-letter,
+.expertise-section .expertise-word,
+.expertise-section .expertise-eyebrow,
+.expertise-section .expertise-quote-mark,
+.expertise-section .expertise-quote-card,
+.expertise-section .expertise-services,
+.expertise-section .expertise-service-word,
+.expertise-section .expertise-icon-tile {
+  opacity: 0;
 }
 
 </style>

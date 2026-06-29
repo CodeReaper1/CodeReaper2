@@ -1,0 +1,40 @@
+/* Coconut Water Brand Theme */
+:root {
+  --color-primary: #2A9D8F;
+  --color-primary-light: color-mix(in oklab, #2A9D8F 85%, white);
+  --color-primary-dark: color-mix(in oklab, #2A9D8F 85%, black);
+
+  --color-coco-brown: #8B5E3C;
+  --color-coco-gold: #E9C46A;
+  --color-coco-cream: #F5F1EB;
+  --color-coco-dark: #1B3A35;
+  --color-coco-teal: #2A9D8F;
+}
+
+/* Font override */
+body,
+html {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Coconut hero gradient */
+.coco-hero-bg {
+  background: linear-gradient(135deg, var(--color-coco-dark) 0%, #264e47 50%, #2A9D8F 100%);
+}
+
+/* Leaf SVG decoration */
+.coco-leaf-decoration {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='%232A9D8F' opacity='0.08'%3E%3Cellipse cx='100' cy='100' rx='80' ry='40' transform='rotate(-30 100 100)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: 40%;
+}
+
+/* Feature card hover */
+.coco-feature-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.coco-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(42, 157, 143, 0.15);
+}

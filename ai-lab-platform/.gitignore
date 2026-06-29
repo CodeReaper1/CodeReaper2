@@ -1,7 +1,0 @@
-node_modules/
-*.db
-*.db-journal
-dist/
-.next/
-.env
-uploads/

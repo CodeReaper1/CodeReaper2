@@ -296,13 +296,6 @@
                             <span class="relative z-10">{{ ctaBtn }}</span>
                             <span class="cta-btn-arrow relative z-10 w-9 h-9 md:w-10 md:h-10 rounded-full bg-primary text-black flex items-center justify-center text-lg transition-transform duration-300 group-hover:scale-110">→</span>
                         </NuxtLink>
-
-                        <div class="cta-tagchip relative">
-                            <div class="absolute -top-2 left-6 w-2 h-2 rotate-45 bg-primary"></div>
-                            <div class="px-4 py-1.5 rounded-full bg-primary text-[11px] font-bold tracking-widest uppercase text-black">
-                                {{ ctaOrbitLabel }}
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -332,7 +325,13 @@
                                     class="cta-orbit-chip relative flex items-center justify-center overflow-hidden"
                                     :class="o.type === 'avatar' ? 'cta-orbit-avatar' : 'cta-orbit-icon'"
                                 >
-                                    <img v-if="o.img" :src="o.img" :alt="o.label" class="w-full h-full object-cover" />
+                                    <img
+                                        v-if="o.img"
+                                        :src="o.img"
+                                        :alt="o.label"
+                                        class="w-full h-full"
+                                        :class="o.type === 'avatar' ? 'object-cover' : 'object-contain p-3 md:p-4'"
+                                    />
                                     <span v-else class="text-xl md:text-2xl">{{ o.emoji }}</span>
                                 </div>
                             </div>
@@ -352,7 +351,13 @@
                                     class="cta-orbit-chip relative flex items-center justify-center overflow-hidden"
                                     :class="o.type === 'avatar' ? 'cta-orbit-avatar' : 'cta-orbit-icon'"
                                 >
-                                    <img v-if="o.img" :src="o.img" :alt="o.label" class="w-full h-full object-cover" />
+                                    <img
+                                        v-if="o.img"
+                                        :src="o.img"
+                                        :alt="o.label"
+                                        class="w-full h-full"
+                                        :class="o.type === 'avatar' ? 'object-cover' : 'object-contain p-3 md:p-4'"
+                                    />
                                     <span v-else class="text-xl md:text-2xl">{{ o.emoji }}</span>
                                 </div>
                             </div>
@@ -372,7 +377,13 @@
                                     class="cta-orbit-chip relative flex items-center justify-center overflow-hidden"
                                     :class="o.type === 'avatar' ? 'cta-orbit-avatar' : 'cta-orbit-icon'"
                                 >
-                                    <img v-if="o.img" :src="o.img" :alt="o.label" class="w-full h-full object-cover" />
+                                    <img
+                                        v-if="o.img"
+                                        :src="o.img"
+                                        :alt="o.label"
+                                        class="w-full h-full"
+                                        :class="o.type === 'avatar' ? 'object-cover' : 'object-contain p-3 md:p-4'"
+                                    />
                                     <span v-else class="text-xl md:text-2xl">{{ o.emoji }}</span>
                                 </div>
                             </div>
@@ -470,26 +481,25 @@ const ctaDesc = computed(() => siteSettings.value?.homepageCtaDesc || t('home_ne
 const ctaBtn = computed(() => siteSettings.value?.homepageCtaBtn || t('home_new.cta.btn_talk'));
 const ctaLink = computed(() => siteSettings.value?.homepageCtaLink || '/contact');
 const ctaStatLabel = computed(() => t('home_new.cta.stat_label'));
-const ctaOrbitLabel = computed(() => t('home_new.cta.orbit_label_default'));
 const ctaTitleWords = computed(() => String(ctaTitle.value).split(/\s+/).filter(Boolean));
 
-// Orbit items — avatar-style for a "specialists" feel (mix avatars + tool glyphs)
+// Orbit items — avatar-style for a "specialists" feel (mix avatars + social icons)
 const orbitGroup1 = [
   { type: 'avatar', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&q=80', label: 'Strategy' },
-  { type: 'icon', emoji: '◎', label: 'Design' },
+  { type: 'icon', img: '/img/social/tiktok.svg', label: 'TikTok' },
   { type: 'avatar', img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&q=80', label: 'Engineering' },
 ];
 const orbitGroup2 = [
-  { type: 'icon', emoji: '◆', label: 'Motion' },
+  { type: 'icon', img: '/img/social/instagram.svg', label: 'Instagram' },
   { type: 'avatar', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&q=80', label: 'Art Direction' },
-  { type: 'icon', emoji: '▲', label: 'Systems' },
+  { type: 'icon', img: '/img/social/facebook.svg', label: 'Facebook' },
   { type: 'avatar', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop&q=80', label: 'Product' },
 ];
 const orbitGroup3 = [
   { type: 'avatar', img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=200&h=200&fit=crop&q=80', label: 'Research' },
-  { type: 'icon', emoji: '✦', label: 'Brand' },
+  { type: 'icon', img: '/img/social/tiktok.svg', label: 'TikTok' },
   { type: 'avatar', img: 'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?w=200&h=200&fit=crop&q=80', label: 'Ops' },
-  { type: 'icon', emoji: '◈', label: 'Data' },
+  { type: 'icon', img: '/img/social/instagram.svg', label: 'Instagram' },
   { type: 'avatar', img: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop&q=80', label: 'Growth' },
 ];
 
@@ -1046,10 +1056,7 @@ function initAnimations(gsap, ScrollTrigger) {
               scaleX: 0.3, scaleY: 1.4, autoAlpha: 0,
               transformOrigin: 'left center',
               duration: 0.9, ease: 'back.out(2)',
-            }, '-=0.5')
-            .from('.cta-section .cta-tagchip', {
-              x: -20, autoAlpha: 0, duration: 0.6, ease: 'power3.out',
-            }, '-=0.7');
+            }, '-=0.5');
 
           // Continuous glow pulse (respect reduced motion: already skipped above)
           gsap.to('.cta-bg-glow', {

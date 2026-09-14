@@ -63,18 +63,18 @@ const DEFAULT_FAQ_ITEMS = [
 ];
 
 const DEFAULT_STACK_ITEMS = [
-  { name: 'Figma', category: 'Design', logo: null },
-  { name: 'Nuxt', category: 'Framework', logo: null },
-  { name: 'React', category: 'Framework', logo: null },
-  { name: 'TypeScript', category: 'Language', logo: null },
-  { name: 'Tailwind CSS', category: 'Styling', logo: null },
-  { name: 'GSAP', category: 'Motion', logo: null },
-  { name: 'WordPress', category: 'CMS', logo: null },
-  { name: 'Shopify', category: 'Commerce', logo: null },
-  { name: 'Node.js', category: 'Runtime', logo: null },
-  { name: 'Supabase', category: 'Backend', logo: null },
-  { name: 'Cloudflare', category: 'Infra', logo: null },
-  { name: 'Framer Motion', category: 'Motion', logo: null },
+  { name: 'Figma', category: 'Design', logo: { sourceUrl: '/img/tech/figma.svg', altText: 'Figma logo' } },
+  { name: 'Nuxt', category: 'Framework', logo: { sourceUrl: '/img/tech/nuxt.svg', altText: 'Nuxt logo' } },
+  { name: 'React', category: 'Framework', logo: { sourceUrl: '/img/tech/react.svg', altText: 'React logo' } },
+  { name: 'TypeScript', category: 'Language', logo: { sourceUrl: '/img/tech/typescript.svg', altText: 'TypeScript logo' } },
+  { name: 'Tailwind CSS', category: 'Styling', logo: { sourceUrl: '/img/tech/tailwindcss.svg', altText: 'Tailwind CSS logo' } },
+  { name: 'GSAP', category: 'Motion', logo: { sourceUrl: '/img/tech/gsap.svg', altText: 'GSAP logo' } },
+  { name: 'WordPress', category: 'CMS', logo: { sourceUrl: '/img/tech/wordpress.svg', altText: 'WordPress logo' } },
+  { name: 'Shopify', category: 'Commerce', logo: { sourceUrl: '/img/tech/shopify.svg', altText: 'Shopify logo' } },
+  { name: 'Node.js', category: 'Runtime', logo: { sourceUrl: '/img/tech/nodejs.svg', altText: 'Node.js logo' } },
+  { name: 'Supabase', category: 'Backend', logo: { sourceUrl: '/img/tech/supabase.svg', altText: 'Supabase logo' } },
+  { name: 'Cloudflare', category: 'Infra', logo: { sourceUrl: '/img/tech/cloudflare.svg', altText: 'Cloudflare logo' } },
+  { name: 'Framer Motion', category: 'Motion', logo: { sourceUrl: '/img/tech/framer-motion.svg', altText: 'Framer Motion logo' } },
 ];
 
 const DEFAULTS = {

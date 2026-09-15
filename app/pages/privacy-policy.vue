@@ -30,7 +30,7 @@
                             </div>
                         </div>
 
-                        <div class="card mb-4 mil-up">
+                        <div id="cookies" class="card mb-4 mil-up" style="scroll-margin-top: 120px">
                             <div class="card-body">
                                 <h2 class="h4 mb-3">{{ $t('privacy.cookies_title') }}</h2>
                                 <p>{{ $t('privacy.cookies_desc1') }}</p>

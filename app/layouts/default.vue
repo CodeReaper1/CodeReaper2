@@ -135,15 +135,21 @@
     <footer class="mil-dark-bg">
       <div class="mi-invert-fix">
           <div class="container mil-p-120-60">
-              <div class="row justify-content-between">
-                  <div class="col-md-4 col-lg-4 mil-mb-60">
-                      <div class="mil-muted mil-logo mil-up mil-mb-30">Apex Digital</div>
-                      <p class="mil-light-soft mil-up mil-mb-30">{{ $t('footer.subscribe') }}</p>
-                      <form class="mil-subscribe-form mil-up">
-                          <input type="text" :placeholder="$t('footer.email')">
-                          <button type="submit" class="mil-button mil-icon-button-sm mil-arrow-place"></button>
-                      </form>
+              <div class="ft-top">
+                  <div class="ft-brand">
+                      <div class="mil-muted mil-logo mil-up">Apex Digital</div>
+                      <p class="mil-light-soft ft-tagline">{{ $t('footer.tagline') }}</p>
                   </div>
+
+                  <nav class="ft-links" :aria-label="$t('footer.legal')">
+                      <NuxtLink :to="localePath('/privacy-policy')">{{ $t('nav.privacy') }}</NuxtLink>
+                      <NuxtLink :to="localePath('/privacy-policy') + '#cookies'">{{ $t('footer.cookies') }}</NuxtLink>
+                      <NuxtLink :to="localePath('/contact')">{{ $t('nav.contact') }}</NuxtLink>
+                  </nav>
+              </div>
+
+              <div class="ft-bottom">
+                  <p>{{ $t('footer.rights', { year: currentYear }) }}</p>
               </div>
           </div>
       </div>
@@ -266,6 +272,8 @@ const router = useRouter();
 const localePath = useLocalePath();
 const switchLocalePath = useSwitchLocalePath();
 
+const currentYear = new Date().getFullYear();
+
 const currentPageName = computed(() => {
   const path = route.path;
   if (path === '/') return 'HOMEPAGE';
@@ -338,6 +346,62 @@ onUnmounted(() => {
    container and stops `position: sticky` anywhere inside a page from ever
    sticking. `clip` hides the same overflow without creating that container. */
 .mil-wrapper { overflow: clip; }
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+.ft-top {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.ft-tagline {
+  margin: 1rem 0 0;
+  max-width: 34ch;
+}
+
+.ft-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+}
+
+.ft-links a {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.3s ease;
+}
+
+.ft-links a:hover {
+  color: #ff9900;
+}
+
+.ft-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ft-bottom p {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@media (min-width: 768px) {
+  .ft-top {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .ft-links {
+    justify-content: flex-end;
+    padding-top: 0.5rem;
+  }
+}
 
 /* Force the always-visible logo and burger to white whenever the menu
    is open (otherwise data-nav-theme="light" sections leave them dark

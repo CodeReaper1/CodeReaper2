@@ -327,8 +327,10 @@
     }
   },
   "footer": {
-    "subscribe": "Subscribe to our newsletter",
-    "email": "Enter your email"
+    "tagline": "Digital experiences for brands that want to be remembered.",
+    "legal": "Legal",
+    "cookies": "Cookie Policy",
+    "rights": "© {year} Apex Digital. All rights reserved."
   },
   "privacy": {
     "title": "Privacy Policy",

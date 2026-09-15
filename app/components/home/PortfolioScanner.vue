@@ -240,28 +240,45 @@ function wrap(p) {
   return v;
 }
 
+// Measured straight off each card, the way the original pen does it. Deriving
+// the positions arithmetically was faster but assumed the card order and the
+// offset always agreed with the layout — when they drifted apart, cards were
+// handed each other's clip. A rect can't lie about where its card actually is.
 function applyClipping() {
   const beamX = stageWidth / 2;
   const beamHalf = 4;
-  const w = cardW.value;
+  const beamLeft = beamX - beamHalf;
+  const beamRight = beamX + beamHalf;
+  const stageLeft = stageRef.value ? stageRef.value.getBoundingClientRect().left : 0;
   let scanning = false;
 
-  cardElements().forEach((el, i) => {
-    // Derived from the offset instead of getBoundingClientRect: reading ~30 rects
-    // every frame would force a layout on each one.
-    const left = position + i * pitch();
-    const right = left + w;
+  // Measure everything before touching any style, so the writes can never land
+  // between two reads and force a synchronous layout.
+  const cards = cardElements().map((el) => ({ el, rect: el.getBoundingClientRect() }));
+
+  cards.forEach(({ el, rect }) => {
+    const left = rect.left - stageLeft;
+    const right = rect.right - stageLeft;
+    const width = rect.width || cardW.value;
     const media = el.children[0];
     const code = el.children[1];
 
+    let clipRight;
     let clipLeft;
-    if (right < beamX - beamHalf) clipLeft = 100;
-    else if (left > beamX + beamHalf) clipLeft = 0;
-    else {
+
+    if (right < beamLeft) {
+      // fully past the beam — all code
+      clipRight = 100;
+      clipLeft = 100;
+    } else if (left > beamRight) {
+      // not reached yet — all artwork
+      clipRight = 0;
+      clipLeft = 0;
+    } else {
       scanning = true;
-      clipLeft = Math.min(Math.max(((beamX + beamHalf - left) / w) * 100, 0), 100);
+      clipRight = Math.min(Math.max(((beamLeft - left) / width) * 100, 0), 100);
+      clipLeft = Math.min(Math.max(((beamRight - left) / width) * 100, 0), 100);
     }
-    const clipRight = Math.min(Math.max(((beamX - beamHalf - left) / w) * 100, 0), 100);
 
     media.style.clipPath = `inset(0 0 0 ${clipRight}%)`;
     code.style.clipPath = `inset(0 ${100 - clipLeft}% 0 0)`;

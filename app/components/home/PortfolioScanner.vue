@@ -22,7 +22,6 @@
           <div
             v-for="(card, i) in cards"
             :key="card.key"
-            :ref="setCardRef"
             class="pscan-card-wrap"
             :style="{ width: cardW + 'px', height: cardH + 'px' }"
           >
@@ -63,7 +62,7 @@
 </template>
 
 <script setup>
-import { computed, nextTick, onBeforeUpdate, onMounted, onUnmounted, ref } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
 import { useLocalePath } from '#i18n';
 
 const localePath = useLocalePath();
@@ -116,9 +115,10 @@ const cards = computed(() => {
   return [...set, ...set.map((c, i) => ({ ...c, key: `${c.key}-b${i}` }))];
 });
 
-let cardEls = [];
-const setCardRef = (el) => { if (el) cardEls.push(el); };
-onBeforeUpdate(() => { cardEls = []; });
+// Live DOM order is the only safe source of truth here: a ref array collected
+// through :ref only gets refreshed for elements Vue re-creates, so it silently
+// falls out of sync with layout order when the card count changes.
+const cardElements = () => (lineRef.value ? Array.from(lineRef.value.children) : []);
 
 /* ── code rain text ─────────────────────────────────────────────────────── */
 const CODE_LIBRARY = [
@@ -174,9 +174,15 @@ function fillAllCode(force = false) {
   const cols = Math.floor(cardW.value / CHAR_W);
   const rows = Math.floor(cardH.value / LINE_H);
   const key = `${cols}x${rows}`;
-  if (!force && key === codeGrid) return;
+  const gridChanged = key !== codeGrid;
   codeGrid = key;
-  cardEls.forEach((el) => fillCode(el, cols, rows));
+  cardElements().forEach((el) => {
+    const pre = el.querySelector('.pscan-code');
+    if (!pre) return;
+    // Cards added by a wider viewport start empty and need filling; the rest keep
+    // the text they already have unless the grid itself changed.
+    if (force || gridChanged || !pre.textContent) fillCode(el, cols, rows);
+  });
 }
 
 /* ── stream motion ──────────────────────────────────────────────────────── */
@@ -240,7 +246,7 @@ function applyClipping() {
   const w = cardW.value;
   let scanning = false;
 
-  cardEls.forEach((el, i) => {
+  cardElements().forEach((el, i) => {
     // Derived from the offset instead of getBoundingClientRect: reading ~30 rects
     // every frame would force a layout on each one.
     const left = position + i * pitch();
@@ -534,7 +540,6 @@ onUnmounted(() => {
   if (onResize) window.removeEventListener('resize', onResize);
   beamParticles = [];
   dust = [];
-  cardEls = [];
 });
 </script>
 

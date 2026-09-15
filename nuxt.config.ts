@@ -10,6 +10,8 @@ export default defineNuxtConfig({
       { code: 'bg', iso: 'bg-BG', file: 'bg.json', name: 'Български' }
     ],
     defaultLocale: 'en',
+    // Without this a key missing from a locale renders as the raw key path.
+    vueI18n: './i18n.config.ts',
     lazy: true,
     strategy: 'prefix_except_default', // '/bg' for Bulgarian, '/' for English
     detectBrowserLanguage: {

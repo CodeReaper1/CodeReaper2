@@ -45,67 +45,25 @@
     </section>
     <!-- banner end -->
 
-    <!-- 2. Expertise poster -->
-    <section class="expertise-section" data-nav-theme="light">
-        <div class="expertise-bg-grid" aria-hidden="true"></div>
-        <div class="expertise-stripe" aria-hidden="true">
-            <div class="expertise-stripe-bar"></div>
+    <!-- 2. Philosophy -->
+    <section class="philo" id="philo" data-nav-theme="light">
+        <div class="philo-head">
+            <span>{{ philoLabel1 }}</span>
+            <span>{{ philoLabel2 }}</span>
         </div>
-
-        <div class="expertise-poster">
-            <div class="expertise-title-lockup" ref="expertiseTitleRef">
-                <span class="expertise-eyebrow">Our</span>
-                <h2 class="expertise-title" aria-label="Expertise">
-                    <span
-                        v-for="(letter, i) in expertiseTitleLetters"
-                        :key="'el' + i"
-                        class="expertise-letter"
-                        v-html="letter"
-                    ></span>
-                </h2>
-            </div>
-
-            <div class="expertise-quote-card" ref="expertiseSubtitleRef">
-                <span class="expertise-quote-mark">&ldquo;</span>
-                <p class="expertise-subtitle">
-                    <span
-                        v-for="(word, i) in expertiseSubtitleWords"
-                        :key="'ew' + i"
-                        class="expertise-word"
-                    >{{ word }}</span>
-                </p>
-            </div>
-
-            <div class="expertise-image-wrap">
-                <div class="expertise-image">
-                    <img
-                        :src="siteSettings?.homepageExpertiseImage || 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1400&auto=format&fit=crop'"
-                        class="expertise-image-img"
-                        alt="Sketching digital product ideas"
-                    />
-                </div>
-            </div>
-
-            <div class="expertise-services">
-                <span class="expertise-service-word">Digital Strategy</span>
-                <span class="expertise-service-word">Branding</span>
-                <span class="expertise-service-word">UI/UX Design</span>
-                <span class="expertise-service-word">Web Development</span>
-                <span class="expertise-service-word">Content Creation</span>
-            </div>
-
-            <div class="expertise-icon-tile" aria-hidden="true">
-                <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M38 70h20M40 80h16M29 44c0-12 8-21 19-21s19 9 19 21c0 8-4 13-9 18-3 3-4 5-4 8H42c0-3-1-5-4-8-5-5-9-10-9-18Z" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M48 12V5M20 25l-5-5M76 25l5-5M16 48H8M80 48h8" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-                    <path d="M69 66l4-4 5 3 4-7-5-3v-6l5-3-4-7-5 3-4-4-3-5h-8l-3 5-4 4-5-3-4 7 5 3v6l-5 3 4 7 5-3 4 4 3 5h8l3-5Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
-                    <circle cx="62" cy="52" r="7" stroke="currentColor" stroke-width="4"/>
-                </svg>
-            </div>
-        </div>
+        <p class="philo-txt"><template
+            v-for="(w, i) in philoWords"
+            :key="'pw' + i"
+        ><em
+            v-if="w.accent"
+            class="pw accent"
+        >{{ w.text }}</em><span
+            v-else
+            class="pw"
+        >{{ w.text }}</span>{{ ' ' }}</template></p>
     </section>
 
-    <HomePortfolioCinema :projects="showcaseProjects" />
+    <HomePortfolioScanner :projects="showcaseProjects" />
 
     <!-- 3. Deep Parallax About -->
     <section class="deep-parallax-section relative h-[100vh] md:h-[130vh] bg-background-dark overflow-hidden flex items-center justify-center border-y border-gray-900 z-0" data-nav-theme="dark">
@@ -294,7 +252,7 @@
                         <NuxtLink :to="localePath(ctaLink)" class="cta-btn group relative inline-flex items-center gap-3 pl-8 pr-4 py-3 md:py-4 rounded-full bg-[#111] border border-white/20 text-white font-bold text-sm md:text-base tracking-wider overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)] hover:border-primary/50 transition-colors duration-300">
                             <span class="cta-btn-glow absolute inset-0 bg-gradient-to-r from-primary via-[#FFB870] to-primary opacity-0 group-hover:opacity-10 transition-opacity duration-500"></span>
                             <span class="relative z-10">{{ ctaBtn }}</span>
-                            <span class="cta-btn-arrow relative z-10 w-9 h-9 md:w-10 md:h-10 rounded-full bg-primary text-black flex items-center justify-center text-lg transition-transform duration-300 group-hover:scale-110">→</span>
+                            <span class="cta-btn-arrow relative z-10 shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-black flex items-center justify-center text-2xl md:text-3xl leading-none transition-transform duration-300 group-hover:scale-110">→</span>
                         </NuxtLink>
                     </div>
                 </div>
@@ -418,28 +376,19 @@ const showcaseProjects = computed(() =>
   wpProjects.value?.length ? wpProjects.value.slice(0, 3) : fallbackProjects
 );
 
-// ── Expertise section (CMS-driven, GSAP animated) ────────────────────────
-const expertiseTitleRef = ref(null);
-const expertiseSubtitleRef = ref(null);
+// ── Philosophy section ───────────────────────────────────────────────────
+const philoLabel1 = computed(() => t('home_new.philosophy.label_1'));
+const philoLabel2 = computed(() => t('home_new.philosophy.label_2'));
 
-const expertiseTitleText = computed(() =>
-  siteSettings.value?.homepageExpertiseTitle || t('home_new.expertise.title')
-);
-const expertiseSubtitleText = computed(() =>
-  siteSettings.value?.homepageExpertiseSubtitle || t('home_new.expertise.subtitle')
-);
+// The accent phrase lights up as one unit, so it is never split into words.
+const splitWords = (s) =>
+  String(s).trim().split(/\s+/).filter(Boolean).map((text) => ({ text, accent: false }));
 
-// Split title into per-letter spans (preserve spaces with NBSP) for stagger animation.
-const expertiseTitleLetters = computed(() => {
-  const raw = String(expertiseTitleText.value)
-    .replace(/<[^>]+>/g, '')
-    .replace(/^our\s+/i, '');
-  return Array.from(raw).map((ch) => (ch === ' ' ? '&nbsp;' : ch));
-});
-const expertiseSubtitleWords = computed(() => {
-  const raw = String(expertiseSubtitleText.value).replace(/<[^>]+>/g, '').trim();
-  return raw.length ? raw.split(/\s+/) : [];
-});
+const philoWords = computed(() => [
+  ...splitWords(t('home_new.philosophy.lead')),
+  { text: t('home_new.philosophy.accent'), accent: true },
+  ...splitWords(t('home_new.philosophy.rest')),
+]);
 
 // ── Stack section ────────────────────────────────────────────────────────
 const stackSubtitle = computed(() => siteSettings.value?.homepageStackSubtitle || t('home_new.stack.subtitle'));
@@ -506,6 +455,7 @@ const orbitGroup3 = [
 useHead({
   link: [
     { href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;500;700&display=swap', rel: 'stylesheet' },
+    { href: 'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,500;0,600;0,700;1,700&display=swap', rel: 'stylesheet' },
     { href: 'https://fonts.googleapis.com/icon?family=Material+Icons', rel: 'stylesheet' },
     { href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap', rel: 'stylesheet' }
   ]
@@ -637,189 +587,28 @@ function initAnimations(gsap, ScrollTrigger) {
           });
 
           // If the user prefers reduced motion, skip the choreographed sections entirely
+          // (the philosophy words fall back to a readable static colour in CSS)
           if (reduceMotion) {
-            gsap.set([
-              '.expertise-section .expertise-stripe-bar',
-              '.expertise-section .expertise-image',
-              '.expertise-section .expertise-image-img',
-              '.expertise-section .expertise-letter',
-              '.expertise-section .expertise-word',
-              '.expertise-section .expertise-eyebrow',
-              '.expertise-section .expertise-quote-mark',
-              '.expertise-section .expertise-quote-card',
-              '.expertise-section .expertise-services',
-              '.expertise-section .expertise-service-word',
-              '.expertise-section .expertise-icon-tile',
-            ], {
-              clearProps: 'all',
-              autoAlpha: 1,
-            });
             ScrollTrigger.refresh();
             return;
           }
 
-          // ═══ 1. EXPERTISE — diagonal sweep + hex image + per-letter title ═══
-          // Initial states (set without flicker — done in onMounted before triggers fire)
-          gsap.set('.expertise-section .expertise-stripe-bar', {
-            scaleX: 0,
-            transformOrigin: 'left center',
-          });
-          gsap.set('.expertise-section .expertise-image', {
-            clipPath: 'inset(100% 0 0 0)',
-          });
-          gsap.set('.expertise-section .expertise-image-img', {
-            scale: 1.25,
-          });
-          gsap.set('.expertise-section .expertise-letter', {
-            yPercent: 110,
-            autoAlpha: 0,
-          });
-          gsap.set('.expertise-section .expertise-word', {
-            yPercent: 60,
-            autoAlpha: 0,
-          });
-          gsap.set('.expertise-section .expertise-eyebrow', {
-            xPercent: -20,
-            autoAlpha: 0,
-          });
-          gsap.set('.expertise-section .expertise-quote-mark', {
-            scale: 0,
-            autoAlpha: 0,
-            transformOrigin: 'center center',
-          });
-          gsap.set('.expertise-section .expertise-quote-card', {
-            xPercent: 8,
-            y: 24,
-            autoAlpha: 0,
-          });
-          gsap.set('.expertise-section .expertise-services', {
-            yPercent: 18,
-            autoAlpha: 0,
-          });
-          gsap.set('.expertise-section .expertise-service-word', {
-            x: -28,
-            autoAlpha: 0,
-          });
-          gsap.set('.expertise-section .expertise-icon-tile', {
-            scale: 0.72,
-            rotation: -5,
-            autoAlpha: 0,
-          });
-
-          const expertiseTl = gsap.timeline({
+          // ═══ 1. PHILOSOPHY — per-word colour scrub ══════════════════════════
+          // Both endpoint colours read pale on the cream ground; the dark band
+          // is the midpoint of the ramp travelling through the paragraph.
+          // duration / stagger IS that band's width, in words (~8).
+          gsap.to('.philo .pw', {
+            color: (i, el) => (el.classList.contains('accent') ? 'rgb(0, 205, 88)' : 'rgb(231, 231, 231)'),
+            ease: 'none',
+            duration: 1,
+            stagger: 0.12,
             scrollTrigger: {
-              trigger: '.expertise-section',
-              start: 'top 72%',
-              toggleActions: 'play none none reverse',
+              trigger: '.philo',
+              start: 'top 75%',
+              end: 'bottom top',
+              scrub: 1,
             },
-            defaults: { ease: 'expo.out' },
           });
-
-          expertiseTl
-            // 1. Orange diagonal stripe sweeps in from the left
-            .to('.expertise-section .expertise-stripe-bar', {
-              scaleX: 1,
-              duration: 1.2,
-              ease: 'expo.inOut',
-            })
-            .to('.expertise-section .expertise-quote-card', {
-              xPercent: 0,
-              y: 0,
-              autoAlpha: 1,
-              duration: 0.9,
-            }, '-=0.75')
-            // 2. Image clip-path expands to its final hex shape, image un-zooms
-            .to('.expertise-section .expertise-image', {
-              clipPath: 'inset(0% 0 0 0)',
-              duration: 1.1,
-              ease: 'expo.inOut',
-            }, '-=0.85')
-            .to('.expertise-section .expertise-image-img', {
-              scale: 1,
-              duration: 1.6,
-              ease: 'expo.out',
-            }, '<')
-            // 3. Eyebrow slides in
-            .to('.expertise-section .expertise-eyebrow', {
-              xPercent: 0,
-              autoAlpha: 1,
-              duration: 0.7,
-            }, '-=1.4')
-            // 4. Title letters rise per-letter
-            .to('.expertise-section .expertise-letter', {
-              yPercent: 0,
-              autoAlpha: 1,
-              duration: 1.0,
-              stagger: { each: 0.035, from: 'start' },
-              ease: 'power3.out',
-            }, '-=1.2')
-            // 5. Quote mark pops, then subtitle words rise
-            .to('.expertise-section .expertise-quote-mark', {
-              scale: 1,
-              autoAlpha: 1,
-              duration: 0.5,
-              ease: 'back.out(1.6)',
-            }, '-=0.7')
-            .to('.expertise-section .expertise-word', {
-              yPercent: 0,
-              autoAlpha: 1,
-              duration: 0.7,
-              stagger: 0.035,
-              ease: 'power3.out',
-            }, '-=0.4')
-            .to('.expertise-section .expertise-services', {
-              yPercent: 0,
-              autoAlpha: 1,
-              duration: 0.75,
-            }, '-=0.75')
-            .to('.expertise-section .expertise-service-word', {
-              x: 0,
-              autoAlpha: 1,
-              duration: 0.6,
-              stagger: 0.06,
-              ease: 'power3.out',
-            }, '-=0.55')
-            .to('.expertise-section .expertise-icon-tile', {
-              scale: 1,
-              rotation: 0,
-              autoAlpha: 1,
-              duration: 0.65,
-              ease: 'back.out(1.5)',
-            }, '-=0.8');
-
-          // Continuous parallax on the image while the section is in view (desktop only)
-          if (isDesktop) {
-            gsap.to('.expertise-section .expertise-image-img', {
-              yPercent: -10,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: '.expertise-section',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1.2,
-              },
-            });
-            gsap.to('.expertise-section .expertise-stripe-bar', {
-              xPercent: 6,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: '.expertise-section',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1.4,
-              },
-            });
-          }
-
-          // Magnetic hover on each subtitle word (fine pointer only)
-          if (window.matchMedia('(pointer: fine)').matches) {
-            const words = root.querySelectorAll('.expertise-section .expertise-word');
-            words.forEach((el) => {
-              const cleanup = makeMagnetic(gsap, el, 0.35, 0.45);
-              magneticCleanups.push(cleanup);
-            });
-          }
-
           // ═══ 3. DEEP PARALLAX — clip-path line reveal + counting stats + drift ═
           const parallaxHeadline = root.querySelector('.deep-parallax-section .parallax-layer[data-speed="0"] > div:nth-child(2)');
           const parallaxTl = gsap.timeline({
@@ -1616,302 +1405,68 @@ function initAnimations(gsap, ScrollTrigger) {
   will-change: transform;
 }
 
-/* Expertise poster */
-.expertise-section {
-  position: relative;
-  min-height: clamp(720px, 92vh, 900px);
-  overflow: hidden;
-  background:
-    linear-gradient(135deg, rgba(255, 153, 0, 0.08) 0 12%, transparent 12% 100%),
-    linear-gradient(315deg, rgba(255, 153, 0, 0.1) 0 14%, transparent 14% 100%),
-    #f4f4f1;
-  color: #090909;
-  font-family: Outfit, Arial, sans-serif;
+/* Philosophy — cream section, per-word colour scrub */
+.philo {
+  background: #f8f7f1;
+  padding: 7.75rem clamp(1.5rem, 5.7vw, 5rem) 6.5rem;
+  font-family: Rubik, Outfit, Arial, sans-serif;
 }
 
-.expertise-bg-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(10,10,10,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(10,10,10,0.08) 1px, transparent 1px),
-    linear-gradient(135deg, transparent 0 47%, rgba(255,153,0,0.18) 47% 48%, transparent 48% 100%);
-  background-size: 92px 92px, 92px 92px, 260px 260px;
-  opacity: 0.55;
-  pointer-events: none;
-}
-
-.expertise-stripe {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.expertise-stripe-bar {
-  position: absolute;
-  left: 5vw;
-  right: 4vw;
-  top: 8%;
-  height: 78%;
-  transform-origin: left center;
-  background:
-    linear-gradient(135deg, rgba(255,153,0,0.98), #ff9900 56%, #d87800);
-  border: 2px solid #090909;
-  box-shadow: 18px 18px 0 #0a0a0a;
-}
-
-.expertise-poster {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: auto auto auto;
-  gap: 0;
-  width: min(100% - 2rem, 1240px);
-  margin: 0 auto;
-  padding: clamp(2rem, 6vw, 4.5rem) 0 clamp(2.5rem, 6vw, 4.5rem);
-}
-
-.expertise-title-lockup {
-  grid-column: 1 / 7;
-  grid-row: 1;
-  z-index: 5;
+.philo-head {
   display: flex;
-  align-items: end;
-  gap: 0;
-  padding-top: 0.35rem;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2.6rem;
 }
 
-.expertise-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  min-height: clamp(5rem, 8vw, 6.6rem);
-  padding: 0.55rem 1.35rem 0.7rem;
-  background: #0a0a0a;
-  border: 2px solid #0a0a0a;
-  color: #ff9900;
-  font-size: clamp(2.8rem, 5vw, 4.6rem);
-  font-weight: 900;
-  line-height: 0.9;
+.philo-head span {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  box-shadow: 12px 12px 0 rgba(0,0,0,0.28);
-  transform: skewX(-13deg);
+  color: rgba(20, 20, 20, 0.66);
 }
 
-.expertise-eyebrow::first-letter {
-  transform: skewX(13deg);
-}
-
-.expertise-title {
-  display: flex;
-  align-items: center;
-  min-height: clamp(4.5rem, 7.1vw, 5.9rem);
-  margin: 0 0 0 -0.55rem;
-  padding: 0.55rem 1.45rem 0.7rem 2rem;
-  background: #fffdfa;
-  border: 2px solid #0a0a0a;
-  color: #ff9900;
-  font-size: clamp(2.65rem, 4.4vw, 4.2rem);
-  font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  transform: skewX(-13deg);
-}
-
-.expertise-letter {
-  display: inline-block;
-  transform: skewX(13deg);
-  will-change: transform, opacity;
-}
-
-.expertise-quote-card {
-  grid-column: 7 / 13;
-  grid-row: 1 / 3;
-  z-index: 4;
-  min-height: clamp(260px, 29vw, 335px);
-  margin-top: 1.6rem;
-  padding: clamp(2rem, 4vw, 3.1rem);
-  background: #fffdfa;
-  border: 2px solid #0a0a0a;
-  box-shadow: 18px 18px 0 #0a0a0a;
-}
-
-.expertise-quote-mark {
-  display: inline-block;
-  margin-right: 0.15em;
-  color: #ff9900;
-  font-size: clamp(4.5rem, 7vw, 6.5rem);
-  font-weight: 900;
-  line-height: 0.3;
-  vertical-align: -0.25em;
-  will-change: transform, opacity;
-}
-
-.expertise-subtitle {
-  display: inline;
+.philo-txt {
   margin: 0;
-  color: #ff9900;
-  font-size: clamp(2.4rem, 4.2vw, 4.6rem);
-  font-weight: 900;
-  line-height: 0.95;
-  letter-spacing: -0.045em;
+  max-width: 13em;
+  font-size: clamp(1.72rem, 6.83vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.165;
 }
 
-.expertise-word {
-  display: inline-block;
-  margin-right: 0.18em;
-  will-change: transform, opacity;
+/* Resting colours — the tween drives `color` from here to the lit values. */
+.philo .pw {
+  color: rgba(20, 20, 20, 0.16);
 }
 
-.expertise-image-wrap {
-  grid-column: 1 / 7;
-  grid-row: 2 / 4;
-  z-index: 3;
-  margin-top: 1.8rem;
+.philo .pw.accent {
+  color: rgba(0, 205, 88, 0.18);
+  font-style: italic;
 }
 
-.expertise-image {
-  aspect-ratio: 1.55 / 1;
-  overflow: hidden;
-  border: 2px solid #0a0a0a;
-  background: #111;
-  box-shadow: 12px 12px 0 rgba(0,0,0,0.2);
-}
-
-.expertise-image-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.1);
-}
-
-.expertise-services {
-  grid-column: 6 / 12;
-  grid-row: 3;
-  z-index: 2;
-  align-self: end;
-  margin-top: -1rem;
-  padding: clamp(1.45rem, 3vw, 2.3rem) clamp(1.5rem, 4vw, 3.3rem);
-  background: #ff9900;
-  border: 2px solid #0a0a0a;
-  box-shadow: 14px 14px 0 #0a0a0a;
-}
-
-.expertise-service-word {
-  display: block;
-  color: #fffdfa;
-  font-size: clamp(1.5rem, 2.7vw, 2.55rem);
-  font-weight: 900;
-  line-height: 1.22;
-  text-transform: uppercase;
-  text-shadow: 0 2px 0 rgba(0,0,0,0.22);
-  will-change: transform, opacity;
-}
-
-.expertise-icon-tile {
-  grid-column: 10 / 12;
-  grid-row: 2 / 4;
-  z-index: 6;
-  align-self: center;
-  justify-self: end;
-  display: grid;
-  place-items: center;
-  width: clamp(118px, 13vw, 164px);
-  aspect-ratio: 1;
-  margin-right: -1rem;
-  background: #0a0a0a;
-  border: 2px solid #0a0a0a;
-  color: #ff9900;
-  box-shadow: 12px 12px 0 rgba(0,0,0,0.28);
-}
-
-.expertise-icon-tile svg {
-  width: 72%;
-  height: 72%;
-}
-
-@media (max-width: 1024px) {
-  .expertise-section {
-    min-height: auto;
+@media (min-width: 900px) {
+  .philo {
+    padding-top: 11rem;
+    padding-bottom: 10rem;
   }
 
-  .expertise-poster {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding-block: 4rem;
-  }
-
-  .expertise-title-lockup,
-  .expertise-quote-card,
-  .expertise-image-wrap,
-  .expertise-services,
-  .expertise-icon-tile {
-    grid-column: 1;
-    grid-row: auto;
-    margin: 0;
-  }
-
-  .expertise-title-lockup {
-    flex-wrap: wrap;
-  }
-
-  .expertise-quote-card {
-    min-height: auto;
-    box-shadow: 10px 10px 0 #0a0a0a;
-  }
-
-  .expertise-services {
-    box-shadow: 10px 10px 0 #0a0a0a;
-  }
-
-  .expertise-icon-tile {
-    justify-self: start;
+  .philo-head {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
   }
 }
 
-@media (max-width: 560px) {
-  .expertise-poster {
-    width: min(100% - 1rem, 1240px);
+@media (prefers-reduced-motion: reduce) {
+  .philo .pw {
+    color: rgba(20, 20, 20, 0.85);
   }
 
-  .expertise-title-lockup {
-    display: block;
-  }
-
-  .expertise-eyebrow,
-  .expertise-title {
-    width: fit-content;
-    min-height: auto;
-  }
-
-  .expertise-title {
-    margin: 0.6rem 0 0;
+  .philo .pw.accent {
+    color: rgb(0, 205, 88);
   }
 }
-
-/* Expertise section — pre-paint the from-state so there is no flash
-   before GSAP loads. GSAP overwrites these values when it runs. */
-.expertise-section .expertise-stripe-bar {
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-.expertise-section .expertise-image {
-  clip-path: inset(100% 0 0 0);
-}
-.expertise-section .expertise-image-img {
-  transform: scale(1.25);
-}
-.expertise-section .expertise-letter,
-.expertise-section .expertise-word,
-.expertise-section .expertise-eyebrow,
-.expertise-section .expertise-quote-mark,
-.expertise-section .expertise-quote-card,
-.expertise-section .expertise-services,
-.expertise-section .expertise-service-word,
-.expertise-section .expertise-icon-tile {
-  opacity: 0;
-}
-
 </style>

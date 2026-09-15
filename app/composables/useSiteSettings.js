@@ -23,9 +23,6 @@ const SETTINGS_QUERY = `
         title
         desc
       }
-      homepageExpertiseTitle
-      homepageExpertiseSubtitle
-      homepageExpertiseImage
       homepageCtaTitle
       homepageCtaDesc
       homepageCtaBtn
@@ -52,15 +49,6 @@ const SETTINGS_QUERY = `
     }
   }
 `;
-
-const DEFAULT_FAQ_ITEMS = [
-  { question: 'How long does a typical project take?', answer: 'Most of our engagements run 6 to 12 weeks from kickoff to launch. Larger platforms can extend to 3–6 months — we scope each one from your goals, not a template.' },
-  { question: 'Do you work with in-house teams?', answer: 'Yes. We pair well with internal design, product, and engineering teams — either leading the work or filling specific gaps. We scale in or out based on what you actually need.' },
-  { question: 'What does pricing look like?', answer: 'Fixed-fee by project or monthly retainer. You get a line-item proposal after the discovery call — no hidden hours, no surprise change orders.' },
-  { question: 'Who owns the work once it ships?', answer: 'You do. Full source, assets, accounts, and documentation transfer on delivery. We will happily stay on for maintenance, but we do not hold your work hostage.' },
-  { question: 'Do you do just design, or also build?', answer: 'Both. Strategy, brand, product design, and production engineering (web, Shopify, headless CMS, Nuxt, Next). Most clients hire us for the full loop.' },
-  { question: 'Where are you based?', answer: 'Montreal, working with clients globally. Async-first, with weekly syncs in your timezone.' },
-];
 
 const DEFAULT_STACK_ITEMS = [
   { name: 'Figma', category: 'Design', logo: { sourceUrl: '/img/tech/figma.svg', altText: 'Figma logo' } },
@@ -100,9 +88,6 @@ const DEFAULTS = {
     { title: 'Development & Build', desc: 'We bring designs to life using modern frameworks, ensuring fast, scalable, and secure digital products.' },
     { title: 'Launch & Growth', desc: 'After a successful launch, we focus on continuous optimization and digital marketing to drive growth.' },
   ],
-  homepageExpertiseTitle: '',
-  homepageExpertiseSubtitle: '',
-  homepageExpertiseImage: '',
   homepageCtaTitle: '',
   homepageCtaDesc: '',
   homepageCtaBtn: '',
@@ -110,9 +95,11 @@ const DEFAULTS = {
   homepageCtaLink: '/contact',
   homepageScrollingTitle: 'Selected Work',
   homepageScrollingSubtitle: 'Digital Dust',
-  homepageFaqTitle: 'Questions, answered',
-  homepageFaqSubtitle: 'FAQ',
-  homepageFaqItems: DEFAULT_FAQ_ITEMS,
+  // Empty on purpose: index.vue falls through to the translated i18n copy
+  // when the CMS has nothing, so English defaults here would beat every translation.
+  homepageFaqTitle: '',
+  homepageFaqSubtitle: '',
+  homepageFaqItems: [],
   homepageStackTitle: 'The stack we ship with',
   homepageStackSubtitle: 'Tech & Tools',
   homepageStackItems: DEFAULT_STACK_ITEMS,
@@ -121,8 +108,7 @@ const DEFAULTS = {
 function normalize(s) {
   if (!s) return { ...DEFAULTS };
   const out = { ...DEFAULTS, ...s };
-  const faqItems = Array.isArray(s.homepageFaqItems) ? s.homepageFaqItems.filter(i => i && i.question) : [];
-  out.homepageFaqItems = faqItems.length ? faqItems : DEFAULT_FAQ_ITEMS;
+  out.homepageFaqItems = Array.isArray(s.homepageFaqItems) ? s.homepageFaqItems.filter(i => i && i.question) : [];
   const stackItems = Array.isArray(s.homepageStackItems) ? s.homepageStackItems.filter(i => i && i.name) : [];
   out.homepageStackItems = stackItems.length ? stackItems : DEFAULT_STACK_ITEMS;
   const processSteps = Array.isArray(s.homepageProcessSteps) ? s.homepageProcessSteps.filter(i => i && i.title) : [];

@@ -1,10 +1,14 @@
 <template>
-  <main class="bg-[#0a0a0a] min-h-screen text-white overflow-hidden">
+  <!-- overflow-clip, not overflow-hidden: `hidden` makes this a scroll container and kills position:sticky inside -->
+  <main class="bg-[#0a0a0a] min-h-screen text-white overflow-clip">
     <div class="mil-content">
       <div id="swupMain" class="mil-main-transition">
 
         <!-- 1. Cinematic Hero — Split Reveal with Geometric Canvas -->
-        <section class="wd-hero-section relative min-h-screen flex items-center overflow-hidden mil-banner mil-dark-bg">
+        <!-- No mil-dark-bg here: the theme paints it with `backdrop-filter: invert(100%)`,
+             which assumes a light page. This page is already dark, so the invert washed the
+             whole hero out to near-white. data-nav-theme keeps the nav inversion working. -->
+        <section class="wd-hero-section relative min-h-screen flex items-center overflow-hidden mil-banner" data-nav-theme="dark">
             <!-- Geometric Background Layer (dodecatrons preserved exactly) -->
             <div class="absolute inset-0 z-0 wd-hero-bg opacity-40">
                 <div class="mi-invert-fix">
@@ -19,6 +23,9 @@
 
             <!-- Ambient glow pulse -->
             <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] rounded-full bg-[#FF9900]/[0.04] blur-[120px] pointer-events-none z-[1] wd-glow-pulse"></div>
+
+            <!-- Soft grey wash — the geometric layer reads as empty black at phone sizes -->
+            <div class="wd-hero-wash lg:hidden absolute inset-0 z-[1] pointer-events-none" aria-hidden="true"></div>
 
             <div class="container relative z-20 px-6 md:px-12 pt-32 pb-20">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[70vh]">
@@ -53,19 +60,19 @@
                         </div>
                     </div>
 
-                    <!-- Right: Floating Metric Cards -->
-                    <div class="lg:col-span-5 xl:col-span-6 relative hidden lg:flex items-center justify-center h-[500px]">
-                        <div class="wd-metric-card absolute top-[5%] right-[10%] bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-6 transform rotate-3">
-                            <div class="text-4xl font-bold text-[#FF9900] mb-1">99.9%</div>
-                            <div class="text-xs tracking-widest text-gray-500 uppercase">Uptime SLA</div>
+                    <!-- Right: Floating Metric Cards — absolute/scattered from lg up, a plain row below it -->
+                    <div class="wd-metrics lg:col-span-5 xl:col-span-6 relative mt-14 lg:mt-0 grid grid-cols-2 gap-4 sm:gap-5 lg:block lg:h-[500px]">
+                        <div class="wd-metric-card lg:absolute lg:top-[5%] lg:right-[10%] bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-5 py-4 md:px-8 md:py-6 lg:rotate-3">
+                            <div class="text-3xl md:text-4xl font-bold text-[#FF9900] mb-1">99.9%</div>
+                            <div class="text-[10px] md:text-xs tracking-widest text-gray-500 uppercase">Uptime SLA</div>
                         </div>
-                        <div class="wd-metric-card absolute top-[35%] left-[0%] bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-6 transform -rotate-2">
-                            <div class="text-4xl font-bold text-white mb-1">&lt;0.8s</div>
-                            <div class="text-xs tracking-widest text-gray-500 uppercase">Avg Load Time</div>
+                        <div class="wd-metric-card lg:absolute lg:top-[35%] lg:left-[0%] bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-5 py-4 md:px-8 md:py-6 lg:-rotate-2">
+                            <div class="text-3xl md:text-4xl font-bold text-white mb-1">&lt;0.8s</div>
+                            <div class="text-[10px] md:text-xs tracking-widest text-gray-500 uppercase">Avg Load Time</div>
                         </div>
-                        <div class="wd-metric-card absolute bottom-[10%] right-[5%] bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-6 transform rotate-1">
-                            <div class="text-4xl font-bold text-white mb-1">100</div>
-                            <div class="text-xs tracking-widest text-gray-500 uppercase">PageSpeed Score</div>
+                        <div class="wd-metric-card col-span-2 lg:absolute lg:bottom-[10%] lg:right-[5%] bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-5 py-4 md:px-8 md:py-6 lg:rotate-1">
+                            <div class="text-3xl md:text-4xl font-bold text-white mb-1">100</div>
+                            <div class="text-[10px] md:text-xs tracking-widest text-gray-500 uppercase">PageSpeed Score</div>
                         </div>
                     </div>
                 </div>
@@ -158,7 +165,8 @@
         </section>
 
         <!-- 4. Process Sequence — Accordion Unfold (with vertical accordion unfold transition) -->
-        <section class="wd-pricing-section relative pt-48 pb-32 bg-[#050505] overflow-hidden" style="will-change: transform;">
+        <!-- overflow-x-clip, not overflow-hidden: `hidden` would make the sticky cards below stick to this box instead of the viewport -->
+        <section class="wd-pricing-section relative pt-48 pb-32 bg-[#050505] overflow-clip" style="will-change: transform;">
             <div class="container relative z-10 px-6 max-w-5xl mx-auto">
                 <div class="text-center mb-24 wd-pricing-header">
                     <h2 class="text-4xl md:text-6xl text-gray-400 font-light mb-6">
@@ -167,7 +175,7 @@
                     <p class="text-xl md:text-2xl text-gray-400 font-light max-w-3xl mx-auto" v-html="$t('services_inner.webdev.prices_desc')"></p>
                 </div>
 
-                <div class="flex flex-col gap-8">
+                <div class="wd-process-stack">
                     <!-- Step 1 -->
                     <div @click="toggleDropdown(0)" class="wd-process-dropdown group relative block bg-[#111] border border-white/5 rounded-3xl p-8 md:p-12 hover:bg-[#1a1a1a] transition-colors cursor-pointer overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-r from-[#FFA500]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -377,7 +385,52 @@ onMounted(() => {
 onUnmounted(() => {
     if (pollingInterval) clearInterval(pollingInterval);
     if (ctx) ctx.revert();
+    stopProcessStack();
 });
+
+/* ── Process steps: sticky stacking cards ──────────────────────────────── */
+const STACK_FADE_DISTANCE = 300;
+let stackCards = [];
+let stackFrame = 0;
+
+function paintProcessStack() {
+    stackFrame = 0;
+    const stickyTop = window.innerWidth < 768 ? 84 : 96;
+    stackCards.forEach((card, i) => {
+        const next = stackCards[i + 1];
+        if (!next) return;
+        const distance = next.getBoundingClientRect().top - stickyTop;
+        const progress = distance >= STACK_FADE_DISTANCE ? 0
+            : distance <= 0 ? 1
+            : 1 - distance / STACK_FADE_DISTANCE;
+        card.style.opacity = String(1 - progress);
+        card.style.filter = progress > 0 ? `blur(${(progress * 8).toFixed(1)}px)` : 'none';
+        card.style.pointerEvents = progress > 0.9 ? 'none' : 'auto';
+    });
+}
+
+function queueProcessStack() {
+    if (!stackFrame) stackFrame = requestAnimationFrame(paintProcessStack);
+}
+
+function startProcessStack() {
+    stackCards = Array.from(document.querySelectorAll('.wd-process-stack .wd-process-dropdown'));
+    if (stackCards.length < 2) return;
+    window.addEventListener('scroll', queueProcessStack, { passive: true });
+    window.addEventListener('resize', queueProcessStack);
+    paintProcessStack();
+    // Sections above this one settle their height after GSAP init, which moves
+    // the cards; repaint once that has happened.
+    setTimeout(paintProcessStack, 400);
+}
+
+function stopProcessStack() {
+    window.removeEventListener('scroll', queueProcessStack);
+    window.removeEventListener('resize', queueProcessStack);
+    if (stackFrame) cancelAnimationFrame(stackFrame);
+    stackFrame = 0;
+    stackCards = [];
+}
 
 function initGSAP() {
     window.ScrollTrigger.refresh();
@@ -547,11 +600,13 @@ function initGSAP() {
             pricingTl.fromTo('.wd-pricing-header',
                 { opacity: 0, y: 50 },
                 { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }
-            ).fromTo('.wd-process-dropdown',
-                { opacity: 0, y: 50, scale: 0.95 },
-                { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'back.out(1.2)', stagger: 0.2 },
-                "-=0.5"
             );
+
+            // Stacking cards: a card fades and blurs out over the last 300px of the
+            // next card's approach to the sticky line. Measured live on scroll rather
+            // than with ScrollTrigger — it caches start/end positions at refresh time,
+            // and a position:sticky trigger reports wherever it is currently pinned.
+            startProcessStack();
 
             // --- T4: Process → CTA — Parallax Depth Layers ---
             gsap.to('.wd-pricing-section .container', {
@@ -625,5 +680,39 @@ function initGSAP() {
 .wd-metric-card {
   will-change: transform, opacity;
   backface-visibility: hidden;
+}
+
+/* Process steps — sticky stacking cards: each pins under the nav and the next
+   one slides over it, the one underneath fading and blurring out. */
+.wd-process-stack {
+  position: relative;
+}
+
+.wd-process-stack > .wd-process-dropdown {
+  position: sticky;
+  top: 96px;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+/* The gap is the scroll distance a card stays pinned before the next covers it. */
+.wd-process-stack > .wd-process-dropdown + .wd-process-dropdown {
+  margin-top: 46vh;
+}
+
+@media (max-width: 767px) {
+  .wd-process-stack > .wd-process-dropdown {
+    top: 84px;
+  }
+
+  .wd-process-stack > .wd-process-dropdown + .wd-process-dropdown {
+    margin-top: 36vh;
+  }
+}
+
+.wd-hero-wash {
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.035) 38%, transparent 72%),
+    radial-gradient(90% 50% at 85% 75%, rgba(255, 153, 0, 0.07) 0%, transparent 70%),
+    linear-gradient(180deg, #161616 0%, #0c0c0c 55%, #050505 100%);
 }
 </style>

@@ -53,8 +53,16 @@
                   <li class="mil-has-children"><NuxtLink :to="localePath('/')">{{ $t('nav.home') }}</NuxtLink></li>
                   <li class="mil-has-children"><NuxtLink :to="localePath('/portfolio')">{{ $t('nav.portfolio') }}</NuxtLink></li>
                   <li class="mil-has-children">
-                    <NuxtLink :to="localePath('/services')">{{ $t('nav.services') }}</NuxtLink>
+                    <!-- Toggles the submenu only — the overview page is the first item inside it -->
+                    <a
+                      role="button"
+                      tabindex="0"
+                      style="cursor: pointer"
+                      @keydown.enter.prevent="$event.currentTarget.click()"
+                      @keydown.space.prevent="$event.currentTarget.click()"
+                    >{{ $t('nav.services') }}</a>
                     <ul>
+                        <li><NuxtLink :to="localePath('/services')">{{ $t('nav.all_services') }}</NuxtLink></li>
                         <li><NuxtLink :to="localePath('/seo')">{{ $t('nav.seo') }}</NuxtLink></li>
                         <li><NuxtLink :to="localePath('/web-development')">{{ $t('nav.web_dev') }}</NuxtLink></li>
                         <li><NuxtLink :to="localePath('/digital-marketing')">{{ $t('nav.digital_marketing') }}</NuxtLink></li>
@@ -325,6 +333,11 @@ onUnmounted(() => {
 .mil-curtain { z-index: 9990 !important; }
 .mil-menu-frame { z-index: 9991 !important; }
 .mil-frame { z-index: 9999 !important; }
+
+/* The theme sets `overflow: hidden` here, which makes the wrapper a scroll
+   container and stops `position: sticky` anywhere inside a page from ever
+   sticking. `clip` hides the same overflow without creating that container. */
+.mil-wrapper { overflow: clip; }
 
 /* Force the always-visible logo and burger to white whenever the menu
    is open (otherwise data-nav-theme="light" sections leave them dark

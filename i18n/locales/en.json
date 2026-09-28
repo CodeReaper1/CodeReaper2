@@ -34,6 +34,17 @@
     }
   },
   "services_page": {
+    "eyebrow": "Crafting Unique Brand Identities",
+    "title_lead": "Branding that you",
+    "title_accent": "need",
+    "title_trail": "Indeed",
+    "subtitle": "Elevate your brand with custom identity and package design. Showcase your story through bold visuals and strategic design solutions.",
+    "scroll_primary": "Scroll down",
+    "scroll_secondary": "to see projects",
+    "works_title": "Recent Works",
+    "cta_primary": "Get Started Now",
+    "cta_secondary": "See Projects",
+    "projects_link": "All Projects",
     "title_part1": "This is",
     "title_part2": "what",
     "title_part3": "we do",
@@ -276,6 +287,7 @@
       "subtitle": "FAQ",
       "title": "Questions, answered",
       "desc": "Everything you need to know before we kick off. Miss something? Reach out — we reply fast.",
+      "contact_link": "Contact Page.",
       "items": [
         {
           "question": "How long does a typical project take?",

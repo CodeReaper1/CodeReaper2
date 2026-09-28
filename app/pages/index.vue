@@ -127,8 +127,11 @@
         </div>
     </section>
 
+    <!-- 5 + 6 stack: the FAQ rides up over the pinned tech-stack section -->
+    <div class="stack-faq-stack">
+
     <!-- 5. Tech Stack & Tools -->
-    <section class="stack-section py-24 md:py-40 bg-white dark:bg-[#0a0a0a] overflow-hidden relative" data-nav-theme="light">
+    <section class="stack-section py-24 md:py-40 bg-white dark:bg-[#0a0a0a] overflow-hidden" data-nav-theme="light">
         <!-- Floating background category strip -->
         <div class="stack-marquee absolute inset-x-0 top-16 md:top-24 pointer-events-none select-none opacity-[0.04] dark:opacity-[0.07] whitespace-nowrap text-[8rem] md:text-[14rem] font-black tracking-tighter uppercase text-gray-900 dark:text-white leading-none">
             <span class="inline-block pr-20">{{ stackTitle }}</span>
@@ -177,47 +180,49 @@
 
     <!-- 6. FAQ -->
     <section class="faq-section" data-nav-theme="light">
-        <div class="faq-shell">
-            <div class="faq-copy">
-                <h2 class="faq-subtitle">{{ faqSubtitle }}</h2>
-                <h3 class="faq-title">
-                    <span class="split-line inline-block">{{ faqTitle }}</span>
-                </h3>
-                <p class="faq-desc">{{ faqDesc }}</p>
-            </div>
+        <div class="faq-card">
+            <h2 class="faq-title">
+                <span class="split-line inline-block">{{ faqTitle }}</span>
+            </h2>
+            <p class="faq-desc">
+                {{ faqDesc }}
+                <NuxtLink :to="localePath('/contact')" class="faq-contact">{{ faqContact }}</NuxtLink>
+            </p>
 
-            <div class="faq-divider" aria-hidden="true">
-                <span></span>
-            </div>
-
-            <div class="faq-list" aria-label="Frequently asked questions">
-                <div
-                    v-for="(item, idx) in faqItems"
-                    :key="idx"
-                    class="faq-item"
-                    :class="{ 'faq-item-open': openFaq === idx }"
-                >
-                    <button
-                        type="button"
-                        class="faq-trigger"
-                        :aria-expanded="openFaq === idx"
-                        @click="toggleFaq(idx)"
+            <div class="faq-grid" aria-label="Frequently asked questions">
+                <div v-for="(col, ci) in faqColumns" :key="ci" class="faq-col">
+                    <div
+                        v-for="entry in col"
+                        :key="entry.idx"
+                        class="faq-item"
+                        :class="{ 'faq-item-open': openFaq === entry.idx }"
                     >
-                        <span class="faq-question">{{ item.question }}</span>
-                        <span class="faq-icon" :class="{ 'faq-icon-open': openFaq === idx }">
-                            <span class="faq-icon-bar"></span>
-                            <span class="faq-icon-bar faq-icon-bar-v" :class="{ 'rotate-90': openFaq !== idx, 'rotate-0': openFaq === idx }"></span>
-                        </span>
-                    </button>
-                    <div class="faq-answer-wrap" :style="{ height: '0px' }">
-                        <div class="faq-answer-inner">
-                            <p class="faq-answer">{{ item.answer }}</p>
+                        <button
+                            type="button"
+                            class="faq-trigger"
+                            :aria-expanded="openFaq === entry.idx"
+                            @click="toggleFaq(entry.idx)"
+                        >
+                            <span class="faq-question">{{ entry.item.question }}</span>
+                            <span class="faq-icon">
+                                <svg class="faq-chevron" viewBox="0 0 16 16" aria-hidden="true">
+                                    <path d="M4 6.5 8 10.5 12 6.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="faq-answer-wrap" :style="{ height: '0px' }">
+                            <div class="faq-answer-inner">
+                                <p class="faq-answer">{{ entry.item.answer }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    </div>
+    <!-- /stack-faq-stack -->
 
     <!-- 7. CTA — Orbital "Specialists" panel -->
     <section class="cta-section relative bg-[#050505] overflow-hidden px-4 md:px-8 py-12 md:py-20" data-nav-theme="dark">
@@ -426,7 +431,6 @@ const stackItems = computed(() => {
 });
 
 // ── FAQ section ──────────────────────────────────────────────────────────
-const faqSubtitle = computed(() => t('home_new.faq.subtitle'));
 const faqTitle = computed(() => t('home_new.faq.title'));
 const faqDesc = computed(() => t('home_new.faq.desc'));
 const faqItems = computed(() => {
@@ -436,6 +440,18 @@ const faqItems = computed(() => {
   }
   return [];
 });
+const faqContact = computed(() => t('home_new.faq.contact_link'));
+
+// Two explicit columns rather than CSS `columns: 2`. Multi-column re-balances
+// while an answer is mid-tween, which visibly throws items across the gutter;
+// splitting the list keeps an opening answer inside its own column. DOM order
+// still matches faqItems order, which animateFaqHeights() indexes into.
+const faqColumns = computed(() => {
+  const entries = faqItems.value.map((item, idx) => ({ item, idx }));
+  const half = Math.ceil(entries.length / 2);
+  return [entries.slice(0, half), entries.slice(half)];
+});
+
 const openFaq = ref(0);
 function toggleFaq(idx) {
   openFaq.value = openFaq.value === idx ? -1 : idx;
@@ -475,6 +491,7 @@ useHead({
   link: [
     { href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;500;700&display=swap', rel: 'stylesheet' },
     { href: 'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,500;0,600;0,700;1,700&display=swap', rel: 'stylesheet' },
+    { href: 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap', rel: 'stylesheet' },
     { href: 'https://fonts.googleapis.com/icon?family=Material+Icons', rel: 'stylesheet' },
     { href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap', rel: 'stylesheet' }
   ]
@@ -487,8 +504,7 @@ function animateFaqHeights() {
   const items = mainRef.value.querySelectorAll('.faq-item');
   items.forEach((item, idx) => {
     const wrap = item.querySelector('.faq-answer-wrap');
-    const barV = item.querySelector('.faq-icon-bar-v');
-    const icon = item.querySelector('.faq-icon');
+    const chevron = item.querySelector('.faq-chevron');
     if (!wrap) return;
     const isOpen = idx === openFaq.value;
     gsapRef.to(wrap, {
@@ -496,8 +512,42 @@ function animateFaqHeights() {
       duration: 0.55,
       ease: 'expo.inOut',
     });
-    if (barV) gsapRef.to(barV, { rotation: isOpen ? 0 : 90, duration: 0.5, ease: 'expo.inOut' });
-    if (icon) gsapRef.to(icon, { backgroundColor: isOpen ? '#FF9900' : '', duration: 0.4, ease: 'power2.out' });
+    if (chevron) gsapRef.to(chevron, { rotation: isOpen ? 180 : 0, duration: 0.45, ease: 'expo.inOut' });
+  });
+}
+
+// .stack-section pins behind the FAQ as a card stack. Two things have to be
+// measured for that, because neither is expressible in CSS:
+//   1. the sticky offset — "shift me up by however much taller than the viewport
+//      I am", so the section parks bottom-flush instead of cropping its lower third;
+//   2. the FAQ's matching height, so the two cards in the stack are the same size.
+function syncStackedSections() {
+  if (typeof window === 'undefined' || !mainRef.value) return;
+  const stack = mainRef.value.querySelector('.stack-section');
+  const faq = mainRef.value.querySelector('.faq-section');
+  if (!stack) return;
+
+  const stackHeight = stack.offsetHeight;
+  stack.style.setProperty('--stack-sticky-top', `-${Math.max(0, stackHeight - window.innerHeight)}px`);
+
+  if (!faq) return;
+  // Only above the FAQ's single-column breakpoint. Narrow viewports stack the
+  // tech grid into a very tall column the FAQ has no content to fill, which would
+  // leave hundreds of pixels of empty white below the last question.
+  if (window.innerWidth >= 768) {
+    faq.style.setProperty('--stack-match-height', `${stackHeight}px`);
+  } else {
+    faq.style.removeProperty('--stack-match-height');
+  }
+}
+
+let stackResizeRaf = null;
+function onStackResize() {
+  if (stackResizeRaf) cancelAnimationFrame(stackResizeRaf);
+  stackResizeRaf = requestAnimationFrame(() => {
+    stackResizeRaf = null;
+    syncStackedSections();
+    window.ScrollTrigger?.refresh();
   });
 }
 
@@ -513,17 +563,27 @@ onMounted(() => {
     }
   });
 
+  // Once synchronously so the offset is right before the first paint, again on
+  // nextTick once layout has settled.
+  syncStackedSections();
+  nextTick(() => syncStackedSections());
+  window.addEventListener('resize', onStackResize);
+
   pollInterval = setInterval(() => {
     if (window.gsap && window.ScrollTrigger) {
       clearInterval(pollInterval);
       pollInterval = null;
       initAnimations(window.gsap, window.ScrollTrigger);
+      // Images and webfonts land after mount and change the section's height.
+      syncStackedSections();
     }
   }, 50);
 });
 
 onUnmounted(() => {
   if (pollInterval) clearInterval(pollInterval);
+  window.removeEventListener('resize', onStackResize);
+  if (stackResizeRaf) cancelAnimationFrame(stackResizeRaf);
   matchMediaCtl?.revert();
   matchMediaCtl = null;
   ctx?.revert();
@@ -810,7 +870,6 @@ function initAnimations(gsap, ScrollTrigger) {
 
           // ═══ 6. FAQ — header reveal, item stagger, accordion click animation ══════
           // Pre-set hidden state to avoid SSR flash
-          gsap.set('.faq-section .faq-subtitle', { y: 20, autoAlpha: 0 });
           gsap.set('.faq-section .faq-title .split-line', { clipPath: 'inset(0 0 100% 0)' });
           gsap.set('.faq-section .faq-desc', { y: 24, autoAlpha: 0 });
           gsap.set('.faq-section .faq-item', { y: 40, autoAlpha: 0 });
@@ -823,10 +882,9 @@ function initAnimations(gsap, ScrollTrigger) {
             },
           });
           faqHeaderTl
-            .to('.faq-section .faq-subtitle', { y: 0, autoAlpha: 1, duration: 0.7 })
             .to('.faq-section .faq-title .split-line', {
               clipPath: 'inset(0 0 0% 0)', duration: 1.1, ease: 'expo.out',
-            }, '-=0.4')
+            })
             .to('.faq-section .faq-desc', { y: 0, autoAlpha: 1, duration: 0.8 }, '-=0.7');
 
           gsap.to('.faq-section .faq-item', {
@@ -1026,169 +1084,115 @@ function initAnimations(gsap, ScrollTrigger) {
 }
 
 /* ═══ FAQ ═══════════════════════════════════════════════════════════════ */
+/* Card-stack transition: the tech-stack section pins and the FAQ scrolls up over
+   it. .stack-section is taller than the viewport (~1003px vs 757px), so a plain
+   top:0 would pin it the instant its top edge hit 0 and permanently crop its lower
+   third. The sticky top is offset negatively by exactly that overflow instead, so
+   the section scrolls through in full and only then holds. The shared parent
+   bounds the offset, so it releases once the FAQ has passed. */
+.stack-faq-stack {
+  position: relative;
+}
+
+.stack-section {
+  position: sticky;
+  /* Negative offset = section height minus viewport height, set by
+     syncStackedSections(). It parks the section with its bottom flush to the
+     viewport bottom, so it pins only once it has been scrolled through in full. */
+  top: var(--stack-sticky-top, 0px);
+  z-index: 1;
+}
+
 .faq-section {
   position: relative;
-  overflow: hidden;
-  min-height: 100vh;
-  padding: clamp(5.5rem, 11vh, 8rem) clamp(1.25rem, 5vw, 5rem);
-  background:
-    radial-gradient(circle at 50% 86%, rgba(255, 153, 0, 0.12), transparent 18rem),
-    radial-gradient(circle at 8% 12%, rgba(255, 153, 0, 0.06), transparent 18rem),
-    #f7f6f1;
-  color: #070707;
+  z-index: 2;
+  /* Matched to .stack-section by syncStackedSections() so both cards in the stack
+     are the same size. min-height, not height — an open answer must still grow it. */
+  min-height: var(--stack-match-height, auto);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: clamp(20px, 2.6vw, 34px) clamp(20px, 2.6vw, 34px) 0 0;
+  box-shadow: 0 -18px 48px rgba(0, 0, 0, 0.18);
+  padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 3rem);
+  background: #ffffff;
+  color: #000000;
   font-family: Outfit, Arial, sans-serif;
 }
 
-.faq-section::before,
-.faq-section::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-}
-
-.faq-section::before {
-  inset: 0;
-  opacity: 0.42;
-  background-image:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px),
-    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-  background-size: 88px 88px;
-  mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
-}
-
-.faq-section::after {
-  top: 18%;
-  right: -7rem;
-  width: 20rem;
-  height: 20rem;
-  border: 1px solid rgba(255, 153, 0, 0.16);
-  opacity: 0.42;
-  transform: rotate(45deg);
-}
-
-.faq-shell {
+/* Width constraint only — the section itself is the white surface now, so this
+   no longer needs padding to inset content from a card edge. */
+.faq-card {
   position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(260px, 0.85fr) 56px minmax(360px, 1.22fr);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-  align-items: center;
-  width: min(100%, 1180px);
-  min-height: 68vh;
+  max-width: 960px;
   margin: 0 auto;
 }
 
-.faq-copy {
-  max-width: 430px;
-}
-
-.faq-subtitle {
-  margin: 0 0 1.65rem;
-  color: #c7831b;
-  font-size: 0.75rem;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-}
-
 .faq-title {
-  margin: 0 0 1.75rem;
-  color: #080808;
-  font-size: clamp(3.5rem, 6.4vw, 5.9rem);
-  font-weight: 100;
-  line-height: 1.02;
-  letter-spacing: -0.055em;
-}
-
-.faq-title .split-line {
-  display: inline-block;
+  margin: 0;
+  color: #000000;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(1.85rem, 4.6vw, 3.05rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  text-align: center;
 }
 
 .faq-desc {
-  max-width: 420px;
-  margin: 0;
-  color: #141414;
-  font-size: clamp(1rem, 1.6vw, 1.14rem);
+  /* Narrow enough that the sentence wraps and the contact link flows inline on
+     the second line, as in the reference, rather than sitting on a line alone. */
+  max-width: 29rem;
+  margin: clamp(0.8rem, 1.6vw, 1.15rem) auto 0;
+  color: rgba(0, 0, 0, 0.55);
+  font-size: clamp(0.82rem, 1.05vw, 0.95rem);
   font-weight: 400;
   line-height: 1.55;
+  text-align: center;
 }
 
-.faq-divider {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  min-height: 520px;
+.faq-contact {
+  color: #000000;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 200ms ease;
 }
 
-.faq-divider::before {
-  content: "";
-  width: 10px;
-  min-height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.02));
+.faq-contact:hover {
+  color: #000000;
 }
 
-.faq-divider span {
-  position: absolute;
-  top: 32%;
-  width: 28px;
-  height: 340px;
-  border-radius: 999px;
-  background: #ff9900;
-  box-shadow:
-    0 18px 45px rgba(255, 153, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.8vw, 1.3rem);
+  align-items: start;
+  margin-top: clamp(1.9rem, 4vw, 3.15rem);
 }
 
-.faq-divider span::after {
-  content: "→";
-  position: absolute;
-  top: 1.1rem;
-  left: 50%;
-  color: #ffffff;
-  font-size: 1.35rem;
-  font-weight: 800;
-  transform: translateX(-50%);
-}
-
-.faq-list {
+.faq-col {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: clamp(0.8rem, 1.8vw, 1.3rem);
 }
 
+/* Hard offset shadow, no blur — the border and its shadow are the whole look,
+   so both stay fully opaque. */
 .faq-item {
   overflow: hidden;
-  border: 1.5px solid rgba(255, 153, 0, 0.64);
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.62);
-  box-shadow:
-    0 18px 45px rgba(255, 153, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(10px);
+  border: 1.6px solid #000000;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 3px 3px 0 #000000;
   transition:
-    transform 240ms ease,
-    box-shadow 240ms ease,
-    border-color 240ms ease,
-    background-color 240ms ease;
-  -webkit-backdrop-filter: blur(10px);
+    transform 200ms ease,
+    box-shadow 200ms ease;
 }
 
 .faq-item:hover {
-  border-color: rgba(255, 153, 0, 0.92);
-  box-shadow:
-    0 24px 58px rgba(255, 153, 0, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.88);
-  transform: translateY(-2px);
-}
-
-.faq-item-open {
-  border-color: #ff9900;
-  background: rgba(255, 255, 255, 0.78);
-  box-shadow:
-    0 30px 70px rgba(255, 153, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 #000000;
 }
 
 .faq-trigger {
@@ -1196,10 +1200,9 @@ function initAnimations(gsap, ScrollTrigger) {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: 74px;
-  padding: 1.2rem 1.55rem 1.15rem;
+  padding: clamp(0.78rem, 1.5vw, 1.02rem) clamp(0.85rem, 1.7vw, 1.2rem);
   border: 0;
-  gap: 1.5rem;
+  gap: 0.9rem;
   background: transparent;
   color: inherit;
   font: inherit;
@@ -1208,27 +1211,26 @@ function initAnimations(gsap, ScrollTrigger) {
 }
 
 .faq-question {
-  color: #0b0b0b;
-  font-size: clamp(1.15rem, 1.8vw, 1.42rem);
-  font-weight: 800;
-  line-height: 1.18;
+  color: #000000;
+  font-size: clamp(0.84rem, 1.05vw, 0.95rem);
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .faq-icon {
-  position: relative;
   display: grid;
   flex: 0 0 auto;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  color: #d28410;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+  background: #1a1a1a;
+  color: #ffffff;
 }
 
-.faq-icon-open {
-  color: #ffffff;
+.faq-chevron {
+  width: 14px;
+  height: 14px;
 }
 
 .faq-answer-wrap {
@@ -1237,58 +1239,20 @@ function initAnimations(gsap, ScrollTrigger) {
 }
 
 .faq-answer-inner {
-  padding: 0 1.55rem 1.55rem;
+  padding: 0 clamp(0.85rem, 1.7vw, 1.2rem) clamp(0.85rem, 1.6vw, 1.1rem);
 }
 
 .faq-answer {
-  max-width: 640px;
   margin: 0;
-  color: #171717;
-  font-size: clamp(0.95rem, 1.25vw, 1.05rem);
+  color: rgba(0, 0, 0, 0.55);
+  font-size: clamp(0.72rem, 0.9vw, 0.8rem);
   font-weight: 400;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
-.faq-icon-bar {
-  position: absolute;
-  width: 13px;
-  height: 2px;
-  border-radius: 999px;
-  background: currentColor;
-  transform-origin: center center;
-}
-
-@media (max-width: 1024px) {
-  .faq-section {
-    min-height: auto;
-  }
-
-  .faq-shell {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
-
-  .faq-copy {
-    max-width: 620px;
-  }
-
-  .faq-divider {
-    display: none;
-  }
-}
-
-@media (max-width: 560px) {
-  .faq-section {
-    padding-inline: 1rem;
-  }
-
-  .faq-trigger {
-    min-height: 68px;
-    padding: 1rem 1.1rem;
-  }
-
-  .faq-answer-inner {
-    padding: 0 1.1rem 1.2rem;
+@media (max-width: 720px) {
+  .faq-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

@@ -29,11 +29,14 @@
             </div>
         </section>
 
-        <!-- T1: Vertical Curtain Wipe (Hero → Approach transition) -->
-        <div class="dm-transition-curtain absolute left-0 right-0 h-screen bg-[#0a0a0a] z-[25] origin-top pointer-events-none" style="top: 100vh;"></div>
-
         <!-- 2. Typography Approach Reveal (Masking) -->
         <section class="dm-approach-section relative py-32 bg-white text-black dark:bg-[#0a0a0a] dark:text-white rounded-t-[3rem] -mt-10 z-20">
+            <!-- T1: Vertical Curtain Wipe (Hero → Approach transition).
+                 Lives inside the section so it tracks the section's real top edge —
+                 the hero is min-h-screen and is taller than 100vh on most viewports.
+                 origin-bottom retracts downward, revealing the section top-first and
+                 matching the direction of .dm-mask-overlay below. -->
+            <div class="dm-transition-curtain absolute inset-x-0 top-0 h-screen bg-[#0a0a0a] z-30 origin-bottom rounded-t-[3rem] pointer-events-none"></div>
             <div class="container px-6 md:px-12">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <div class="dm-mask-container relative h-[500px] md:h-[700px] w-full overflow-hidden rounded-[2rem]">
@@ -131,7 +134,7 @@
         </section>
 
         <!-- 4. Process Stacking Sequence -->
-        <section class="dm-pricing-section relative pt-48 pb-64 bg-[#050505] overflow-visible">
+        <section class="dm-pricing-section relative pt-48 pb-24 bg-[#050505] overflow-visible">
             <div class="container relative z-10 px-6 max-w-5xl mx-auto">
                 <div class="text-center mb-32 dm-pricing-header">
                     <h2 class="text-4xl md:text-6xl text-gray-400 font-light mb-6">
@@ -140,7 +143,7 @@
                     <p class="text-xl md:text-2xl text-gray-400 font-light max-w-3xl mx-auto" v-html="$t('services_inner.marketing.prices_desc')"></p>
                 </div>
 
-                <div class="dm-cards-wrapper relative pb-[10vh]">
+                <div class="dm-cards-wrapper relative pb-[2vh]">
                     <!-- Step 1 -->
                     <div class="dm-stack-card sticky top-[10vh] w-full bg-[#111] border border-white/5 rounded-[2.5rem] p-10 md:p-16 shadow-2xl mb-[8vh] overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-br from-[#FFA500]/5 to-transparent pointer-events-none"></div>
@@ -215,8 +218,6 @@ import { useHead, useLocalePath } from '#imports';
 
 const localePath = useLocalePath();
 
-const { settings: siteSettings } = useSiteSettings();
-const { sections: dmSections, getSection } = usePageSections('digital-marketing');
 
 
 
@@ -318,8 +319,8 @@ function initGSAPAnimations(gsap, ScrollTrigger) {
                         ease: "power3.inOut",
                         scrollTrigger: {
                             trigger: ".dm-approach-section",
-                            start: "top 100%",
-                            end: "top 40%",
+                            start: "top bottom",
+                            end: "top 50%",
                             scrub: 0.8
                         }
                     }
@@ -442,13 +443,13 @@ function initGSAPAnimations(gsap, ScrollTrigger) {
                 const lastCard = processCards[processCards.length - 1];
                 if (lastCard) {
                     gsap.to(lastCard, {
-                        filter: "blur(4px)",
-                        opacity: 0.3,
+                        filter: "blur(2px)",
+                        opacity: 0.55,
                         ease: "none",
                         scrollTrigger: {
                             trigger: ".dm-cta-section",
-                            start: "top 100%",
-                            end: "top 60%",
+                            start: "top 85%",
+                            end: "top 45%",
                             scrub: 1
                         }
                     });

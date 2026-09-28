@@ -15,27 +15,27 @@
                 <div class="mil-banner-content text-center w-full max-w-5xl mx-auto">
                     <div class="mb-6 overflow-hidden">
                         <span class="inline-block text-[#FFA500] tracking-[0.4em] uppercase text-sm md:text-base font-bold hero-subtitle">
-                           {{ siteSettings?.homepageHeroSubtitle || $t('home.banner.title_main') }}
+                           {{ $t('home.banner.title_main') }}
                         </span>
                     </div>
 
                     <h1 class="hp-hero-title text-5xl md:text-[7rem] lg:text-[9rem] font-[100] text-white leading-[0.9] tracking-tighter mb-10 mx-auto" style="color: white !important;">
-                        <span class="split-line block">{{ siteSettings?.homepageHeroTitle1 || $t('home.banner.title_sub1') }}</span>
-                        <span class="split-line block font-bold">{{ siteSettings?.homepageHeroTitle2 || $t('home.banner.title_sub2') }}</span>
+                        <span class="split-line block">{{ $t('home.banner.title_sub1') }}</span>
+                        <span class="split-line block font-bold">{{ $t('home.banner.title_sub2') }}</span>
                     </h1>
                     
                     <div class="hero-bottom-elements flex flex-col items-center gap-8 mt-12">
                         <p class="text-gray-400 text-lg md:text-2xl max-w-2xl font-light mx-auto">
-                            {{ siteSettings?.homepageHeroDesc || $t('home.banner.desc') }}
+                            {{ $t('home.banner.desc') }}
                         </p>
 
                         <div class="flex flex-col sm:flex-row items-center gap-6 mt-4">
                             <NuxtLink :to="localePath('/services')" class="mil-button mil-arrow-place px-10 py-5 text-lg">
-                                <span>{{ siteSettings?.homepageHeroBtn1 || $t('home.banner.btn_services') }}</span>
+                                <span>{{ $t('home.banner.btn_services') }}</span>
                             </NuxtLink>
 
                             <NuxtLink :to="localePath('/portfolio')" class="mil-link mil-muted mil-arrow-place text-lg group">
-                                <span class="group-hover:text-white transition-colors">{{ siteSettings?.homepageHeroBtn2 || $t('home.banner.btn_portfolio') }}</span>
+                                <span class="group-hover:text-white transition-colors">{{ $t('home.banner.btn_portfolio') }}</span>
                             </NuxtLink>
                         </div>
                     </div>
@@ -80,18 +80,18 @@
         
         <!-- Foreground Text Layer (Normal Flow) -->
         <div class="parallax-layer relative z-20 container mx-auto px-6 text-center" data-speed="0">
-             <h2 class="text-sm font-bold tracking-[0.3em] text-primary mb-8 uppercase">{{ siteSettings?.homepageStrategySubtitle || $t('home_new.strategy.subtitle') }}</h2>
-             <div class="text-4xl md:text-6xl lg:text-7xl font-[100] text-white leading-tight max-w-5xl mx-auto drop-shadow-2xl" v-html="siteSettings?.homepageStrategyTitle || $t('home_new.strategy.title')"></div>
+             <h2 class="text-sm font-bold tracking-[0.3em] text-primary mb-8 uppercase">{{ $t('home_new.strategy.subtitle') }}</h2>
+             <div class="text-4xl md:text-6xl lg:text-7xl font-[100] text-white leading-tight max-w-5xl mx-auto drop-shadow-2xl" v-html="$t('home_new.strategy.title')"></div>
              
              <!-- Using existing stats keys to make the layer richer -->
              <div class="grid grid-cols-2 gap-8 md:gap-16 mt-20 md:mt-32 max-w-3xl mx-auto pointer-events-auto">
                  <div>
-                    <div class="stat-counter text-5xl md:text-7xl font-black text-primary mb-2" :data-target="siteSettings?.homepageStat1Num || '200'" data-suffix="+">0+</div>
-                    <div class="text-xs md:text-sm tracking-widest text-gray-400 uppercase">{{ siteSettings?.homepageStat1Label || $t('home_new.stats.s1_label') }}</div>
+                    <div class="stat-counter text-5xl md:text-7xl font-black text-primary mb-2" :data-target="$t('home_new.stats.s1_num')" data-suffix="+">0+</div>
+                    <div class="text-xs md:text-sm tracking-widest text-gray-400 uppercase">{{ $t('home_new.stats.s1_label') }}</div>
                  </div>
                  <div>
-                    <div class="stat-counter text-5xl md:text-7xl font-black text-primary mb-2" :data-target="siteSettings?.homepageStat2Num || '98'" data-suffix="%">0%</div>
-                    <div class="text-xs md:text-sm tracking-widest text-gray-400 uppercase">{{ siteSettings?.homepageStat2Label || $t('home_new.stats.s3_label') }}</div>
+                    <div class="stat-counter text-5xl md:text-7xl font-black text-primary mb-2" :data-target="$t('home_new.stats.s3_num')" data-suffix="%">0%</div>
+                    <div class="text-xs md:text-sm tracking-widest text-gray-400 uppercase">{{ $t('home_new.stats.s3_label') }}</div>
                  </div>
              </div>
         </div>
@@ -110,16 +110,16 @@
                 
                 <!-- Right: Steps -->
                 <div class="flex-1 space-y-24 md:space-y-48 my-12">
-                    <div v-for="(step, index) in (siteSettings?.homepageProcessSteps?.length ? siteSettings.homepageProcessSteps : $tm('home_new.strategy.steps'))" :key="index" class="process-step relative">
+                    <div v-for="(step, index) in $tm('home_new.strategy.steps')" :key="index" class="process-step relative">
                         <!-- Mobile marker -->
                         <div class="md:hidden w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold mb-6 text-xl">
                             {{ index + 1 }}
                         </div>
                         <h3 class="process-step-title text-4xl md:text-7xl font-[100] mb-8 text-gray-900 dark:text-white transition-all duration-700 ease-out">
-                            {{ typeof step.title === 'string' ? step.title : $rt(step.title) }}
+                            {{ $rt(step.title) }}
                         </h3>
                         <p class="process-step-desc text-xl md:text-3xl text-gray-500 dark:text-gray-400 max-w-2xl font-light leading-relaxed">
-                            {{ typeof step.desc === 'string' ? step.desc : $rt(step.desc) }}
+                            {{ $rt(step.desc) }}
                         </p>
                     </div>
                 </div>
@@ -363,7 +363,6 @@ const localePath = useLocalePath();
 const mainRef = ref(null);
 const { t, tm, rt } = useI18n();
 
-const { settings: siteSettings } = useSiteSettings();
 const { projects: wpProjects } = usePortfolio(3);
 
 const fallbackProjects = [
@@ -391,26 +390,46 @@ const philoWords = computed(() => [
 ]);
 
 // ── Stack section ────────────────────────────────────────────────────────
-const stackSubtitle = computed(() => siteSettings.value?.homepageStackSubtitle || t('home_new.stack.subtitle'));
-const stackTitle = computed(() => siteSettings.value?.homepageStackTitle || t('home_new.stack.title'));
+const stackSubtitle = computed(() => t('home_new.stack.subtitle'));
+const stackTitle = computed(() => t('home_new.stack.title'));
 const stackDesc = computed(() => t('home_new.stack.desc'));
+// Logos are keyed off the untranslated brand name — `category` is the only
+// part of a stack item that differs between locales.
+const STACK_LOGOS = {
+  'Figma': '/img/tech/figma.svg',
+  'Nuxt': '/img/tech/nuxt.svg',
+  'React': '/img/tech/react.svg',
+  'TypeScript': '/img/tech/typescript.svg',
+  'Tailwind CSS': '/img/tech/tailwindcss.svg',
+  'GSAP': '/img/tech/gsap.svg',
+  'WordPress': '/img/tech/wordpress.svg',
+  'Shopify': '/img/tech/shopify.svg',
+  'Node.js': '/img/tech/nodejs.svg',
+  'Supabase': '/img/tech/supabase.svg',
+  'Cloudflare': '/img/tech/cloudflare.svg',
+  'Framer Motion': '/img/tech/framer-motion.svg',
+};
+
 const stackItems = computed(() => {
-  const fromCms = siteSettings.value?.homepageStackItems;
-  if (Array.isArray(fromCms) && fromCms.length) return fromCms;
   const fromI18n = tm('home_new.stack.items');
-  if (Array.isArray(fromI18n) && fromI18n.length) {
-    return fromI18n.map((i) => ({ name: rt(i.name), category: rt(i.category), logo: null }));
-  }
-  return [];
+  if (!Array.isArray(fromI18n) || !fromI18n.length) return [];
+  return fromI18n.map((i) => {
+    const name = rt(i.name);
+    const src = STACK_LOGOS[name];
+    return {
+      name,
+      category: rt(i.category),
+      // The card falls back to the first letter when a brand has no asset.
+      logo: src ? { sourceUrl: src, altText: name } : null,
+    };
+  });
 });
 
 // ── FAQ section ──────────────────────────────────────────────────────────
-const faqSubtitle = computed(() => siteSettings.value?.homepageFaqSubtitle || t('home_new.faq.subtitle'));
-const faqTitle = computed(() => siteSettings.value?.homepageFaqTitle || t('home_new.faq.title'));
+const faqSubtitle = computed(() => t('home_new.faq.subtitle'));
+const faqTitle = computed(() => t('home_new.faq.title'));
 const faqDesc = computed(() => t('home_new.faq.desc'));
 const faqItems = computed(() => {
-  const fromCms = siteSettings.value?.homepageFaqItems;
-  if (Array.isArray(fromCms) && fromCms.length) return fromCms;
   const fromI18n = tm('home_new.faq.items');
   if (Array.isArray(fromI18n) && fromI18n.length) {
     return fromI18n.map((i) => ({ question: rt(i.question), answer: rt(i.answer) }));
@@ -424,11 +443,11 @@ function toggleFaq(idx) {
 }
 
 // ── CTA section ──────────────────────────────────────────────────────────
-const ctaSubtitle = computed(() => siteSettings.value?.homepageCtaSubtitle || t('home_new.cta.subtitle'));
-const ctaTitle = computed(() => siteSettings.value?.homepageCtaTitle || t('home_new.cta.title'));
-const ctaDesc = computed(() => siteSettings.value?.homepageCtaDesc || t('home_new.cta.desc'));
-const ctaBtn = computed(() => siteSettings.value?.homepageCtaBtn || t('home_new.cta.btn_talk'));
-const ctaLink = computed(() => siteSettings.value?.homepageCtaLink || '/contact');
+const ctaSubtitle = computed(() => t('home_new.cta.subtitle'));
+const ctaTitle = computed(() => t('home_new.cta.title'));
+const ctaDesc = computed(() => t('home_new.cta.desc'));
+const ctaBtn = computed(() => t('home_new.cta.btn_talk'));
+const ctaLink = '/contact';
 const ctaStatLabel = computed(() => t('home_new.cta.stat_label'));
 const ctaTitleWords = computed(() => String(ctaTitle.value).split(/\s+/).filter(Boolean));
 
@@ -598,7 +617,7 @@ function initAnimations(gsap, ScrollTrigger) {
           // is the midpoint of the ramp travelling through the paragraph.
           // duration / stagger IS that band's width, in words (~8).
           gsap.to('.philo .pw', {
-            color: (i, el) => (el.classList.contains('accent') ? 'rgb(0, 205, 88)' : 'rgb(231, 231, 231)'),
+            color: (i, el) => (el.classList.contains('accent') ? 'rgb(245, 166, 80)' : 'rgb(231, 231, 231)'),
             ease: 'none',
             duration: 1,
             stagger: 0.12,
@@ -1442,7 +1461,7 @@ function initAnimations(gsap, ScrollTrigger) {
 }
 
 .philo .pw.accent {
-  color: rgba(0, 205, 88, 0.18);
+  color: rgba(245, 166, 80, 0.18);
   font-style: italic;
 }
 
@@ -1466,7 +1485,7 @@ function initAnimations(gsap, ScrollTrigger) {
   }
 
   .philo .pw.accent {
-    color: rgb(0, 205, 88);
+    color: rgb(245, 166, 80);
   }
 }
 </style>
